@@ -2,11 +2,14 @@ package vpc_prototype;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Observable;
+import java.util.Observer;
+
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class ModeloImagen {
+public class ModeloImagen extends Observable{
 
 	private BufferedImage imagen;
 	
@@ -27,7 +30,16 @@ public class ModeloImagen {
                   
         }
 		
-        imagen = img;
+        setImagen(img);
+	}
+	
+
+	public BufferedImage getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(BufferedImage imagen) {
+		this.imagen = imagen;
 	}
 
 }
