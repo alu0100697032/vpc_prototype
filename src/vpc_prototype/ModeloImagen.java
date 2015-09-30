@@ -2,6 +2,7 @@ package vpc_prototype;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -12,6 +13,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class ModeloImagen extends Observable{
 
 	private BufferedImage imagen;
+	private ArrayList<Integer[][]> coloresRGBImagen;
 	
 	public ModeloImagen(){
 		
@@ -26,20 +28,38 @@ public class ModeloImagen extends Observable{
                 File imagenSeleccionada=selectorFichero.getSelectedFile();
                 img = ImageIO.read(imagenSeleccionada);
             } catch (Exception e) {
+            	e.printStackTrace();
             }
                   
         }
-		
         setImagen(img);
+        almacenarRGBImagen();
 	}
 	
-
+	public void almacenarRGBImagen(){
+		coloresRGBImagen = new ArrayList<Integer[][]>();
+	}
+	
+	/*
+	 * GETTER Y SETTER
+	 */
+	
 	public BufferedImage getImagen() {
 		return imagen;
 	}
 
 	public void setImagen(BufferedImage imagen) {
 		this.imagen = imagen;
+	}
+
+
+	public ArrayList<Integer[][]> getColoresRGB() {
+		return coloresRGBImagen;
+	}
+
+
+	public void setColoresRGB(ArrayList<Integer[][]> coloresRGB) {
+		this.coloresRGBImagen = coloresRGB;
 	}
 
 }
