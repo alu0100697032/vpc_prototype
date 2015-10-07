@@ -40,6 +40,24 @@ public class ModeloImagen extends Observable {
 
 	public void almacenarRGBImagen() {
 		coloresRGBImagen = new ArrayList<Integer[][]>();
+		int[][] matrizAuxiliarPlanoColorAzul = null; 
+		int[][] matrizAuxiliarPlanoColorVerde = null;
+		int[][] matrizAuxiliarPlanoColorRojo = null; 
+		
+		for(int i = 0; i < imagen.getHeight(); i++){
+			matrizAuxiliarPlanoColorAzul[i] = new int[imagen.getWidth()];
+			matrizAuxiliarPlanoColorVerde[i] = new int[imagen.getWidth()];
+			matrizAuxiliarPlanoColorRojo[i] = new int[imagen.getWidth()];
+			for(int j = 0; j < imagen.getWidth(); j++){
+				
+			}
+		}
+		
+		for(int i = 0; i < imagen.getHeight(); i++){
+			for(int j = 0; j < imagen.getWidth(); j++){
+				
+			}
+		}
 	}
 
 	/*
