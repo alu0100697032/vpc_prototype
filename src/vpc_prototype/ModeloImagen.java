@@ -37,7 +37,9 @@ public class ModeloImagen extends Observable {
 		setImagen(img);
 		almacenarRGBImagen();
 	}
-
+	/*
+	 * Separar el RGB de la imagen en matrices 
+	 */
 	public void almacenarRGBImagen() {
 		coloresRGBImagen = new ArrayList<Integer[][]>();
 		int[][] matrizAuxiliarPlanoColorAzul = null; 
@@ -49,13 +51,9 @@ public class ModeloImagen extends Observable {
 			matrizAuxiliarPlanoColorVerde[i] = new int[imagen.getWidth()];
 			matrizAuxiliarPlanoColorRojo[i] = new int[imagen.getWidth()];
 			for(int j = 0; j < imagen.getWidth(); j++){
-				
-			}
-		}
-		
-		for(int i = 0; i < imagen.getHeight(); i++){
-			for(int j = 0; j < imagen.getWidth(); j++){
-				
+				matrizAuxiliarPlanoColorAzul[i][j] = imagen.getColorModel().getBlue(imagen.getRGB(i, j));
+				matrizAuxiliarPlanoColorVerde[i][j] = imagen.getColorModel().getGreen(imagen.getRGB(i, j));
+				matrizAuxiliarPlanoColorRojo[i][j] = imagen.getColorModel().getRed(imagen.getRGB(i, j));
 			}
 		}
 	}
