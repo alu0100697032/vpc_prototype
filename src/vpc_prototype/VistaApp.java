@@ -40,7 +40,7 @@ public class VistaApp extends JFrame{
 	}
 	
 	public void addVentanaImagen(ModeloImagen modeloImagen){
-		VistaImagen imagen = new VistaImagen(modeloImagen.getImagenGris());
+		VistaImagen imagen = new VistaImagen(modeloImagen.getImagen());
 		imagenesAbiertas.add(imagen);
 		add(imagen);
 	}

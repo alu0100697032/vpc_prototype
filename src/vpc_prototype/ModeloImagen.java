@@ -1,5 +1,6 @@
 package vpc_prototype;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -14,15 +15,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class ModeloImagen extends Observable {
 
 	private BufferedImage imagen;
-	private BufferedImage imagenFinal;
-	private ArrayList<ArrayList<ArrayList<Integer>>> coloresRGBImagen;
-	private ArrayList<ArrayList<Integer>> imagenGris;
 	private HashMap<Integer, Integer> histograma;
 
 	public ModeloImagen() {
 
 		BufferedImage img = null;
-		BufferedImage imgfinal = null;
 		JFileChooser selectorFichero = new JFileChooser();
 		selectorFichero.setDialogTitle("Seleccione imagen a visualizar:");
 		FileNameExtensionFilter extensionPermitida = new FileNameExtensionFilter(
@@ -39,10 +36,7 @@ public class ModeloImagen extends Observable {
 			}
 
 		}
-		imgfinal = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
 		setImagen(img);
-		setImagenFinal(imgfinal);
-		almacenarRGBImagen();
 		histograma = new HashMap<Integer, Integer>();
 		for (int i = 0; i < 256; i++)
 			histograma.put(i, 0);
@@ -50,49 +44,21 @@ public class ModeloImagen extends Observable {
 	}
 
 	/*
-	 * Separar el RGB de la imagen en matrices
-	 */
-	public void almacenarRGBImagen() {
-		coloresRGBImagen = new ArrayList<ArrayList<ArrayList<Integer>>>();
-		ArrayList<ArrayList<Integer>> matrizAuxiliarPlanoColorAzul = new ArrayList<ArrayList<Integer>>();
-		ArrayList<ArrayList<Integer>> matrizAuxiliarPlanoColorVerde = new ArrayList<ArrayList<Integer>>();
-		ArrayList<ArrayList<Integer>> matrizAuxiliarPlanoColorRojo = new ArrayList<ArrayList<Integer>>();
-
-		for (int i = 0; i < imagen.getWidth(); i++) {
-			matrizAuxiliarPlanoColorRojo.add(new ArrayList<Integer>());
-			matrizAuxiliarPlanoColorVerde.add(new ArrayList<Integer>());
-			matrizAuxiliarPlanoColorAzul.add(new ArrayList<Integer>());
-			for (int j = 0; j < imagen.getHeight(); j++) {
-				matrizAuxiliarPlanoColorRojo.get(i).add(imagenFinal.getColorModel()
-						.getBlue(imagenFinal.getRGB(i, j)));
-				matrizAuxiliarPlanoColorVerde.get(i).add(imagenFinal.getColorModel()
-						.getBlue(imagenFinal.getRGB(i, j)));
-				matrizAuxiliarPlanoColorAzul.get(i).add(imagenFinal.getColorModel()
-						.getBlue(imagenFinal.getRGB(i, j)));
-			}
-		}
-		coloresRGBImagen.add(matrizAuxiliarPlanoColorRojo);
-		coloresRGBImagen.add(matrizAuxiliarPlanoColorVerde);
-		coloresRGBImagen.add(matrizAuxiliarPlanoColorAzul);
-	}
-
-	/*
 	 * Pasar a gris la imagen
 	 */
 	public void pasarImagenGris() {
-
-		imagenGris = new ArrayList<ArrayList<Integer>>();
-
+		Color colorRGB;
+		int colorGris;
 
 		for (int i = 0; i < imagen.getWidth(); i++) {
-			imagenGris.add(new ArrayList<Integer>());
 			for (int j = 0; j < imagen.getHeight(); j++) {
+				colorRGB = new Color(imagen.getRGB(i, j));
 				// NTSC format
-				imagenGris.get(i).add((int) ((coloresRGBImagen.get(0).get(i).get(j) * 0.299)
-						+ (coloresRGBImagen.get(1).get(i).get(j) * 0.587) + (coloresRGBImagen
-						.get(2).get(i).get(j) * 0.114)));
-				histograma.put(imagenGris.get(i).get(j),
-						histograma.get(imagenGris.get(i).get(j) + 1));
+				colorGris = ((int) ((colorRGB.getRed()* 0.299)
+						+ (colorRGB.getGreen() * 0.587) + (colorRGB.getBlue() * 0.114)));
+				histograma.put(colorGris,
+						histograma.get(colorGris)+1);
+				imagen.setRGB(i, j, colorGris);
 			}
 		}
 	}
@@ -109,36 +75,12 @@ public class ModeloImagen extends Observable {
 		this.imagen = imagen;
 	}
 
-	public ArrayList<ArrayList<ArrayList<Integer>>> getColoresRGB() {
-		return coloresRGBImagen;
-	}
-
-	public void setColoresRGB(ArrayList<ArrayList<ArrayList<Integer>>> coloresRGB) {
-		this.coloresRGBImagen = coloresRGB;
-	}
-
-	public ArrayList<ArrayList<Integer>> getImagenGris() {
-		return imagenGris;
-	}
-
-	public void setImagenGris(ArrayList<ArrayList<Integer>> imagenGris) {
-		this.imagenGris = imagenGris;
-	}
-
 	public HashMap<Integer, Integer> getHistograma() {
 		return histograma;
 	}
 
 	public void setHistograma(HashMap<Integer, Integer> histograma) {
 		this.histograma = histograma;
-	}
-
-	public BufferedImage getImagenFinal() {
-		return imagenFinal;
-	}
-
-	public void setImagenFinal(BufferedImage imagenFinal) {
-		this.imagenFinal = imagenFinal;
 	}
 
 }
