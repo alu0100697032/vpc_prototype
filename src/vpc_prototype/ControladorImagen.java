@@ -2,6 +2,7 @@ package vpc_prototype;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ControladorImagen implements ActionListener{
@@ -22,6 +23,9 @@ public class ControladorImagen implements ActionListener{
 			ModeloImagen modeloImagen = new ModeloImagen();
 			listaModeloImagen.add(modeloImagen);
 			vistaApp.addVentanaImagen(modeloImagen);
+		}
+		if(vistaApp.getMenuItemGuardarImagen() == e.getSource()){
+			vistaApp.guardarImagen(listaModeloImagen);
 		}
 	}
 

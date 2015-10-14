@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -36,8 +37,9 @@ public class VistaApp extends JFrame {
 
 		menuArchivo = new JMenu("Archivo");
 		menuItemAbrirImagen = new JMenuItem("Abrir Imagen");
+		menuItemGuardarImagen = new JMenuItem("Guardar Imagen");
 		menuArchivo.add(menuItemAbrirImagen);
-
+		menuArchivo.add(menuItemGuardarImagen);
 		barraMenu.add(menuArchivo);
 
 		setVisible(true);
@@ -57,13 +59,13 @@ public class VistaApp extends JFrame {
 	 * Guardar imagen seleccionada
 	 */
 
-	public void guardarImagen(ArrayList<ModeloImagen> modeloImagen) throws IOException {
+	public void guardarImagen(ArrayList<ModeloImagen> modeloImagen) {
 		for (int i = 0; i < imagenesAbiertas.size(); i++) {
 			if (imagenesAbiertas.get(i).isSelected()) {
 				/*File file = new File("theimage.png");
 				ImageIO.write(modeloImagen.get(i).getImagen(), modeloImagen
 						.get(i).getExtensionIMagen(), file);*/
-				
+				System.out.println("dsdgffgsdg");
 			}
 		}
 	}
