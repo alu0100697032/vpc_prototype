@@ -2,27 +2,35 @@ package vpc_prototype;
 
 import java.awt.Dimension;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 
 public class VistaApp extends JFrame {
 
+	/*
+	 * Atributos 
+	 */
+	private ArrayList<VistaImagen> imagenesAbiertas;
 	private JMenuBar barraMenu;
+	
 	private JMenu menuArchivo;
 	private JMenuItem menuItemAbrirImagen;
 	private JMenuItem menuItemGuardarImagen;
-	private ArrayList<VistaImagen> imagenesAbiertas;
-
+	
+	private JMenu menuEditar;
+	private JMenuItem menuItemCrearCopia;
+	
+	/*
+	 * Constructor
+	 */
+	
 	public VistaApp() {
 
 		/* Propiedades de la ventana */
@@ -34,16 +42,35 @@ public class VistaApp extends JFrame {
 
 		imagenesAbiertas = new ArrayList<VistaImagen>();
 
+		//MenuBar
+		
 		barraMenu = new JMenuBar();
 		setJMenuBar(barraMenu);
 
+		/*
+		 * Pestañas del menu
+		 */
+		
+		//Archivo
+		
 		menuArchivo = new JMenu("Archivo");
+		
 		menuItemAbrirImagen = new JMenuItem("Abrir Imagen");
 		menuItemGuardarImagen = new JMenuItem("Guardar Como...");
 		menuArchivo.add(menuItemAbrirImagen);
 		menuArchivo.add(menuItemGuardarImagen);
+		
 		barraMenu.add(menuArchivo);
 
+		//Editar
+		
+		menuEditar = new JMenu("Editar");
+		
+		menuItemCrearCopia = new JMenuItem("Crear Copia");
+		menuEditar.add(menuItemCrearCopia);
+		
+		barraMenu.add(menuEditar);
+		
 		setVisible(true);
 	}
 
@@ -61,51 +88,33 @@ public class VistaApp extends JFrame {
 	 * Guardar imagen seleccionada
 	 */
 
+	// al cerrar ventanas se eliminan imagenesAbiertas pero no de la lista
+	// modeloImagen con lo cual se pierde la referencia verdadera(probar)
 	public void guardarImagen(ArrayList<ModeloImagen> modeloImagen) {
 		for (int i = 0; i < imagenesAbiertas.size(); i++) {
 			if (imagenesAbiertas.get(i).isSelected()) {
-				/*File file = new File("theimage.png");
-				ImageIO.write(modeloImagen.get(i).getImagen(), modeloImagen
-						.get(i).getExtensionImagen(), file);*/
-
-	             File saveFile = new File("imagen." + modeloImagen
-							.get(i).getExtensionImagen());
-	             JFileChooser chooser = new JFileChooser();
-	             chooser.setSelectedFile(saveFile);
-	             int rval = chooser.showSaveDialog(this);
-	             if (rval == JFileChooser.APPROVE_OPTION) {
-	                 saveFile = chooser.getSelectedFile();
-	                 /* Write the filtered image in the selected format,
-	                  * to the file chosen by the user.
-	                  */
-	                 try {
-	                     ImageIO.write(modeloImagen.get(i).getImagen(), modeloImagen
-	     						.get(i).getExtensionImagen(), saveFile);
-	                 } catch (IOException ex) {
-	                 }
-	             }
-	             
-
+				File saveFile = new File("imagen." + modeloImagen.get(i).getExtensionImagen());
+				JFileChooser chooser = new JFileChooser();
+				chooser.setSelectedFile(saveFile);
+				int rval = chooser.showSaveDialog(this);
+				if (rval == JFileChooser.APPROVE_OPTION) {
+					saveFile = chooser.getSelectedFile();
+					try {
+						ImageIO.write(modeloImagen.get(i).getImagen(), modeloImagen.get(i).getExtensionImagen(),
+								saveFile);
+					} catch (IOException ex) {
+					}
+				}
 			}
 		}
 	}
 
+	/*
+	 * Crear copia
+	 */
+	
+	
 	/* GETTER AND SETTER */
-	public JMenuBar getBarraMenu() {
-		return barraMenu;
-	}
-
-	public void setBarraMenu(JMenuBar barraMenu) {
-		this.barraMenu = barraMenu;
-	}
-
-	public JMenu getMenuArchivo() {
-		return menuArchivo;
-	}
-
-	public void setMenuArchivo(JMenu menuArchivo) {
-		this.menuArchivo = menuArchivo;
-	}
 
 	public JMenuItem getMenuItemAbrirImagen() {
 		return menuItemAbrirImagen;
@@ -121,6 +130,20 @@ public class VistaApp extends JFrame {
 
 	public void setMenuItemGuardarImagen(JMenuItem menuItemGuardarImagen) {
 		this.menuItemGuardarImagen = menuItemGuardarImagen;
+	}
+
+	/**
+	 * @return the menuItemCrearCopia
+	 */
+	public JMenuItem getMenuItemCrearCopia() {
+		return menuItemCrearCopia;
+	}
+
+	/**
+	 * @param menuItemCrearCopia the menuItemCrearCopia to set
+	 */
+	public void setMenuItemCrearCopia(JMenuItem menuItemCrearCopia) {
+		this.menuItemCrearCopia = menuItemCrearCopia;
 	}
 
 }

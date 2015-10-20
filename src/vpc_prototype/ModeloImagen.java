@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Observable;
 
 import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -26,16 +25,14 @@ public class ModeloImagen extends Observable {
 		JFileChooser selectorFichero = new JFileChooser();
 		selectorFichero.setDialogTitle("Seleccione una imagen para abrir:");
 		FileNameExtensionFilter extensionPermitida = new FileNameExtensionFilter(
-				"Archivos de imagen: *.jpg, *.gif, *.png, *.bmp, *.jpeg",
-				"jpg", "bmp", "png", "gif", "jpeg");
+				"Archivos de imagen: *.jpg, *.gif, *.png, *.bmp, *.jpeg", "jpg", "bmp", "png", "gif", "jpeg");
 		selectorFichero.setFileFilter(extensionPermitida);
 		int flag = selectorFichero.showOpenDialog(null);
 		if (flag == JFileChooser.APPROVE_OPTION) {
 			try {
 				File imagenSeleccionada = selectorFichero.getSelectedFile();
 				img = ImageIO.read(imagenSeleccionada);
-				extensionImagen = imagenSeleccionada.getName().substring(
-						imagenSeleccionada.getName().lastIndexOf('.'));
+				extensionImagen = imagenSeleccionada.getName().substring(imagenSeleccionada.getName().lastIndexOf('.'));
 				extensionImagen = extensionImagen.substring(1);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -62,11 +59,10 @@ public class ModeloImagen extends Observable {
 			for (int j = 0; j < imagen.getHeight(); j++) {
 				colorRGB = new Color(imagen.getRGB(i, j));
 				// NTSC format
-				colorGris = ((int) ((colorRGB.getRed() * 0.299)
-						+ (colorRGB.getGreen() * 0.587) + (colorRGB.getBlue() * 0.114)));
+				colorGris = ((int) ((colorRGB.getRed() * 0.299) + (colorRGB.getGreen() * 0.587)
+						+ (colorRGB.getBlue() * 0.114)));
 				histograma.put(colorGris, histograma.get(colorGris) + 1);
-				imagen.setRGB(i, j,
-						new Color(colorGris, colorGris, colorGris).getRGB());
+				imagen.setRGB(i, j, new Color(colorGris, colorGris, colorGris).getRGB());
 			}
 		}
 	}
