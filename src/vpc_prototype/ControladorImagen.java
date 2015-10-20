@@ -13,6 +13,7 @@ public class ControladorImagen implements ActionListener{
 	public ControladorImagen(){
 		vistaApp = new VistaApp();
 		vistaApp.getMenuItemAbrirImagen().addActionListener(this);
+		vistaApp.getMenuItemGuardarImagen().addActionListener(this);
 		listaModeloImagen = new ArrayList<ModeloImagen>();
 	}
 	

@@ -15,7 +15,7 @@ public class ModeloImagen extends Observable {
 
 	private BufferedImage imagen;
 	private HashMap<Integer, Integer> histograma;
-	private String extensionIMagen;
+	private String extensionImagen;
 
 	/*
 	 * Constructor: abre la imagen desde selector de fichero
@@ -34,8 +34,9 @@ public class ModeloImagen extends Observable {
 			try {
 				File imagenSeleccionada = selectorFichero.getSelectedFile();
 				img = ImageIO.read(imagenSeleccionada);
-				imagenSeleccionada.getName().substring(0,
+				extensionImagen = imagenSeleccionada.getName().substring(
 						imagenSeleccionada.getName().lastIndexOf('.'));
+				extensionImagen = extensionImagen.substring(1);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -90,12 +91,12 @@ public class ModeloImagen extends Observable {
 		this.histograma = histograma;
 	}
 
-	public String getExtensionIMagen() {
-		return extensionIMagen;
+	public String getExtensionImagen() {
+		return extensionImagen;
 	}
 
-	public void setExtensionIMagen(String extensionIMagen) {
-		this.extensionIMagen = extensionIMagen;
+	public void setExtensionImagen(String extensionIMagen) {
+		this.extensionImagen = extensionIMagen;
 	}
 
 }

@@ -2,6 +2,7 @@ package vpc_prototype;
 
 import java.awt.Dimension;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -12,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 public class VistaApp extends JFrame {
 
@@ -37,7 +39,7 @@ public class VistaApp extends JFrame {
 
 		menuArchivo = new JMenu("Archivo");
 		menuItemAbrirImagen = new JMenuItem("Abrir Imagen");
-		menuItemGuardarImagen = new JMenuItem("Guardar Imagen");
+		menuItemGuardarImagen = new JMenuItem("Guardar Como...");
 		menuArchivo.add(menuItemAbrirImagen);
 		menuArchivo.add(menuItemGuardarImagen);
 		barraMenu.add(menuArchivo);
@@ -64,8 +66,26 @@ public class VistaApp extends JFrame {
 			if (imagenesAbiertas.get(i).isSelected()) {
 				/*File file = new File("theimage.png");
 				ImageIO.write(modeloImagen.get(i).getImagen(), modeloImagen
-						.get(i).getExtensionIMagen(), file);*/
-				System.out.println("dsdgffgsdg");
+						.get(i).getExtensionImagen(), file);*/
+
+	             File saveFile = new File("imagen." + modeloImagen
+							.get(i).getExtensionImagen());
+	             JFileChooser chooser = new JFileChooser();
+	             chooser.setSelectedFile(saveFile);
+	             int rval = chooser.showSaveDialog(this);
+	             if (rval == JFileChooser.APPROVE_OPTION) {
+	                 saveFile = chooser.getSelectedFile();
+	                 /* Write the filtered image in the selected format,
+	                  * to the file chosen by the user.
+	                  */
+	                 try {
+	                     ImageIO.write(modeloImagen.get(i).getImagen(), modeloImagen
+	     						.get(i).getExtensionImagen(), saveFile);
+	                 } catch (IOException ex) {
+	                 }
+	             }
+	             
+
 			}
 		}
 	}
