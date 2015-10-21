@@ -1,30 +1,30 @@
-package vpc_prototype;
+package Dibujables;
 
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 
-public class VistaImagen extends JInternalFrame {
+public class DibujaImagen extends JInternalFrame {
 
 	private JLabel pintarImagenGris;
 
-	public VistaImagen(BufferedImage imagen) {
+	public DibujaImagen(BufferedImage imagen) {
 		setSize(imagen.getWidth(), imagen.getHeight());
 		setClosable(true);
 		setResizable(true);
 
-		pintarImagenGris = new JLabel();
-		pintarImagenGris.setIcon(new ImageIcon(imagen));
-		add(pintarImagenGris);
+		setPintarImagenGris(new JLabel());
+		getPintarImagenGris().setIcon(new ImageIcon(imagen));
+		add(getPintarImagenGris());
 		setVisible(true);
 	}
 
-	public JLabel getImagenGris() {
+	public JLabel getPintarImagenGris() {
 		return pintarImagenGris;
 	}
 
-	public void setImagenGris(JLabel imagenGris) {
+	public void setPintarImagenGris(JLabel imagenGris) {
 		this.pintarImagenGris = imagenGris;
 	}
 }

@@ -1,8 +1,9 @@
-package vpc_prototype;
+package Clases;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Observable;
 
@@ -10,7 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class ModeloImagen extends Observable {
+public class Imagen extends Observable implements Cloneable {
 
 	private BufferedImage imagen;
 	private HashMap<Integer, Integer> histograma;
@@ -19,20 +20,23 @@ public class ModeloImagen extends Observable {
 	/*
 	 * Constructor: abre la imagen desde selector de fichero
 	 */
-	public ModeloImagen() {
+
+	public Imagen() {
 
 		BufferedImage img = null;
 		JFileChooser selectorFichero = new JFileChooser();
 		selectorFichero.setDialogTitle("Seleccione una imagen para abrir:");
 		FileNameExtensionFilter extensionPermitida = new FileNameExtensionFilter(
-				"Archivos de imagen: *.jpg, *.gif, *.png, *.bmp, *.jpeg", "jpg", "bmp", "png", "gif", "jpeg");
+				"Archivos de imagen: *.jpg, *.gif, *.png, *.bmp, *.jpeg",
+				"jpg", "bmp", "png", "gif", "jpeg");
 		selectorFichero.setFileFilter(extensionPermitida);
 		int flag = selectorFichero.showOpenDialog(null);
 		if (flag == JFileChooser.APPROVE_OPTION) {
 			try {
 				File imagenSeleccionada = selectorFichero.getSelectedFile();
 				img = ImageIO.read(imagenSeleccionada);
-				extensionImagen = imagenSeleccionada.getName().substring(imagenSeleccionada.getName().lastIndexOf('.'));
+				extensionImagen = imagenSeleccionada.getName().substring(
+						imagenSeleccionada.getName().lastIndexOf('.'));
 				extensionImagen = extensionImagen.substring(1);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -59,12 +63,46 @@ public class ModeloImagen extends Observable {
 			for (int j = 0; j < imagen.getHeight(); j++) {
 				colorRGB = new Color(imagen.getRGB(i, j));
 				// NTSC format
-				colorGris = ((int) ((colorRGB.getRed() * 0.299) + (colorRGB.getGreen() * 0.587)
-						+ (colorRGB.getBlue() * 0.114)));
+				colorGris = ((int) ((colorRGB.getRed() * 0.299)
+						+ (colorRGB.getGreen() * 0.587) + (colorRGB.getBlue() * 0.114)));
 				histograma.put(colorGris, histograma.get(colorGris) + 1);
-				imagen.setRGB(i, j, new Color(colorGris, colorGris, colorGris).getRGB());
+				imagen.setRGB(i, j,
+						new Color(colorGris, colorGris, colorGris).getRGB());
 			}
 		}
+	}
+
+	/*
+	 * Guardar imagen
+	 */
+
+	public void guardarImagen() {
+		File saveFile = new File("imagen." + extensionImagen);
+		JFileChooser chooser = new JFileChooser();
+		chooser.setSelectedFile(saveFile);
+		int rval = chooser.showSaveDialog(null);
+		if (rval == JFileChooser.APPROVE_OPTION) {
+			saveFile = chooser.getSelectedFile();
+			try {
+				ImageIO.write(imagen, extensionImagen, saveFile);
+			} catch (IOException ex) {
+			}
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	
+	public Imagen clone() {
+		Imagen imagenClonada = null;
+		try {
+			imagenClonada = (Imagen) super.clone();
+		} catch (CloneNotSupportedException ex) {
+			System.out.println(" no se puede duplicar");
+		}
+		return imagenClonada;
 	}
 
 	/*

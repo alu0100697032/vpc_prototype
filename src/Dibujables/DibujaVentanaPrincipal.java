@@ -1,6 +1,7 @@
-package vpc_prototype;
+package Dibujables;
 
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,12 +13,14 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-public class VistaApp extends JFrame {
+import Clases.Imagen;
+
+public class DibujaVentanaPrincipal extends JFrame {
 
 	/*
 	 * Atributos 
 	 */
-	private ArrayList<VistaImagen> imagenesAbiertas;
+	private ArrayList<DibujaImagen> imagenesAbiertas;
 	private JMenuBar barraMenu;
 	
 	private JMenu menuArchivo;
@@ -31,7 +34,7 @@ public class VistaApp extends JFrame {
 	 * Constructor
 	 */
 	
-	public VistaApp() {
+	public DibujaVentanaPrincipal() {
 
 		/* Propiedades de la ventana */
 		setTitle("Photoshop prototype");
@@ -40,7 +43,7 @@ public class VistaApp extends JFrame {
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		imagenesAbiertas = new ArrayList<VistaImagen>();
+		imagenesAbiertas = new ArrayList<DibujaImagen>();
 
 		//MenuBar
 		
@@ -48,7 +51,7 @@ public class VistaApp extends JFrame {
 		setJMenuBar(barraMenu);
 
 		/*
-		 * Pestañas del menu
+		 * Pestaï¿½as del menu
 		 */
 		
 		//Archivo
@@ -75,40 +78,17 @@ public class VistaApp extends JFrame {
 	}
 
 	/*
-	 * AÃ±adir una nueva ventana con su imagen
+	 * Listeners
 	 */
-
-	public void addVentanaImagen(ModeloImagen modeloImagen) {
-		VistaImagen imagen = new VistaImagen(modeloImagen.getImagen());
-		imagenesAbiertas.add(imagen);
-		add(imagen);
+	
+	public void addAbrirImagenListener (ActionListener a){
+		getMenuItemAbrirImagen().addActionListener(a);
 	}
-
-	/*
-	 * Guardar imagen seleccionada
-	 */
-
-	// al cerrar ventanas se eliminan imagenesAbiertas pero no de la lista
-	// modeloImagen con lo cual se pierde la referencia verdadera(probar)
-	public void guardarImagen(ArrayList<ModeloImagen> modeloImagen) {
-		for (int i = 0; i < imagenesAbiertas.size(); i++) {
-			if (imagenesAbiertas.get(i).isSelected()) {
-				File saveFile = new File("imagen." + modeloImagen.get(i).getExtensionImagen());
-				JFileChooser chooser = new JFileChooser();
-				chooser.setSelectedFile(saveFile);
-				int rval = chooser.showSaveDialog(this);
-				if (rval == JFileChooser.APPROVE_OPTION) {
-					saveFile = chooser.getSelectedFile();
-					try {
-						ImageIO.write(modeloImagen.get(i).getImagen(), modeloImagen.get(i).getExtensionImagen(),
-								saveFile);
-					} catch (IOException ex) {
-					}
-				}
-			}
-		}
+	
+	public void addGuardarImagenListener(ActionListener a){
+		getMenuItemGuardarImagen().addActionListener(a);
 	}
-
+	
 	/*
 	 * Crear copia
 	 */
@@ -144,6 +124,20 @@ public class VistaApp extends JFrame {
 	 */
 	public void setMenuItemCrearCopia(JMenuItem menuItemCrearCopia) {
 		this.menuItemCrearCopia = menuItemCrearCopia;
+	}
+
+	/**
+	 * @return the imagenesAbiertas
+	 */
+	public ArrayList<DibujaImagen> getImagenesAbiertas() {
+		return imagenesAbiertas;
+	}
+
+	/**
+	 * @param imagenesAbiertas the imagenesAbiertas to set
+	 */
+	public void setImagenesAbiertas(ArrayList<DibujaImagen> imagenesAbiertas) {
+		this.imagenesAbiertas = imagenesAbiertas;
 	}
 
 }
