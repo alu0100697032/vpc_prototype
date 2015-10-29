@@ -5,6 +5,7 @@
 * http://www.genbetadev.com/java-j2ee/tratamiento-de-imagenes-i-escala-de-grises
 * http://www.javamexico.org/blogs/jose_manuel/aplicando_mvc_en_java
 * http://www.lawebdelprogramador.com/foros/Java/739281-OBTENER-DATOS-RGB-DE-UNA-IMAGEN.html
+* [ventanas](http://www.chuidiang.com/java/novatos/JFrame_JDialog.php)
 
 ##Especificaciones 
 - Operaciones de punto: rellenar la tabla de transformación una vez y luego realizar la operación. 0-255
