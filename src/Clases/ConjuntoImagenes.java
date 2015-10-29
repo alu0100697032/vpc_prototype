@@ -22,8 +22,9 @@ public class ConjuntoImagenes {
 		getListaImagenes().remove(index);
 	}
 	
-	public void hacerCopiaImagen(int index){
+	public Imagen hacerCopiaImagen(int index){
 		getListaImagenes().add(getListaImagenes().get(index).clone());
+		return getListaImagenes().get(getListaImagenes().size()-1);
 	}
 	
 	public Imagen getImagen(int index){

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -22,6 +23,7 @@ public class DibujaVentanaPrincipal extends JFrame {
 	 */
 	private ArrayList<DibujaImagen> imagenesAbiertas;
 	private JMenuBar barraMenu;
+	private JDesktopPane grupoInternalFrames;
 	
 	private JMenu menuArchivo;
 	private JMenuItem menuItemAbrirImagen;
@@ -74,6 +76,11 @@ public class DibujaVentanaPrincipal extends JFrame {
 		
 		barraMenu.add(menuEditar);
 		
+		//DesktopPane
+		
+		grupoInternalFrames = new JDesktopPane();
+		setContentPane(grupoInternalFrames);
+		
 		setVisible(true);
 	}
 
@@ -89,6 +96,10 @@ public class DibujaVentanaPrincipal extends JFrame {
 		getMenuItemGuardarImagen().addActionListener(a);
 	}
 	
+	public void addHcerCopiaListener(ActionListener a){
+		getMenuItemCrearCopia().addActionListener(a);
+		
+	}
 	/*
 	 * Crear copia
 	 */
@@ -138,6 +149,20 @@ public class DibujaVentanaPrincipal extends JFrame {
 	 */
 	public void setImagenesAbiertas(ArrayList<DibujaImagen> imagenesAbiertas) {
 		this.imagenesAbiertas = imagenesAbiertas;
+	}
+
+	/**
+	 * @return the grupoInternalFrames
+	 */
+	public JDesktopPane getGrupoInternalFrames() {
+		return grupoInternalFrames;
+	}
+
+	/**
+	 * @param grupoInternalFrames the grupoInternalFrames to set
+	 */
+	public void setGrupoInternalFrames(JDesktopPane grupoInternalFrames) {
+		this.grupoInternalFrames = grupoInternalFrames;
 	}
 
 }

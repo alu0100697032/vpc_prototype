@@ -15,11 +15,11 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 		super();
 		addAbrirImagenListener(new AbrirImagenListener());
 		addGuardarImagenListener(new GuardarImagenListener());
-		conjuntoImagenes= new ConjuntoImagenes();
+		addHcerCopiaListener(new HacerCopiaListener());
+		conjuntoImagenes = new ConjuntoImagenes();
 	}
 
-
-	class AbrirImagenListener implements ActionListener{
+	class AbrirImagenListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -28,12 +28,12 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 			getConjuntoImagenes().addImagen(imagen);
 			DibujaImagen dibujaImagen = new DibujaImagen(imagen.getImagen());
 			getImagenesAbiertas().add(dibujaImagen);
-			add(dibujaImagen);
+			getGrupoInternalFrames().add(dibujaImagen);
 		}
-		
+
 	}
-	
-	class GuardarImagenListener implements ActionListener{
+
+	class GuardarImagenListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -44,7 +44,25 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 				}
 			}
 		}
-		
+
+	}
+
+	class HacerCopiaListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
+				if (getImagenesAbiertas().get(i).isSelected()) {
+					DibujaImagen dibujaImagen = new DibujaImagen(
+							getConjuntoImagenes().hacerCopiaImagen(i)
+									.getImagen());
+					getImagenesAbiertas().add(dibujaImagen);
+					getGrupoInternalFrames().add(dibujaImagen);
+				}
+			}
+		}
+
 	}
 
 	/**
@@ -55,7 +73,8 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 	}
 
 	/**
-	 * @param conjuntoImagenes the conjuntoImagenes to set
+	 * @param conjuntoImagenes
+	 *            the conjuntoImagenes to set
 	 */
 	public void setConjuntoImagenes(ConjuntoImagenes conjuntoImagenes) {
 		this.conjuntoImagenes = conjuntoImagenes;
