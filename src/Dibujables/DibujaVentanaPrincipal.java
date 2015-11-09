@@ -1,5 +1,6 @@
 package Dibujables;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -12,9 +13,10 @@ public class DibujaVentanaPrincipal extends JFrame {
 	/*
 	 * Atributos 
 	 */
-	private ArrayList<DibujaImagen> imagenesAbiertas;
+	private ArrayList<DibujaInternalFrameImagen> imagenesAbiertas;
 	private DibujaBarraMenu barraMenu;
 	private JDesktopPane grupoInternalFrames;
+	private DibujaPanelEstado panelEstado;
 	
 	
 	/*
@@ -33,7 +35,7 @@ public class DibujaVentanaPrincipal extends JFrame {
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		imagenesAbiertas = new ArrayList<DibujaImagen>();
+		imagenesAbiertas = new ArrayList<DibujaInternalFrameImagen>();
 
 		//MenuBar
 		
@@ -45,6 +47,9 @@ public class DibujaVentanaPrincipal extends JFrame {
 		grupoInternalFrames = new JDesktopPane();
 		setContentPane(grupoInternalFrames);
 		
+		//Panel de estado
+		panelEstado = new DibujaPanelEstado(getWidth());
+		add(panelEstado);
 		setVisible(true);
 	}
 
@@ -72,14 +77,14 @@ public class DibujaVentanaPrincipal extends JFrame {
 	/**
 	 * @return the imagenesAbiertas
 	 */
-	public ArrayList<DibujaImagen> getImagenesAbiertas() {
+	public ArrayList<DibujaInternalFrameImagen> getImagenesAbiertas() {
 		return imagenesAbiertas;
 	}
 
 	/**
 	 * @param imagenesAbiertas the imagenesAbiertas to set
 	 */
-	public void setImagenesAbiertas(ArrayList<DibujaImagen> imagenesAbiertas) {
+	public void setImagenesAbiertas(ArrayList<DibujaInternalFrameImagen> imagenesAbiertas) {
 		this.imagenesAbiertas = imagenesAbiertas;
 	}
 
@@ -95,6 +100,20 @@ public class DibujaVentanaPrincipal extends JFrame {
 	 */
 	public void setGrupoInternalFrames(JDesktopPane grupoInternalFrames) {
 		this.grupoInternalFrames = grupoInternalFrames;
+	}
+
+	/**
+	 * @return the panelEstado
+	 */
+	public DibujaPanelEstado getPanelEstado() {
+		return panelEstado;
+	}
+
+	/**
+	 * @param panelEstado the panelEstado to set
+	 */
+	public void setPanelEstado(DibujaPanelEstado panelEstado) {
+		this.panelEstado = panelEstado;
 	}
 
 }
