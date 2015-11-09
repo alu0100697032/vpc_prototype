@@ -2,19 +2,10 @@ package Dibujables;
 
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.JDesktopPane;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-
-import Clases.Imagen;
 
 public class DibujaVentanaPrincipal extends JFrame {
 
@@ -22,15 +13,9 @@ public class DibujaVentanaPrincipal extends JFrame {
 	 * Atributos 
 	 */
 	private ArrayList<DibujaImagen> imagenesAbiertas;
-	private JMenuBar barraMenu;
+	private DibujaBarraMenu barraMenu;
 	private JDesktopPane grupoInternalFrames;
 	
-	private JMenu menuArchivo;
-	private JMenuItem menuItemAbrirImagen;
-	private JMenuItem menuItemGuardarImagen;
-	
-	private JMenu menuEditar;
-	private JMenuItem menuItemCrearCopia;
 	
 	/*
 	 * Constructor
@@ -38,7 +23,10 @@ public class DibujaVentanaPrincipal extends JFrame {
 	
 	public DibujaVentanaPrincipal() {
 
-		/* Propiedades de la ventana */
+		/* 
+		 * Propiedades de la ventana
+		 */
+		
 		setTitle("Photoshop prototype");
 		setLayout(null);
 		setMinimumSize(new Dimension(600, 400));
@@ -49,32 +37,8 @@ public class DibujaVentanaPrincipal extends JFrame {
 
 		//MenuBar
 		
-		barraMenu = new JMenuBar();
+		barraMenu = new DibujaBarraMenu();
 		setJMenuBar(barraMenu);
-
-		/*
-		 * Pesta�as del menu
-		 */
-		
-		//Archivo
-		
-		menuArchivo = new JMenu("Archivo");
-		
-		menuItemAbrirImagen = new JMenuItem("Abrir Imagen");
-		menuItemGuardarImagen = new JMenuItem("Guardar Como...");
-		menuArchivo.add(menuItemAbrirImagen);
-		menuArchivo.add(menuItemGuardarImagen);
-		
-		barraMenu.add(menuArchivo);
-
-		//Editar
-		
-		menuEditar = new JMenu("Editar");
-		
-		menuItemCrearCopia = new JMenuItem("Crear Copia");
-		menuEditar.add(menuItemCrearCopia);
-		
-		barraMenu.add(menuEditar);
 		
 		//DesktopPane
 		
@@ -89,53 +53,21 @@ public class DibujaVentanaPrincipal extends JFrame {
 	 */
 	
 	public void addAbrirImagenListener (ActionListener a){
-		getMenuItemAbrirImagen().addActionListener(a);
+		barraMenu.getMenuItemAbrirImagen().addActionListener(a);
 	}
 	
 	public void addGuardarImagenListener(ActionListener a){
-		getMenuItemGuardarImagen().addActionListener(a);
+		barraMenu.getMenuItemGuardarImagen().addActionListener(a);
 	}
 	
-	public void addHcerCopiaListener(ActionListener a){
-		getMenuItemCrearCopia().addActionListener(a);
+	public void addHacerCopiaListener(ActionListener a){
+		barraMenu.getMenuItemCrearCopia().addActionListener(a);
 		
 	}
+	
 	/*
-	 * Crear copia
+	 * GETTER AND SETTER
 	 */
-	
-	
-	/* GETTER AND SETTER */
-
-	public JMenuItem getMenuItemAbrirImagen() {
-		return menuItemAbrirImagen;
-	}
-
-	public void setMenuItemAbrirImagen(JMenuItem menuItemAbrirImagen) {
-		this.menuItemAbrirImagen = menuItemAbrirImagen;
-	}
-
-	public JMenuItem getMenuItemGuardarImagen() {
-		return menuItemGuardarImagen;
-	}
-
-	public void setMenuItemGuardarImagen(JMenuItem menuItemGuardarImagen) {
-		this.menuItemGuardarImagen = menuItemGuardarImagen;
-	}
-
-	/**
-	 * @return the menuItemCrearCopia
-	 */
-	public JMenuItem getMenuItemCrearCopia() {
-		return menuItemCrearCopia;
-	}
-
-	/**
-	 * @param menuItemCrearCopia the menuItemCrearCopia to set
-	 */
-	public void setMenuItemCrearCopia(JMenuItem menuItemCrearCopia) {
-		this.menuItemCrearCopia = menuItemCrearCopia;
-	}
 
 	/**
 	 * @return the imagenesAbiertas

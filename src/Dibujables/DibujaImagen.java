@@ -20,11 +20,19 @@ public class DibujaImagen extends JInternalFrame {
 		setVisible(true);
 	}
 
+	/**
+	 * @return the pintarImagenGris
+	 */
 	public JLabel getPintarImagenGris() {
 		return pintarImagenGris;
 	}
 
-	public void setPintarImagenGris(JLabel imagenGris) {
-		this.pintarImagenGris = imagenGris;
+	/**
+	 * @param pintarImagenGris the pintarImagenGris to set
+	 */
+	public void setPintarImagenGris(JLabel pintarImagenGris) {
+		this.pintarImagenGris = pintarImagenGris;
 	}
+
+
 }

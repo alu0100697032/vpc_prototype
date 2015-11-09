@@ -2,7 +2,6 @@ package Dibujables;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import Clases.ConjuntoImagenes;
 import Clases.Imagen;
@@ -15,7 +14,7 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 		super();
 		addAbrirImagenListener(new AbrirImagenListener());
 		addGuardarImagenListener(new GuardarImagenListener());
-		addHcerCopiaListener(new HacerCopiaListener());
+		addHacerCopiaListener(new HacerCopiaListener());
 		conjuntoImagenes = new ConjuntoImagenes();
 	}
 
