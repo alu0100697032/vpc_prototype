@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
 
@@ -16,6 +17,7 @@ public class Imagen extends Observable implements Cloneable {
 	private BufferedImage imagen;
 	private HashMap<Integer, Integer> histograma;
 	private String extensionImagen;
+	private ArrayList<ArrayList<Integer>> matrizPixelesGris;
 
 	/*
 	 * Constructor: abre la imagen desde selector de fichero
@@ -58,13 +60,17 @@ public class Imagen extends Observable implements Cloneable {
 	public void pasarImagenGris() {
 		Color colorRGB;
 		int colorGris;
-
+		matrizPixelesGris = new ArrayList<ArrayList<Integer>>();
 		for (int i = 0; i < imagen.getWidth(); i++) {
+			matrizPixelesGris.add(new ArrayList<Integer>());
 			for (int j = 0; j < imagen.getHeight(); j++) {
 				colorRGB = new Color(imagen.getRGB(i, j));
 				// NTSC format
 				colorGris = ((int) ((colorRGB.getRed() * 0.299)
 						+ (colorRGB.getGreen() * 0.587) + (colorRGB.getBlue() * 0.114)));
+				//añadir gris a la matriz
+				matrizPixelesGris.get(i).add(colorGris);
+				//formar el histograma
 				histograma.put(colorGris, histograma.get(colorGris) + 1);
 				imagen.setRGB(i, j,
 						new Color(colorGris, colorGris, colorGris).getRGB());
@@ -105,6 +111,9 @@ public class Imagen extends Observable implements Cloneable {
 		return imagenClonada;
 	}
 
+	public int getNivelGrisPixel(int x, int y){
+		return matrizPixelesGris.get(x).get(y);
+	}
 	/*
 	 * GETTER Y SETTER
 	 */
@@ -131,6 +140,20 @@ public class Imagen extends Observable implements Cloneable {
 
 	public void setExtensionImagen(String extensionIMagen) {
 		this.extensionImagen = extensionIMagen;
+	}
+
+	/**
+	 * @return the matrizPixelesGris
+	 */
+	public ArrayList<ArrayList<Integer>> getMatrizPixelesGris() {
+		return matrizPixelesGris;
+	}
+
+	/**
+	 * @param matrizPixelesGris the matrizPixelesGris to set
+	 */
+	public void setMatrizPixelesGris(ArrayList<ArrayList<Integer>> matrizPixelesGris) {
+		this.matrizPixelesGris = matrizPixelesGris;
 	}
 
 }

@@ -1,12 +1,13 @@
-package Dibujables;
+package VentanaPrincipal;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+
+import Dibujables.DibujaInternalFrameImagen;
 
 public class DibujaVentanaPrincipal extends JFrame {
 

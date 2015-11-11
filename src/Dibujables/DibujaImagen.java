@@ -3,9 +3,12 @@ package Dibujables;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.awt.image.BufferedImage;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
+import VentanaPrincipal.DibujaPanelEstado;
+import Clases.Imagen;
 
 public class DibujaImagen extends JLabel implements MouseMotionListener {
 
@@ -13,17 +16,18 @@ public class DibujaImagen extends JLabel implements MouseMotionListener {
 	 * Atributos
 	 */
 	private DibujaPanelEstado panelEstado;
-	private BufferedImage imagen;
+	private Imagen imagen;
 
 	/*
 	 * Constructor
 	 */
-	public DibujaImagen(BufferedImage img, DibujaPanelEstado pEstado) {
+	public DibujaImagen(Imagen img, DibujaPanelEstado pEstado) {
 
 		setPanelEstado(pEstado);
+		
 		setImagen(img);
-		setSize(imagen.getWidth(), imagen.getHeight());
-		setIcon(new ImageIcon(imagen));
+		setSize(imagen.getImagen().getWidth(), imagen.getImagen().getHeight());
+		setIcon(new ImageIcon(imagen.getImagen()));
 		addMouseMotionListener(this);
 
 		setVisible(true);
@@ -38,9 +42,16 @@ public class DibujaImagen extends JLabel implements MouseMotionListener {
 	@Override
 	public void mouseMoved(MouseEvent evento) {
 		// TODO Auto-generated method stub
-		Color colorGris = new Color(imagen.getRGB(evento.getX(), evento.getY()));
-		panelEstado.getCoordenadasColor().setText("X = " + evento.getX() + " Y = " + evento.getY() + " Nivel de gris = "
-				+ colorGris.getBlue());
+		Color colorGris = new Color(imagen.getImagen().getRGB(evento.getX(),
+				evento.getY()));
+		panelEstado.getCoordenadasColor()
+				.setText(
+						"X = "
+								+ evento.getX()
+								+ " Y = "
+								+ evento.getY()
+								+ " Nivel de gris = "
+								+ imagen.getNivelGrisPixel(evento.getX(), evento.getY()));
 	}
 
 	/**
@@ -61,7 +72,7 @@ public class DibujaImagen extends JLabel implements MouseMotionListener {
 	/**
 	 * @return the imagen
 	 */
-	public BufferedImage getImagen() {
+	public Imagen getImagen() {
 		return imagen;
 	}
 
@@ -69,7 +80,7 @@ public class DibujaImagen extends JLabel implements MouseMotionListener {
 	 * @param imagen
 	 *            the imagen to set
 	 */
-	public void setImagen(BufferedImage imagen) {
+	public void setImagen(Imagen imagen) {
 		this.imagen = imagen;
 	}
 }

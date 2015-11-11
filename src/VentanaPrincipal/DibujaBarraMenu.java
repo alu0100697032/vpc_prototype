@@ -1,4 +1,4 @@
-package Dibujables;
+package VentanaPrincipal;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;

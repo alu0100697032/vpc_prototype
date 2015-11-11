@@ -1,6 +1,7 @@
 package Dibujables;
 
 import javax.swing.JInternalFrame;
+import javax.swing.JPanel;
 
 public class DibujaInternalFrameImagen extends JInternalFrame{
 	/*
@@ -15,10 +16,15 @@ public class DibujaInternalFrameImagen extends JInternalFrame{
 		
 		setDibujaImagen(img);
 		setSize(dibujaImagen.getWidth(), dibujaImagen.getHeight());
+		
+		JPanel contentPane = new JPanel();
+		contentPane.setSize(img.getWidth(), img.getHeight());
+		setContentPane(new JPanel());
+		
 		add(dibujaImagen);
 		
 		setClosable(true);
-		setResizable(false);
+		setResizable(true);
 		setVisible(true);
 	}
 	/**

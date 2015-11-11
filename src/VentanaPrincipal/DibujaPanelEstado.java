@@ -1,4 +1,4 @@
-package Dibujables;
+package VentanaPrincipal;
 
 import java.awt.Dimension;
 

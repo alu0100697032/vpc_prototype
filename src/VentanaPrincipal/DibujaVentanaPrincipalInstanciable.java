@@ -1,11 +1,14 @@
-package Dibujables;
+package VentanaPrincipal;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import Clases.ConjuntoImagenes;
 import Clases.Imagen;
+import Dibujables.DibujaImagen;
+import Dibujables.DibujaInternalFrameImagen;
 
-public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal{
+public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 
 	private ConjuntoImagenes conjuntoImagenes;
 
@@ -24,7 +27,8 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal{
 			// TODO Auto-generated method stub
 			Imagen imagen = new Imagen();
 			getConjuntoImagenes().addImagen(imagen);
-			DibujaInternalFrameImagen dibujaInternalFrameImagen = new DibujaInternalFrameImagen(new DibujaImagen(imagen.getImagen(), getPanelEstado()));
+			DibujaInternalFrameImagen dibujaInternalFrameImagen = new DibujaInternalFrameImagen(
+					new DibujaImagen(imagen, getPanelEstado()));
 			getImagenesAbiertas().add(dibujaInternalFrameImagen);
 			getGrupoInternalFrames().add(dibujaInternalFrameImagen);
 		}
@@ -52,9 +56,10 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal{
 			// TODO Auto-generated method stub
 			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
 				if (getImagenesAbiertas().get(i).isSelected()) {
-					DibujaInternalFrameImagen dibujaInternalFrameImagen = new DibujaInternalFrameImagen(new DibujaImagen(
-							getConjuntoImagenes().hacerCopiaImagen(i)
-									.getImagen(), getPanelEstado()));
+					DibujaInternalFrameImagen dibujaInternalFrameImagen = new DibujaInternalFrameImagen(
+							new DibujaImagen(getConjuntoImagenes()
+									.hacerCopiaImagen(i),
+									getPanelEstado()));
 					getImagenesAbiertas().add(dibujaInternalFrameImagen);
 					getGrupoInternalFrames().add(dibujaInternalFrameImagen);
 				}
@@ -76,5 +81,5 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal{
 	 */
 	public void setConjuntoImagenes(ConjuntoImagenes conjuntoImagenes) {
 		this.conjuntoImagenes = conjuntoImagenes;
-	}	
+	}
 }

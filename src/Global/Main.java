@@ -1,6 +1,6 @@
 package Global;
 
-import Dibujables.DibujaVentanaPrincipalInstanciable;
+import VentanaPrincipal.DibujaVentanaPrincipalInstanciable;
 
 public class Main {
 
