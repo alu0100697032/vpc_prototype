@@ -5,7 +5,9 @@ import java.awt.event.ActionListener;
 
 import Clases.ConjuntoImagenes;
 import Clases.Imagen;
+import Dibujables.DibujaHistograma;
 import Dibujables.DibujaImagen;
+import Dibujables.DibujaInternalFrameHistograma;
 import Dibujables.DibujaInternalFrameImagen;
 
 public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
@@ -17,6 +19,7 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 		addAbrirImagenListener(new AbrirImagenListener());
 		addGuardarImagenListener(new GuardarImagenListener());
 		addHacerCopiaListener(new HacerCopiaListener());
+		addVerHistogramaListener(new VerHistogramaListener());
 		conjuntoImagenes = new ConjuntoImagenes();
 	}
 
@@ -58,10 +61,26 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 				if (getImagenesAbiertas().get(i).isSelected()) {
 					DibujaInternalFrameImagen dibujaInternalFrameImagen = new DibujaInternalFrameImagen(
 							new DibujaImagen(getConjuntoImagenes()
-									.hacerCopiaImagen(i),
-									getPanelEstado()));
+									.hacerCopiaImagen(i), getPanelEstado()));
 					getImagenesAbiertas().add(dibujaInternalFrameImagen);
 					getGrupoInternalFrames().add(dibujaInternalFrameImagen);
+				}
+			}
+		}
+
+	}
+
+	class VerHistogramaListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
+				if (getImagenesAbiertas().get(i).isSelected()) {
+					DibujaInternalFrameHistograma internalFrameHistograma = new DibujaInternalFrameHistograma(
+							new DibujaHistograma(getConjuntoImagenes()
+									.getHistograma(i)));
+					getGrupoInternalFrames().add(internalFrameHistograma);
 				}
 			}
 		}

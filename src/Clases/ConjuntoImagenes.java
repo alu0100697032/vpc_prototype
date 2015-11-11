@@ -1,6 +1,7 @@
 package Clases;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ConjuntoImagenes {
 
@@ -31,6 +32,9 @@ public class ConjuntoImagenes {
 		return getListaImagenes().get(index);
 	}
 	
+	public HashMap<Integer, Integer> getHistograma(int index){
+		return getListaImagenes().get(index).getHistograma();
+	}
 	/**
 	 * @return the listaImagenes
 	 */

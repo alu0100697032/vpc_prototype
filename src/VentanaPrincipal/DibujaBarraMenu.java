@@ -17,6 +17,9 @@ public class DibujaBarraMenu extends JMenuBar{
 	private JMenu menuEditar;
 	private JMenuItem menuItemCrearCopia;
 	
+	private JMenu menuVer;
+	private JMenuItem menuItemVerHistograma;
+	
 	/*
 	 * Constructor
 	 */
@@ -42,6 +45,15 @@ public class DibujaBarraMenu extends JMenuBar{
 		menuEditar.add(menuItemCrearCopia);
 		
 		add(menuEditar);
+		
+		//Ver
+		
+		menuVer = new JMenu("Ver");
+		
+		menuItemVerHistograma = new JMenuItem("Ver Histograma");
+		menuVer.add(menuItemVerHistograma);
+		
+		add(menuVer);
 	}
 	
 	/*
@@ -107,5 +119,33 @@ public class DibujaBarraMenu extends JMenuBar{
 	 */
 	public void setMenuEditar(JMenu menuEditar) {
 		this.menuEditar = menuEditar;
+	}
+
+	/**
+	 * @return the menuVer
+	 */
+	public JMenu getMenuVer() {
+		return menuVer;
+	}
+
+	/**
+	 * @param menuVer the menuVer to set
+	 */
+	public void setMenuVer(JMenu menuVer) {
+		this.menuVer = menuVer;
+	}
+
+	/**
+	 * @return the menuVerHistograma
+	 */
+	public JMenuItem getMenuItemVerHistograma() {
+		return menuItemVerHistograma;
+	}
+
+	/**
+	 * @param menuVerHistograma the menuVerHistograma to set
+	 */
+	public void setMenuVerHistograma(JMenuItem menuItemVerHistograma) {
+		this.menuItemVerHistograma = menuItemVerHistograma;
 	}
 }

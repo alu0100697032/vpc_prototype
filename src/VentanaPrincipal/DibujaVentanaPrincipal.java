@@ -68,9 +68,11 @@ public class DibujaVentanaPrincipal extends JFrame {
 	
 	public void addHacerCopiaListener(ActionListener a){
 		barraMenu.getMenuItemCrearCopia().addActionListener(a);
-		
 	}
 	
+	public void addVerHistogramaListener(ActionListener a){
+		barraMenu.getMenuItemVerHistograma().addActionListener(a);
+	}
 	/*
 	 * GETTER AND SETTER
 	 */
