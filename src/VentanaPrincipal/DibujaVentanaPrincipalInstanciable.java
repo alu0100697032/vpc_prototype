@@ -3,11 +3,14 @@ package VentanaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import alertas.InformacionImagen;
 import Clases.ConjuntoImagenes;
 import Clases.Imagen;
-import Dibujables.DibujaHistograma;
+import Dibujables.DibujaHistogramaAbsoluto;
+import Dibujables.DibujaHistogramaAcumulado;
 import Dibujables.DibujaImagen;
-import Dibujables.DibujaInternalFrameHistograma;
+import Dibujables.DibujaInternalFrameHistogramaAbsoluto;
+import Dibujables.DibujaInternalFrameHistogramaAcumulado;
 import Dibujables.DibujaInternalFrameImagen;
 
 public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
@@ -19,7 +22,9 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 		addAbrirImagenListener(new AbrirImagenListener());
 		addGuardarImagenListener(new GuardarImagenListener());
 		addHacerCopiaListener(new HacerCopiaListener());
-		addVerHistogramaListener(new VerHistogramaListener());
+		addVerHistogramaAbsolutoListener(new VerHistogramaAbsolutoListener());
+		addVerHistogramaAcumuladoListener(new VerHistogramaAcumuladoListener());
+		addVerInformacionImagenListener(new VerInformacionImagenListener());
 		conjuntoImagenes = new ConjuntoImagenes();
 	}
 
@@ -70,17 +75,49 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 
 	}
 
-	class VerHistogramaListener implements ActionListener {
+	class VerHistogramaAbsolutoListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
 				if (getImagenesAbiertas().get(i).isSelected()) {
-					DibujaInternalFrameHistograma internalFrameHistograma = new DibujaInternalFrameHistograma(
-							new DibujaHistograma(getConjuntoImagenes()
-									.getHistograma(i)));
+					DibujaInternalFrameHistogramaAbsoluto internalFrameHistograma = new DibujaInternalFrameHistogramaAbsoluto(
+							new DibujaHistogramaAbsoluto(getConjuntoImagenes()
+									.getHistogramaAbsoluto(i)));
 					getGrupoInternalFrames().add(internalFrameHistograma);
+				}
+			}
+		}
+
+	}
+
+	class VerHistogramaAcumuladoListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
+				if (getImagenesAbiertas().get(i).isSelected()) {
+					DibujaInternalFrameHistogramaAcumulado internalFrameHistograma = new DibujaInternalFrameHistogramaAcumulado(
+							new DibujaHistogramaAcumulado(getConjuntoImagenes()
+									.getHistogramaAcumulado(i)));
+					getGrupoInternalFrames().add(internalFrameHistograma);
+				}
+			}
+		}
+
+	}
+
+	class VerInformacionImagenListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
+				if (getImagenesAbiertas().get(i).isSelected()) {
+					InformacionImagen informacion = new InformacionImagen(
+							getConjuntoImagenes().getImagen(i));
 				}
 			}
 		}

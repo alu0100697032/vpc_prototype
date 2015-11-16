@@ -32,8 +32,28 @@ public class ConjuntoImagenes {
 		return getListaImagenes().get(index);
 	}
 	
-	public HashMap<Integer, Integer> getHistograma(int index){
-		return getListaImagenes().get(index).getHistograma();
+	public HashMap<Integer, Integer> getHistogramaAbsoluto(int index){
+		return getListaImagenes().get(index).getHistogramaAbsoluto();
+	}
+	
+	public HashMap<Integer, Integer> getHistogramaAcumulado(int index){
+		return getListaImagenes().get(index).getHistogramaAcumulado();
+	}
+	
+	public int getRangoMaximo(int index){
+		return getListaImagenes().get(index).getRangoMaximo();
+	}
+	
+	public int getRangoMinimo(int index){
+		return getListaImagenes().get(index).getRangoMinimo();
+	}
+	
+	public int getBrillo(int index){
+		return getListaImagenes().get(index).getBrillo();
+	}
+	
+	public double getContraste(int index){
+		return getListaImagenes().get(index).getContraste();
 	}
 	/**
 	 * @return the listaImagenes

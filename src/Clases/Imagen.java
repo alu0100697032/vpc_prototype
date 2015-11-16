@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
+import java.util.Map.Entry;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
@@ -15,9 +16,16 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class Imagen extends Observable implements Cloneable {
 
 	private BufferedImage imagen;
-	private HashMap<Integer, Integer> histograma;
-	private String extensionImagen;
 	private ArrayList<ArrayList<Integer>> matrizPixelesGris;
+
+	private HashMap<Integer, Integer> histogramaAbsoluto;
+	private HashMap<Integer, Integer> histogramaAcumulado;
+	private String extensionImagen;
+	private int rangoMinimo;
+	private int rangoMaximo;
+	private int brillo;
+	private double contraste;
+	private int entropia;
 
 	/*
 	 * Constructor: abre la imagen desde selector de fichero
@@ -47,9 +55,10 @@ public class Imagen extends Observable implements Cloneable {
 		}
 		setImagen(img);
 		// inicializa el histograma
-		histograma = new HashMap<Integer, Integer>();
+		histogramaAcumulado = new HashMap<Integer, Integer>();
+		histogramaAbsoluto = new HashMap<Integer, Integer>();
 		for (int i = 0; i < 256; i++)
-			histograma.put(i, 0);
+			histogramaAbsoluto.put(i, 0);
 		pasarImagenGris();
 	}
 
@@ -68,14 +77,74 @@ public class Imagen extends Observable implements Cloneable {
 				// NTSC format
 				colorGris = ((int) ((colorRGB.getRed() * 0.299)
 						+ (colorRGB.getGreen() * 0.587) + (colorRGB.getBlue() * 0.114)));
-				//añadir gris a la matriz
+				// añadir gris a la matriz
 				matrizPixelesGris.get(i).add(colorGris);
-				//formar el histograma
-				histograma.put(colorGris, histograma.get(colorGris) + 1);
+				// formar el histograma
+				histogramaAbsoluto.put(colorGris,
+						histogramaAbsoluto.get(colorGris) + 1);
 				imagen.setRGB(i, j,
 						new Color(colorGris, colorGris, colorGris).getRGB());
 			}
 		}
+		obtenerHisogramaAcumulado();
+		obtenerRango();
+		obtenerBrillo();
+		obtenerContraste();
+	}
+
+	/*
+	 * Obtener histograma acumulado
+	 */
+	private void obtenerHisogramaAcumulado() {
+		int pixelesAcumulados = 0;
+		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
+			pixelesAcumulados = pixelesAcumulados + entry.getValue();
+			histogramaAcumulado.put(entry.getKey(), pixelesAcumulados);
+		}
+	}
+
+	/*
+	 * Obtener rango
+	 */
+	private void obtenerRango() {
+		setRangoMaximo(0);
+		setRangoMinimo(255);
+		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
+			if (entry.getKey() > rangoMaximo)
+				rangoMaximo = entry.getKey();
+			if (entry.getKey() < rangoMinimo)
+				rangoMinimo = entry.getKey();
+		}
+	}
+
+	/*
+	 * Obtener brillo
+	 */
+	private void obtenerBrillo() {
+		int sumatorioValores = 0;
+		int numeroPixleles = 0;
+		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
+			numeroPixleles = numeroPixleles + entry.getValue();
+			sumatorioValores = sumatorioValores + entry.getKey()
+					* entry.getValue();
+		}
+		brillo = sumatorioValores / numeroPixleles;
+	}
+
+	/*
+	 * Obtener contraste
+	 */
+	private void obtenerContraste() {
+		int sumatorioValores = 0;
+		int numeroPixleles = 0;
+		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
+			numeroPixleles = numeroPixleles + entry.getValue();
+			sumatorioValores = sumatorioValores
+					+ (int) Math.pow(entry.getKey(), 2) * entry.getValue();
+		}
+		contraste = (int) Math
+				.sqrt(((sumatorioValores / numeroPixleles) - (int) Math.pow(
+						brillo, 2)));
 	}
 
 	/*
@@ -97,10 +166,20 @@ public class Imagen extends Observable implements Cloneable {
 	}
 
 	/*
+	 * Informacion de la imagen
+	 */
+	public String informacionImagen() {
+		String informacion = "Rango: " + rangoMinimo + " - " + rangoMaximo
+				+ " Brillo: " + brillo + " Contraste: " + contraste;
+		return informacion;
+	}
+
+	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#clone()
 	 */
-	
+
 	public Imagen clone() {
 		Imagen imagenClonada = null;
 		try {
@@ -111,9 +190,10 @@ public class Imagen extends Observable implements Cloneable {
 		return imagenClonada;
 	}
 
-	public int getNivelGrisPixel(int x, int y){
+	public int getNivelGrisPixel(int x, int y) {
 		return matrizPixelesGris.get(x).get(y);
 	}
+
 	/*
 	 * GETTER Y SETTER
 	 */
@@ -126,12 +206,12 @@ public class Imagen extends Observable implements Cloneable {
 		this.imagen = imagen;
 	}
 
-	public HashMap<Integer, Integer> getHistograma() {
-		return histograma;
+	public HashMap<Integer, Integer> getHistogramaAbsoluto() {
+		return histogramaAbsoluto;
 	}
 
-	public void setHistograma(HashMap<Integer, Integer> histograma) {
-		this.histograma = histograma;
+	public void setHistogramaAbsoluto(HashMap<Integer, Integer> histograma) {
+		this.histogramaAbsoluto = histograma;
 	}
 
 	public String getExtensionImagen() {
@@ -150,10 +230,103 @@ public class Imagen extends Observable implements Cloneable {
 	}
 
 	/**
-	 * @param matrizPixelesGris the matrizPixelesGris to set
+	 * @param matrizPixelesGris
+	 *            the matrizPixelesGris to set
 	 */
-	public void setMatrizPixelesGris(ArrayList<ArrayList<Integer>> matrizPixelesGris) {
+	public void setMatrizPixelesGris(
+			ArrayList<ArrayList<Integer>> matrizPixelesGris) {
 		this.matrizPixelesGris = matrizPixelesGris;
+	}
+
+	/**
+	 * @return the histogramaAcumulado
+	 */
+	public HashMap<Integer, Integer> getHistogramaAcumulado() {
+		return histogramaAcumulado;
+	}
+
+	/**
+	 * @param histogramaAcumulado
+	 *            the histogramaAcumulado to set
+	 */
+	public void setHistogramaAcumulado(
+			HashMap<Integer, Integer> histogramaAcumulado) {
+		this.histogramaAcumulado = histogramaAcumulado;
+	}
+
+	/**
+	 * @return the rangoMinimo
+	 */
+	public int getRangoMinimo() {
+		return rangoMinimo;
+	}
+
+	/**
+	 * @param rangoMinimo
+	 *            the rangoMinimo to set
+	 */
+	public void setRangoMinimo(int rangoMinimo) {
+		this.rangoMinimo = rangoMinimo;
+	}
+
+	/**
+	 * @return the rangoMaximo
+	 */
+	public int getRangoMaximo() {
+		return rangoMaximo;
+	}
+
+	/**
+	 * @param rangoMaximo
+	 *            the rangoMaximo to set
+	 */
+	public void setRangoMaximo(int rangoMaximo) {
+		this.rangoMaximo = rangoMaximo;
+	}
+
+	/**
+	 * @return the brilloImagen
+	 */
+	public int getBrillo() {
+		return brillo;
+	}
+
+	/**
+	 * @param brilloImagen
+	 *            the brilloImagen to set
+	 */
+	public void setBrillo(int brilloImagen) {
+		this.brillo = brilloImagen;
+	}
+
+	/**
+	 * @return the constraste
+	 */
+	public double getContraste() {
+		return contraste;
+	}
+
+	/**
+	 * @param constraste
+	 *            the constraste to set
+	 */
+	public void setConstraste(double contraste) {
+		this.contraste = contraste;
+	}
+
+	/**
+	 * @return the entropia
+	 */
+	public int getEntropia() {
+		return entropia;
+	}
+
+	/**
+	 * @param entropia
+	 *            the entropia to set
+	 */
+	public void setEntropia(int entropia) {
+		this.entropia = entropia;
 	}
 
 }

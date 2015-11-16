@@ -18,7 +18,9 @@ public class DibujaBarraMenu extends JMenuBar{
 	private JMenuItem menuItemCrearCopia;
 	
 	private JMenu menuVer;
-	private JMenuItem menuItemVerHistograma;
+	private JMenuItem menuItemVerHistogramaAbsoluo;
+	private JMenuItem menuItemVerHistogramaAcumulado;
+	private JMenuItem menuItemVerInformacionImagen;
 	
 	/*
 	 * Constructor
@@ -50,8 +52,14 @@ public class DibujaBarraMenu extends JMenuBar{
 		
 		menuVer = new JMenu("Ver");
 		
-		menuItemVerHistograma = new JMenuItem("Ver Histograma");
-		menuVer.add(menuItemVerHistograma);
+		menuItemVerHistogramaAbsoluo = new JMenuItem("Histograma Absoluto");
+		menuVer.add(menuItemVerHistogramaAbsoluo);
+		
+		menuItemVerHistogramaAcumulado = new JMenuItem("Histograma Acumulado");
+		menuVer.add(menuItemVerHistogramaAcumulado);
+		
+		menuItemVerInformacionImagen = new JMenuItem("Información de la imagen");
+		menuVer.add(menuItemVerInformacionImagen);
 		
 		add(menuVer);
 	}
@@ -138,14 +146,44 @@ public class DibujaBarraMenu extends JMenuBar{
 	/**
 	 * @return the menuVerHistograma
 	 */
-	public JMenuItem getMenuItemVerHistograma() {
-		return menuItemVerHistograma;
+	public JMenuItem getMenuItemVerHistogramaAbsoluto() {
+		return menuItemVerHistogramaAbsoluo;
 	}
 
 	/**
 	 * @param menuVerHistograma the menuVerHistograma to set
 	 */
-	public void setMenuVerHistograma(JMenuItem menuItemVerHistograma) {
-		this.menuItemVerHistograma = menuItemVerHistograma;
+	public void setMenuVerHistogramaAbsoluto(JMenuItem menuItemVerHistograma) {
+		this.menuItemVerHistogramaAbsoluo = menuItemVerHistograma;
+	}
+
+	/**
+	 * @return the menuItemVerHistogramaAcumulado
+	 */
+	public JMenuItem getMenuItemVerHistogramaAcumulado() {
+		return menuItemVerHistogramaAcumulado;
+	}
+
+	/**
+	 * @param menuItemVerHistogramaAcumulado the menuItemVerHistogramaAcumulado to set
+	 */
+	public void setMenuItemVerHistogramaAcumulado(
+			JMenuItem menuItemVerHistogramaAcumulado) {
+		this.menuItemVerHistogramaAcumulado = menuItemVerHistogramaAcumulado;
+	}
+
+	/**
+	 * @return the menuItemVerInformacionImagen
+	 */
+	public JMenuItem getMenuItemVerInformacionImagen() {
+		return menuItemVerInformacionImagen;
+	}
+
+	/**
+	 * @param menuItemVerInformacionImagen the menuItemVerInformacionImagen to set
+	 */
+	public void setMenuItemVerInformacionImagen(
+			JMenuItem menuItemVerInformacionImagen) {
+		this.menuItemVerInformacionImagen = menuItemVerInformacionImagen;
 	}
 }

@@ -1,14 +1,13 @@
 package Dibujables;
 
-import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import VentanaPrincipal.DibujaPanelEstado;
 import Clases.Imagen;
+import VentanaPrincipal.DibujaPanelEstado;
 
 public class DibujaImagen extends JLabel implements MouseMotionListener {
 
@@ -29,21 +28,19 @@ public class DibujaImagen extends JLabel implements MouseMotionListener {
 		setSize(imagen.getImagen().getWidth(), imagen.getImagen().getHeight());
 		setIcon(new ImageIcon(imagen.getImagen()));
 		addMouseMotionListener(this);
-
+		
 		setVisible(true);
 	}
-
+	
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
-
+		
 	}
-
+	
 	@Override
 	public void mouseMoved(MouseEvent evento) {
 		// TODO Auto-generated method stub
-		Color colorGris = new Color(imagen.getImagen().getRGB(evento.getX(),
-				evento.getY()));
 		panelEstado.getCoordenadasColor()
 				.setText(
 						"X = "

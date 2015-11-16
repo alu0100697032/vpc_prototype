@@ -2,13 +2,12 @@ package Dibujables;
 
 import javax.swing.JInternalFrame;
 
-public class DibujaInternalFrameHistograma extends JInternalFrame{
+public class DibujaInternalFrameHistogramaAbsoluto extends JInternalFrame{
 	
-	private DibujaHistograma dibujaHistograma;
+	private DibujaHistogramaAbsoluto dibujaHistograma;
 
-	public DibujaInternalFrameHistograma(DibujaHistograma histograma){
+	public DibujaInternalFrameHistogramaAbsoluto(DibujaHistogramaAbsoluto histograma){
 		setDibujaHistograma(histograma);
-		//setSize(dibujaHistograma.getWidth(), dibujaHistograma.getHeight());
 		add(dibujaHistograma);
 		pack();
 		setClosable(true);
@@ -19,14 +18,14 @@ public class DibujaInternalFrameHistograma extends JInternalFrame{
 	/**
 	 * @return the dibujaHistograma
 	 */
-	public DibujaHistograma getDibujaHistograma() {
+	public DibujaHistogramaAbsoluto getDibujaHistograma() {
 		return dibujaHistograma;
 	}
 
 	/**
 	 * @param dibujaHistograma the dibujaHistograma to set
 	 */
-	public void setDibujaHistograma(DibujaHistograma dibujaHistograma) {
+	public void setDibujaHistograma(DibujaHistogramaAbsoluto dibujaHistograma) {
 		this.dibujaHistograma = dibujaHistograma;
 	}
 }

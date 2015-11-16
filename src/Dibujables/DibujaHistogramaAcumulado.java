@@ -11,7 +11,8 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-public class DibujaHistograma extends JPanel{
+public class DibujaHistogramaAcumulado extends JPanel{
+
 	/*
 	 * Atributos
 	 */
@@ -19,9 +20,9 @@ public class DibujaHistograma extends JPanel{
 	/*
 	 * Constructor	
 	 */
-	public DibujaHistograma(HashMap<Integer, Integer> histogramaImagen){
+	public DibujaHistogramaAcumulado(HashMap<Integer, Integer> histogramaAcumuladoImagen){
 		
-		setHistograma(histogramaImagen);
+		setHistograma(histogramaAcumuladoImagen);
 		
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		
@@ -30,7 +31,7 @@ public class DibujaHistograma extends JPanel{
 		}
 		
 		JFreeChart chart = ChartFactory.createBarChart
-		        ("Histograma","Nivel de Gris", "Número de pixeles",
+		        ("Histograma Acumulado","Nivel de Gris", "Número de pixeles",
 		        dataset, PlotOrientation.VERTICAL, true,true, false);
         
         ChartPanel chartPanel = new ChartPanel(chart);
@@ -51,5 +52,4 @@ public class DibujaHistograma extends JPanel{
 	public void setHistograma(HashMap<Integer, Integer> histograma) {
 		this.histograma = histograma;
 	}
-
 }

@@ -70,8 +70,16 @@ public class DibujaVentanaPrincipal extends JFrame {
 		barraMenu.getMenuItemCrearCopia().addActionListener(a);
 	}
 	
-	public void addVerHistogramaListener(ActionListener a){
-		barraMenu.getMenuItemVerHistograma().addActionListener(a);
+	public void addVerHistogramaAbsolutoListener(ActionListener a){
+		barraMenu.getMenuItemVerHistogramaAbsoluto().addActionListener(a);
+	}
+	
+	public void addVerHistogramaAcumuladoListener(ActionListener a){
+		barraMenu.getMenuItemVerHistogramaAcumulado().addActionListener(a);
+	}
+	
+	public void addVerInformacionImagenListener(ActionListener a){
+		barraMenu.getMenuItemVerInformacionImagen().addActionListener(a);
 	}
 	/*
 	 * GETTER AND SETTER
