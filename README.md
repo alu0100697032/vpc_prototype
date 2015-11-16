@@ -6,6 +6,7 @@
 * http://www.javamexico.org/blogs/jose_manuel/aplicando_mvc_en_java
 * http://www.lawebdelprogramador.com/foros/Java/739281-OBTENER-DATOS-RGB-DE-UNA-IMAGEN.html
 * [Graficos Java](http://jonathanmelgoza.com/blog/como-hacer-graficos-con-java/)
+* [Recortar Imagen](http://www.java-tips.org/java-se-tips-100019/23-java-awt-image/2428-how-to-crop-a-subimage-from-an-image.html)
 
 ##Especificaciones 
 - Operaciones de punto: rellenar la tabla de transformación una vez y luego realizar la operación. 0-255
