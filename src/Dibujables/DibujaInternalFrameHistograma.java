@@ -8,9 +8,9 @@ public class DibujaInternalFrameHistograma extends JInternalFrame{
 
 	public DibujaInternalFrameHistograma(DibujaHistograma histograma){
 		setDibujaHistograma(histograma);
-		setSize(dibujaHistograma.getWidth(), dibujaHistograma.getHeight());
+		//setSize(dibujaHistograma.getWidth(), dibujaHistograma.getHeight());
 		add(dibujaHistograma);
-		
+		pack();
 		setClosable(true);
 		setResizable(true);
 		setVisible(true);
