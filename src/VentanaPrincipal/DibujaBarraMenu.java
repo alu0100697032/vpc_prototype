@@ -58,7 +58,7 @@ public class DibujaBarraMenu extends JMenuBar{
 		menuItemVerHistogramaAcumulado = new JMenuItem("Histograma Acumulado");
 		menuVer.add(menuItemVerHistogramaAcumulado);
 		
-		menuItemVerInformacionImagen = new JMenuItem("Información de la imagen");
+		menuItemVerInformacionImagen = new JMenuItem("Informacion de la imagen");
 		menuVer.add(menuItemVerInformacionImagen);
 		
 		add(menuVer);

@@ -8,7 +8,7 @@ import Clases.Imagen;
 public class InformacionImagen extends JDialog {
 
 	public InformacionImagen(Imagen imagen){
-		setTitle("Información de la imagen");
+		setTitle("Informacion de la imagen");
 		setResizable(false);
 		JOptionPane.showMessageDialog(
 				this, imagen.informacionImagen());
