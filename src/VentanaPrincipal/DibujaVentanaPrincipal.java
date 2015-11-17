@@ -1,5 +1,6 @@
 package VentanaPrincipal;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class DibujaVentanaPrincipal extends JFrame {
 		 */
 		
 		setTitle("Photoshop prototype");
-		setLayout(null);
+		setLayout(new BorderLayout());
 		setMinimumSize(new Dimension(600, 400));
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -46,11 +47,11 @@ public class DibujaVentanaPrincipal extends JFrame {
 		//DesktopPane
 		
 		grupoInternalFrames = new JDesktopPane();
-		setContentPane(grupoInternalFrames);
+		add(grupoInternalFrames);
 		
 		//Panel de estado
 		panelEstado = new DibujaPanelEstado(getWidth());
-		add(panelEstado);
+		add(panelEstado, BorderLayout.SOUTH);
 		setVisible(true);
 	}
 
