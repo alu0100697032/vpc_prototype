@@ -16,6 +16,7 @@ public class DibujaBarraMenu extends JMenuBar{
 	
 	private JMenu menuEditar;
 	private JMenuItem menuItemCrearCopia;
+	private JMenuItem menuItemCambiarBrilloContraste;
 	
 	private JMenu menuVer;
 	private JMenuItem menuItemVerHistogramaAbsoluo;
@@ -45,6 +46,9 @@ public class DibujaBarraMenu extends JMenuBar{
 		
 		menuItemCrearCopia = new JMenuItem("Crear Copia");
 		menuEditar.add(menuItemCrearCopia);
+		
+		menuItemCambiarBrilloContraste = new JMenuItem("Brillo y Contraste");
+		menuEditar.add(menuItemCambiarBrilloContraste);
 		
 		add(menuEditar);
 		
@@ -185,5 +189,19 @@ public class DibujaBarraMenu extends JMenuBar{
 	public void setMenuItemVerInformacionImagen(
 			JMenuItem menuItemVerInformacionImagen) {
 		this.menuItemVerInformacionImagen = menuItemVerInformacionImagen;
+	}
+
+	/**
+	 * @return the menuItemCambiarBrilloContraste
+	 */
+	public JMenuItem getMenuItemCambiarBrilloContraste() {
+		return menuItemCambiarBrilloContraste;
+	}
+
+	/**
+	 * @param menuItemCambiarBrilloContraste the menuItemCambiarBrilloContraste to set
+	 */
+	public void setMenuItemCambiarBrilloContraste(JMenuItem menuItemCambiarBrilloContraste) {
+		this.menuItemCambiarBrilloContraste = menuItemCambiarBrilloContraste;
 	}
 }

@@ -58,7 +58,9 @@ public class DibujaVentanaPrincipal extends JFrame {
 	/*
 	 * Listeners
 	 */
-	
+	/*
+	 * Archivo
+	 */
 	public void addAbrirImagenListener (ActionListener a){
 		barraMenu.getMenuItemAbrirImagen().addActionListener(a);
 	}
@@ -66,11 +68,18 @@ public class DibujaVentanaPrincipal extends JFrame {
 	public void addGuardarImagenListener(ActionListener a){
 		barraMenu.getMenuItemGuardarImagen().addActionListener(a);
 	}
-	
+	/*
+	 * Editar
+	 */
 	public void addHacerCopiaListener(ActionListener a){
 		barraMenu.getMenuItemCrearCopia().addActionListener(a);
 	}
-	
+	public void addCambiarBrilloContrasteListener(ActionListener a){
+		barraMenu.getMenuItemCambiarBrilloContraste().addActionListener(a);
+	}
+	/*
+	 * Ver
+	 */
 	public void addVerHistogramaAbsolutoListener(ActionListener a){
 		barraMenu.getMenuItemVerHistogramaAbsoluto().addActionListener(a);
 	}

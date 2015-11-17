@@ -163,7 +163,7 @@ public class Imagen extends Observable implements Cloneable {
 	 * Informacion de la imagen
 	 */
 	public String informacionImagen() {
-		String informacion = "Informacion de la imagen \nTipo: ." + extensionImagen + "\nSize: " + imagen.getWidth()
+		String informacion = "Tipo: ." + extensionImagen + "\nSize: " + imagen.getWidth()
 				+ "x" + imagen.getHeight() + "\nRango: " + rangoMinimo + " - " + rangoMaximo + "\nBrillo: " + brillo
 				+ "\nContraste: " + contraste + "\nEntropia: ";
 		return informacion;

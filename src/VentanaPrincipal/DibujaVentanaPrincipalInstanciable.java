@@ -3,6 +3,8 @@ package VentanaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import alertas.CambiarBrilloContraste;
+import alertas.CambiarBrilloContrasteInstanciable;
 import alertas.InformacionImagen;
 import Clases.ConjuntoImagenes;
 import Clases.Imagen;
@@ -22,6 +24,7 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 		addAbrirImagenListener(new AbrirImagenListener());
 		addGuardarImagenListener(new GuardarImagenListener());
 		addHacerCopiaListener(new HacerCopiaListener());
+		addCambiarBrilloContrasteListener(new CambiarBrilloContrasteListener());
 		addVerHistogramaAbsolutoListener(new VerHistogramaAbsolutoListener());
 		addVerHistogramaAcumuladoListener(new VerHistogramaAcumuladoListener());
 		addVerInformacionImagenListener(new VerInformacionImagenListener());
@@ -69,6 +72,20 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 									.hacerCopiaImagen(i), getPanelEstado()));
 					getImagenesAbiertas().add(dibujaInternalFrameImagen);
 					getGrupoInternalFrames().add(dibujaInternalFrameImagen);
+				}
+			}
+		}
+
+	}
+	
+	class CambiarBrilloContrasteListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
+				if (getImagenesAbiertas().get(i).isSelected()) {
+					CambiarBrilloContrasteInstanciable cambiarBrilloContraste = new CambiarBrilloContrasteInstanciable(conjuntoImagenes.getImagen(i));
 				}
 			}
 		}
