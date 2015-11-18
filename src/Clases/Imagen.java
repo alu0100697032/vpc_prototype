@@ -173,7 +173,7 @@ public class Imagen extends Observable implements Cloneable {
 						colorCambiado).getRGB());
 			}
 		}
-		setHistogramaAcumulado(histogramaCambiado);
+		setHistogramaAbsoluto(histogramaCambiado);
 		obtenerHisogramaAcumulado();
 		obtenerRango();
 		obtenerBrillo();
@@ -219,6 +219,9 @@ public class Imagen extends Observable implements Cloneable {
 		Imagen imagenClonada = null;
 		try {
 			imagenClonada = (Imagen) super.clone();
+			imagenClonada.setHistogramaAbsoluto((HashMap<Integer, Integer>) imagenClonada.getHistogramaAbsoluto().clone());
+			imagenClonada.setHistogramaAcumulado((HashMap<Integer, Integer>) imagenClonada.getHistogramaAcumulado().clone());
+			imagenClonada.setMatrizPixelesGris((ArrayList<ArrayList<Integer>>) imagenClonada.getMatrizPixelesGris().clone());
 		} catch (CloneNotSupportedException ex) {
 			System.out.println(" no se puede duplicar");
 		}

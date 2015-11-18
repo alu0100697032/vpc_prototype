@@ -3,6 +3,8 @@ package alertas;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
+import org.omg.Messaging.SyncScopeHelper;
+
 import Clases.Imagen;
 
 public class InformacionImagen extends JDialog {

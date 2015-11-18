@@ -137,4 +137,18 @@ public class DibujaVentanaPrincipal extends JFrame {
 		this.panelEstado = panelEstado;
 	}
 
+	/**
+	 * @return the barraMenu
+	 */
+	public DibujaBarraMenu getBarraMenu() {
+		return barraMenu;
+	}
+
+	/**
+	 * @param barraMenu the barraMenu to set
+	 */
+	public void setBarraMenu(DibujaBarraMenu barraMenu) {
+		this.barraMenu = barraMenu;
+	}
+
 }

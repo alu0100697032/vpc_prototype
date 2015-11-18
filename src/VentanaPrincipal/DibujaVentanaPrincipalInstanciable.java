@@ -3,9 +3,6 @@ package VentanaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import alertas.CambiarBrilloContraste;
-import alertas.CambiarBrilloContrasteInstanciable;
-import alertas.InformacionImagen;
 import Clases.ConjuntoImagenes;
 import Clases.Imagen;
 import Dibujables.DibujaHistogramaAbsoluto;
@@ -14,6 +11,8 @@ import Dibujables.DibujaImagen;
 import Dibujables.DibujaInternalFrameHistogramaAbsoluto;
 import Dibujables.DibujaInternalFrameHistogramaAcumulado;
 import Dibujables.DibujaInternalFrameImagen;
+import alertas.CambiarBrilloContraste;
+import alertas.InformacionImagen;
 
 public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 
@@ -68,8 +67,7 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
 				if (getImagenesAbiertas().get(i).isSelected()) {
 					DibujaInternalFrameImagen dibujaInternalFrameImagen = new DibujaInternalFrameImagen(
-							new DibujaImagen(getConjuntoImagenes()
-									.hacerCopiaImagen(i), getPanelEstado()));
+							new DibujaImagen(getConjuntoImagenes().hacerCopiaImagen(i), getPanelEstado()));
 					getImagenesAbiertas().add(dibujaInternalFrameImagen);
 					getGrupoInternalFrames().add(dibujaInternalFrameImagen);
 				}
@@ -77,7 +75,7 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 		}
 
 	}
-	
+
 	class CambiarBrilloContrasteListener implements ActionListener {
 
 		@Override
@@ -85,7 +83,9 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 			// TODO Auto-generated method stub
 			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
 				if (getImagenesAbiertas().get(i).isSelected()) {
-					CambiarBrilloContrasteInstanciable cambiarBrilloContraste = new CambiarBrilloContrasteInstanciable(conjuntoImagenes.getImagen(i));
+					CambiarBrilloContraste cambiarBrilloContraste = new CambiarBrilloContraste(
+							conjuntoImagenes.getImagen(i), getImagenesAbiertas(), getBarraMenu(),
+							getGrupoInternalFrames(), getPanelEstado(), getConjuntoImagenes());
 				}
 			}
 		}
@@ -100,8 +100,7 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
 				if (getImagenesAbiertas().get(i).isSelected()) {
 					DibujaInternalFrameHistogramaAbsoluto internalFrameHistograma = new DibujaInternalFrameHistogramaAbsoluto(
-							new DibujaHistogramaAbsoluto(getConjuntoImagenes()
-									.getHistogramaAbsoluto(i)));
+							new DibujaHistogramaAbsoluto(getConjuntoImagenes().getHistogramaAbsoluto(i)));
 					getGrupoInternalFrames().add(internalFrameHistograma);
 				}
 			}
@@ -117,8 +116,7 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
 				if (getImagenesAbiertas().get(i).isSelected()) {
 					DibujaInternalFrameHistogramaAcumulado internalFrameHistograma = new DibujaInternalFrameHistogramaAcumulado(
-							new DibujaHistogramaAcumulado(getConjuntoImagenes()
-									.getHistogramaAcumulado(i)));
+							new DibujaHistogramaAcumulado(getConjuntoImagenes().getHistogramaAcumulado(i)));
 					getGrupoInternalFrames().add(internalFrameHistograma);
 				}
 			}
@@ -133,8 +131,7 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 			// TODO Auto-generated method stub
 			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
 				if (getImagenesAbiertas().get(i).isSelected()) {
-					InformacionImagen informacion = new InformacionImagen(
-							getConjuntoImagenes().getImagen(i));
+					InformacionImagen informacion = new InformacionImagen(getConjuntoImagenes().getImagen(i));
 				}
 			}
 		}
