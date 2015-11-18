@@ -24,7 +24,7 @@ public class Imagen extends Observable implements Cloneable {
 	private int rangoMinimo;
 	private int rangoMaximo;
 	private int brillo;
-	private double contraste;
+	private int contraste;
 	private int entropia;
 
 	/*
@@ -37,14 +37,16 @@ public class Imagen extends Observable implements Cloneable {
 		JFileChooser selectorFichero = new JFileChooser();
 		selectorFichero.setDialogTitle("Seleccione una imagen para abrir:");
 		FileNameExtensionFilter extensionPermitida = new FileNameExtensionFilter(
-				"Archivos de imagen: *.jpg, *.gif, *.png, *.bmp, *.jpeg", "jpg", "bmp", "png", "gif", "jpeg");
+				"Archivos de imagen: *.jpg, *.gif, *.png, *.bmp, *.jpeg",
+				"jpg", "bmp", "png", "gif", "jpeg");
 		selectorFichero.setFileFilter(extensionPermitida);
 		int flag = selectorFichero.showOpenDialog(null);
 		if (flag == JFileChooser.APPROVE_OPTION) {
 			try {
 				File imagenSeleccionada = selectorFichero.getSelectedFile();
 				img = ImageIO.read(imagenSeleccionada);
-				extensionImagen = imagenSeleccionada.getName().substring(imagenSeleccionada.getName().lastIndexOf('.'));
+				extensionImagen = imagenSeleccionada.getName().substring(
+						imagenSeleccionada.getName().lastIndexOf('.'));
 				extensionImagen = extensionImagen.substring(1);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -73,13 +75,15 @@ public class Imagen extends Observable implements Cloneable {
 			for (int j = 0; j < imagen.getHeight(); j++) {
 				colorRGB = new Color(imagen.getRGB(i, j));
 				// NTSC format
-				colorGris = ((int) ((colorRGB.getRed() * 0.299) + (colorRGB.getGreen() * 0.587)
-						+ (colorRGB.getBlue() * 0.114)));
+				colorGris = ((int) ((colorRGB.getRed() * 0.299)
+						+ (colorRGB.getGreen() * 0.587) + (colorRGB.getBlue() * 0.114)));
 				// añadir gris a la matriz
 				matrizPixelesGris.get(i).add(colorGris);
 				// formar el histograma
-				histogramaAbsoluto.put(colorGris, histogramaAbsoluto.get(colorGris) + 1);
-				imagen.setRGB(i, j, new Color(colorGris, colorGris, colorGris).getRGB());
+				histogramaAbsoluto.put(colorGris,
+						histogramaAbsoluto.get(colorGris) + 1);
+				imagen.setRGB(i, j,
+						new Color(colorGris, colorGris, colorGris).getRGB());
 			}
 		}
 		obtenerHisogramaAcumulado();
@@ -93,6 +97,7 @@ public class Imagen extends Observable implements Cloneable {
 	 */
 	private void obtenerHisogramaAcumulado() {
 		int pixelesAcumulados = 0;
+		histogramaAcumulado.clear();
 		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
 			pixelesAcumulados = pixelesAcumulados + entry.getValue();
 			histogramaAcumulado.put(entry.getKey(), pixelesAcumulados);
@@ -121,7 +126,8 @@ public class Imagen extends Observable implements Cloneable {
 		int numeroPixleles = 0;
 		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
 			numeroPixleles = numeroPixleles + entry.getValue();
-			sumatorioValores = sumatorioValores + entry.getKey() * entry.getValue();
+			sumatorioValores = sumatorioValores + entry.getKey()
+					* entry.getValue();
 		}
 		brillo = sumatorioValores / numeroPixleles;
 	}
@@ -135,10 +141,43 @@ public class Imagen extends Observable implements Cloneable {
 		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
 			numeroPixleles = numeroPixleles + entry.getValue();
 			for (int j = 0; j < entry.getValue(); j++) {
-				sumatorioValores = sumatorioValores + (int) Math.pow((entry.getKey() - brillo), 2);
+				sumatorioValores = sumatorioValores
+						+ (int) Math.pow((entry.getKey() - brillo), 2);
 			}
 		}
 		contraste = (int) Math.sqrt(((sumatorioValores / numeroPixleles)));
+	}
+
+	/*
+	 * Cambiar brillo y contraste
+	 */
+	public void ajustarBrilloContraste(int brilloPrima, int contrastePrima) {
+		int A = contrastePrima / contraste;
+		int B = brilloPrima - (A * brillo);
+		int colorCambiado;
+		HashMap<Integer, Integer> relacionVinVout = new HashMap<Integer, Integer>();
+		HashMap<Integer, Integer> histogramaCambiado = new HashMap<Integer, Integer>();
+		for (int i = 0; i < histogramaAbsoluto.size(); i++)
+			histogramaCambiado.put(i, 0);
+		for (int i = 0; i < histogramaAbsoluto.size(); i++) {
+			colorCambiado = (A * histogramaAbsoluto.get(i)) + B;
+			histogramaCambiado.put(colorCambiado, histogramaAbsoluto.get(i));
+			relacionVinVout.put(i, colorCambiado);
+		}
+		for (int i = 0; i < matrizPixelesGris.size(); i++) {
+			for (int j = 0; j < matrizPixelesGris.get(i).size(); j++) {
+				colorCambiado = histogramaCambiado.get(matrizPixelesGris.get(i)
+						.get(j));
+				matrizPixelesGris.get(i).set(j, colorCambiado);
+				imagen.setRGB(i, j, new Color(colorCambiado, colorCambiado,
+						colorCambiado).getRGB());
+			}
+		}
+		setHistogramaAcumulado(histogramaCambiado);
+		obtenerHisogramaAcumulado();
+		obtenerRango();
+		obtenerBrillo();
+		obtenerContraste();
 	}
 
 	/*
@@ -163,8 +202,9 @@ public class Imagen extends Observable implements Cloneable {
 	 * Informacion de la imagen
 	 */
 	public String informacionImagen() {
-		String informacion = "Tipo: ." + extensionImagen + "\nSize: " + imagen.getWidth()
-				+ "x" + imagen.getHeight() + "\nRango: " + rangoMinimo + " - " + rangoMaximo + "\nBrillo: " + brillo
+		String informacion = "Tipo: ." + extensionImagen + "\nSize: "
+				+ imagen.getWidth() + "x" + imagen.getHeight() + "\nRango: "
+				+ rangoMinimo + " - " + rangoMaximo + "\nBrillo: " + brillo
 				+ "\nContraste: " + contraste + "\nEntropia: ";
 		return informacion;
 	}
@@ -228,7 +268,8 @@ public class Imagen extends Observable implements Cloneable {
 	 * @param matrizPixelesGris
 	 *            the matrizPixelesGris to set
 	 */
-	public void setMatrizPixelesGris(ArrayList<ArrayList<Integer>> matrizPixelesGris) {
+	public void setMatrizPixelesGris(
+			ArrayList<ArrayList<Integer>> matrizPixelesGris) {
 		this.matrizPixelesGris = matrizPixelesGris;
 	}
 
@@ -243,7 +284,8 @@ public class Imagen extends Observable implements Cloneable {
 	 * @param histogramaAcumulado
 	 *            the histogramaAcumulado to set
 	 */
-	public void setHistogramaAcumulado(HashMap<Integer, Integer> histogramaAcumulado) {
+	public void setHistogramaAcumulado(
+			HashMap<Integer, Integer> histogramaAcumulado) {
 		this.histogramaAcumulado = histogramaAcumulado;
 	}
 
@@ -295,7 +337,7 @@ public class Imagen extends Observable implements Cloneable {
 	/**
 	 * @return the constraste
 	 */
-	public double getContraste() {
+	public int getContraste() {
 		return contraste;
 	}
 
@@ -303,7 +345,7 @@ public class Imagen extends Observable implements Cloneable {
 	 * @param constraste
 	 *            the constraste to set
 	 */
-	public void setConstraste(double contraste) {
+	public void setConstraste(int contraste) {
 		this.contraste = contraste;
 	}
 
