@@ -32,7 +32,7 @@ public class Imagen extends Observable implements Cloneable {
 	private int rangoMaximo;
 	private int brillo;
 	private int contraste;
-	private int entropia;
+	private float entropia;
 
 	/**
 	 * Constructor: Imagen
@@ -78,6 +78,7 @@ public class Imagen extends Observable implements Cloneable {
 		obtenerRango();
 		obtenerBrillo();
 		obtenerContraste();
+		obtenerEntropia();
 	}
 
 	/**
@@ -99,9 +100,9 @@ public class Imagen extends Observable implements Cloneable {
 		setRangoMaximo(0);
 		setRangoMinimo(255);
 		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
-			if (entry.getKey() > rangoMaximo)
+			if (entry.getValue() != 0 && entry.getKey() > rangoMaximo)
 				rangoMaximo = entry.getKey();
-			if (entry.getKey() < rangoMinimo)
+			if (entry.getValue() != 0 && entry.getKey() < rangoMinimo)
 				rangoMinimo = entry.getKey();
 		}
 	}
@@ -111,9 +112,8 @@ public class Imagen extends Observable implements Cloneable {
 	 */
 	private void obtenerBrillo() {
 		int sumatorioValores = 0;
-		int numeroPixleles = 0;
+		int numeroPixleles = histogramaAcumulado.get(255);
 		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
-			numeroPixleles = numeroPixleles + entry.getValue();
 			sumatorioValores = sumatorioValores + entry.getKey() * entry.getValue();
 		}
 		brillo = sumatorioValores / numeroPixleles;
@@ -124,14 +124,26 @@ public class Imagen extends Observable implements Cloneable {
 	 */
 	private void obtenerContraste() {
 		int sumatorioValores = 0;
-		int numeroPixleles = 0;
+		int numeroPixleles = histogramaAcumulado.get(255);
 		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
-			numeroPixleles = numeroPixleles + entry.getValue();
 			for (int j = 0; j < entry.getValue(); j++) {
 				sumatorioValores = sumatorioValores + (int) Math.pow((entry.getKey() - brillo), 2);
 			}
 		}
 		contraste = (int) Math.sqrt(((sumatorioValores / numeroPixleles)));
+	}
+
+	/**
+	 * obtenerEntropia
+	 */
+	private void obtenerEntropia() {
+		entropia = 0;
+		int numeroPixleles = histogramaAcumulado.get(255);
+		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
+			float probabilidad = (float)entry.getValue() / (float)numeroPixleles;
+			if(probabilidad > 0.0)
+				entropia -= (probabilidad * (Math.log(probabilidad) / Math.log(2)));
+		}
 	}
 
 	/**
@@ -205,7 +217,7 @@ public class Imagen extends Observable implements Cloneable {
 	public String informacionImagen() {
 		String informacion = "Tipo: ." + extensionImagen + "\nSize: " + imagen.getWidth() + "x" + imagen.getHeight()
 				+ "\nRango: " + rangoMinimo + " - " + rangoMaximo + "\nBrillo: " + brillo + "\nContraste: " + contraste
-				+ "\nEntropia: ";
+				+ "\nEntropia: " + entropia;
 		return informacion;
 	}
 
@@ -363,7 +375,7 @@ public class Imagen extends Observable implements Cloneable {
 	/**
 	 * @return the entropia
 	 */
-	public int getEntropia() {
+	public float getEntropia() {
 		return entropia;
 	}
 
@@ -371,7 +383,7 @@ public class Imagen extends Observable implements Cloneable {
 	 * @param entropia
 	 *            the entropia to set
 	 */
-	public void setEntropia(int entropia) {
+	public void setEntropia(float entropia) {
 		this.entropia = entropia;
 	}
 
