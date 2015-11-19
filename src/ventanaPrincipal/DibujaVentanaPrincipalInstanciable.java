@@ -1,18 +1,18 @@
-package VentanaPrincipal;
+package ventanaPrincipal;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import Clases.ConjuntoImagenes;
-import Clases.Imagen;
-import Dibujables.DibujaHistogramaAbsoluto;
-import Dibujables.DibujaHistogramaAcumulado;
-import Dibujables.DibujaImagen;
-import Dibujables.DibujaInternalFrameHistogramaAbsoluto;
-import Dibujables.DibujaInternalFrameHistogramaAcumulado;
-import Dibujables.DibujaInternalFrameImagen;
-import alertas.CambiarBrilloContraste;
-import alertas.InformacionImagen;
+import clases.ConjuntoImagenes;
+import clases.Imagen;
+import dialogs.CambiarBrilloContraste;
+import dialogs.InformacionImagen;
+import dibujablesHistogramas.DibujaHistogramaAbsoluto;
+import dibujablesHistogramas.DibujaHistogramaAcumulado;
+import dibujablesHistogramas.DibujaInternalFrameHistogramaAbsoluto;
+import dibujablesHistogramas.DibujaInternalFrameHistogramaAcumulado;
+import dibujablesImagen.DibujaImagen;
+import dibujablesImagen.DibujaInternalFrameImagen;
 
 public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 

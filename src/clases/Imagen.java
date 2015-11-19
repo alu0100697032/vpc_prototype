@@ -1,4 +1,4 @@
-package Clases;
+package clases;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;

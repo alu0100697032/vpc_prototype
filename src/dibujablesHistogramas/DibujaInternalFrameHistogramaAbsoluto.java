@@ -1,4 +1,4 @@
-package Dibujables;
+package dibujablesHistogramas;
 
 import javax.swing.JInternalFrame;
 

@@ -1,4 +1,4 @@
-package Dibujables;
+package dibujablesImagen;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -6,8 +6,8 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import Clases.Imagen;
-import VentanaPrincipal.DibujaPanelEstado;
+import clases.Imagen;
+import statusBar.DibujaPanelEstado;
 
 public class DibujaImagen extends JLabel implements MouseMotionListener {
 

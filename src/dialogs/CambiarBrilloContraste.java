@@ -1,4 +1,4 @@
-package alertas;
+package dialogs;
 
 import java.awt.Adjustable;
 import java.awt.Color;
@@ -18,12 +18,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 
-import Clases.ConjuntoImagenes;
-import Clases.Imagen;
-import Dibujables.DibujaImagen;
-import Dibujables.DibujaInternalFrameImagen;
-import VentanaPrincipal.DibujaBarraMenu;
-import VentanaPrincipal.DibujaPanelEstado;
+import clases.ConjuntoImagenes;
+import clases.Imagen;
+import dibujablesImagen.DibujaImagen;
+import dibujablesImagen.DibujaInternalFrameImagen;
+import menuBar.DibujaBarraMenu;
+import statusBar.DibujaPanelEstado;
 
 public class CambiarBrilloContraste extends JDialog {
 

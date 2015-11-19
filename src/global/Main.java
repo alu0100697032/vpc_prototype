@@ -1,6 +1,6 @@
-package Global;
+package global;
 
-import VentanaPrincipal.DibujaVentanaPrincipalInstanciable;
+import ventanaPrincipal.DibujaVentanaPrincipalInstanciable;
 
 public class Main {
 

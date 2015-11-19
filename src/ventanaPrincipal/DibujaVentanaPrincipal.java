@@ -1,4 +1,4 @@
-package VentanaPrincipal;
+package ventanaPrincipal;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 
-import Dibujables.DibujaInternalFrameImagen;
+import dibujablesImagen.DibujaInternalFrameImagen;
+import menuBar.DibujaBarraMenu;
+import statusBar.DibujaPanelEstado;
 
 public class DibujaVentanaPrincipal extends JFrame {
 

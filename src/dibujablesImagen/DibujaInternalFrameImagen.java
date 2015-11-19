@@ -1,4 +1,4 @@
-package Dibujables;
+package dibujablesImagen;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;

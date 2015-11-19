@@ -1,11 +1,11 @@
-package alertas;
+package dialogs;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import org.omg.Messaging.SyncScopeHelper;
 
-import Clases.Imagen;
+import clases.Imagen;
 
 public class InformacionImagen extends JDialog {
 

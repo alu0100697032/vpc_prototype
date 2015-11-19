@@ -1,4 +1,4 @@
-package VentanaPrincipal;
+package statusBar;
 
 import java.awt.Dimension;
 

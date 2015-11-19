@@ -1,4 +1,4 @@
-package Dibujables;
+package dibujablesHistogramas;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
