@@ -3,10 +3,13 @@ package ventanaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.plaf.SliderUI;
+
 import clases.ConjuntoImagenes;
 import clases.Imagen;
 import dialogs.CambiarBrilloContraste;
 import dialogs.InformacionImagen;
+import dialogs.SelectorFichero;
 import dibujablesHistogramas.DibujaHistogramaAbsoluto;
 import dibujablesHistogramas.DibujaHistogramaAcumulado;
 import dibujablesHistogramas.DibujaInternalFrameHistogramaAbsoluto;
@@ -35,7 +38,9 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			Imagen imagen = new Imagen();
+			SelectorFichero selectorFichero = new SelectorFichero();
+			Imagen imagen = new Imagen(selectorFichero.getImagenCargada(), selectorFichero.getNombreImagen(),
+					selectorFichero.getExtensionImagen());
 			getConjuntoImagenes().addImagen(imagen);
 			DibujaInternalFrameImagen dibujaInternalFrameImagen = new DibujaInternalFrameImagen(
 					new DibujaImagen(imagen, getPanelEstado()));

@@ -26,6 +26,7 @@ public class Imagen extends Observable implements Cloneable {
 	private HashMap<Integer, Integer> histogramaAbsoluto;
 	private HashMap<Integer, Integer> histogramaAcumulado;
 	private String extensionImagen;
+	private String nombreImagen;
 	private int rangoMinimo;
 	private int rangoMaximo;
 	private int brillo;
@@ -36,29 +37,10 @@ public class Imagen extends Observable implements Cloneable {
 	 * Constructor: Imagen
 	 */
 
-	public Imagen() {
-
-		BufferedImage img = null;
-		JFileChooser selectorFichero = new JFileChooser();
-		selectorFichero.setDialogTitle("Seleccione una imagen para abrir:");
-		FileNameExtensionFilter extensionPermitida = new FileNameExtensionFilter(
-				"Archivos de imagen: *.jpg, *.gif, *.png, *.bmp, *.jpeg",
-				"jpg", "bmp", "png", "gif", "jpeg");
-		selectorFichero.setFileFilter(extensionPermitida);
-		int flag = selectorFichero.showOpenDialog(null);
-		if (flag == JFileChooser.APPROVE_OPTION) {
-			try {
-				File imagenSeleccionada = selectorFichero.getSelectedFile();
-				img = ImageIO.read(imagenSeleccionada);
-				extensionImagen = imagenSeleccionada.getName().substring(
-						imagenSeleccionada.getName().lastIndexOf('.'));
-				extensionImagen = extensionImagen.substring(1);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		}
+	public Imagen(BufferedImage img, String nombre, String extension) {
 		setImagen(img);
+		setExtensionImagen(extension);
+		setNombreImagen(nombre);
 		// inicializa los histogramas
 		histogramaAcumulado = new HashMap<Integer, Integer>();
 		histogramaAbsoluto = new HashMap<Integer, Integer>();
@@ -379,6 +361,20 @@ public class Imagen extends Observable implements Cloneable {
 	 */
 	public void setEntropia(int entropia) {
 		this.entropia = entropia;
+	}
+
+	/**
+	 * @return the nombreImagen
+	 */
+	public String getNombreImagen() {
+		return nombreImagen;
+	}
+
+	/**
+	 * @param nombreImagen the nombreImagen to set
+	 */
+	public void setNombreImagen(String nombreImagen) {
+		this.nombreImagen = nombreImagen;
 	}
 
 }
