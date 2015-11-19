@@ -1,6 +1,7 @@
 package clases;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
@@ -46,7 +47,7 @@ public class Imagen extends Observable implements Cloneable {
 		histogramaAbsoluto = new HashMap<Integer, Integer>();
 		for (int i = 0; i < 256; i++)
 			histogramaAbsoluto.put(i, 0);
-		//pasar la imagen a gris
+		// pasar la imagen a gris
 		pasarImagenGris();
 	}
 
@@ -63,18 +64,16 @@ public class Imagen extends Observable implements Cloneable {
 			for (int j = 0; j < imagen.getHeight(); j++) {
 				colorRGB = new Color(imagen.getRGB(i, j));
 				// NTSC format
-				colorGris = ((int) ((colorRGB.getRed() * 0.299)
-						+ (colorRGB.getGreen() * 0.587) + (colorRGB.getBlue() * 0.114)));
+				colorGris = ((int) ((colorRGB.getRed() * 0.299) + (colorRGB.getGreen() * 0.587)
+						+ (colorRGB.getBlue() * 0.114)));
 				// añadir gris a la matriz
 				matrizPixelesGris.get(i).add(colorGris);
 				// formar el histograma
-				histogramaAbsoluto.put(colorGris,
-						histogramaAbsoluto.get(colorGris) + 1);
-				imagen.setRGB(i, j,
-						new Color(colorGris, colorGris, colorGris).getRGB());
+				histogramaAbsoluto.put(colorGris, histogramaAbsoluto.get(colorGris) + 1);
+				imagen.setRGB(i, j, new Color(colorGris, colorGris, colorGris).getRGB());
 			}
 		}
-		//una vez pasada a gris se calculan una serie de propiedades
+		// una vez pasada a gris se calculan una serie de propiedades
 		obtenerHisogramaAcumulado();
 		obtenerRango();
 		obtenerBrillo();
@@ -115,8 +114,7 @@ public class Imagen extends Observable implements Cloneable {
 		int numeroPixleles = 0;
 		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
 			numeroPixleles = numeroPixleles + entry.getValue();
-			sumatorioValores = sumatorioValores + entry.getKey()
-					* entry.getValue();
+			sumatorioValores = sumatorioValores + entry.getKey() * entry.getValue();
 		}
 		brillo = sumatorioValores / numeroPixleles;
 	}
@@ -130,8 +128,7 @@ public class Imagen extends Observable implements Cloneable {
 		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
 			numeroPixleles = numeroPixleles + entry.getValue();
 			for (int j = 0; j < entry.getValue(); j++) {
-				sumatorioValores = sumatorioValores
-						+ (int) Math.pow((entry.getKey() - brillo), 2);
+				sumatorioValores = sumatorioValores + (int) Math.pow((entry.getKey() - brillo), 2);
 			}
 		}
 		contraste = (int) Math.sqrt(((sumatorioValores / numeroPixleles)));
@@ -155,11 +152,9 @@ public class Imagen extends Observable implements Cloneable {
 		}
 		for (int i = 0; i < matrizPixelesGris.size(); i++) {
 			for (int j = 0; j < matrizPixelesGris.get(i).size(); j++) {
-				colorCambiado = histogramaCambiado.get(matrizPixelesGris.get(i)
-						.get(j));
+				colorCambiado = histogramaCambiado.get(matrizPixelesGris.get(i).get(j));
 				matrizPixelesGris.get(i).set(j, colorCambiado);
-				imagen.setRGB(i, j, new Color(colorCambiado, colorCambiado,
-						colorCambiado).getRGB());
+				imagen.setRGB(i, j, new Color(colorCambiado, colorCambiado, colorCambiado).getRGB());
 			}
 		}
 		setHistogramaAbsoluto(histogramaCambiado);
@@ -167,6 +162,23 @@ public class Imagen extends Observable implements Cloneable {
 		obtenerRango();
 		obtenerBrillo();
 		obtenerContraste();
+	}
+
+	public BufferedImage subImagen(Point inicio, Point fin) {
+		int k = 0;
+		int l = 0;
+		BufferedImage subImagen = new BufferedImage((int) (fin.getX() - inicio.getX()),
+				(int) (fin.getY() - inicio.getY()), imagen.getType());
+		for (int i = (int) inicio.getX(); i < fin.getX(); i++) {
+			for (int j = (int) inicio.getY(); j < fin.getY(); j++) {
+				subImagen.setRGB(k, l, new Color(matrizPixelesGris.get(i).get(j), matrizPixelesGris.get(i).get(j),
+						matrizPixelesGris.get(i).get(j)).getRGB());
+				l++;
+			}
+			l = 0;
+			k++;
+		}
+		return subImagen;
 	}
 
 	/**
@@ -191,10 +203,9 @@ public class Imagen extends Observable implements Cloneable {
 	 * informacionImagen
 	 */
 	public String informacionImagen() {
-		String informacion = "Tipo: ." + extensionImagen + "\nSize: "
-				+ imagen.getWidth() + "x" + imagen.getHeight() + "\nRango: "
-				+ rangoMinimo + " - " + rangoMaximo + "\nBrillo: " + brillo
-				+ "\nContraste: " + contraste + "\nEntropia: ";
+		String informacion = "Tipo: ." + extensionImagen + "\nSize: " + imagen.getWidth() + "x" + imagen.getHeight()
+				+ "\nRango: " + rangoMinimo + " - " + rangoMaximo + "\nBrillo: " + brillo + "\nContraste: " + contraste
+				+ "\nEntropia: ";
 		return informacion;
 	}
 
@@ -207,13 +218,16 @@ public class Imagen extends Observable implements Cloneable {
 	public Imagen clone() {
 		Imagen imagenClonada = null;
 		try {
-			//clonar las primitivas
+			// clonar las primitivas
 			imagenClonada = (Imagen) super.clone();
-			//clonar los arrays
-			imagenClonada.setHistogramaAbsoluto((HashMap<Integer, Integer>) imagenClonada.getHistogramaAbsoluto().clone());
-			imagenClonada.setHistogramaAcumulado((HashMap<Integer, Integer>) imagenClonada.getHistogramaAcumulado().clone());
-			imagenClonada.setMatrizPixelesGris((ArrayList<ArrayList<Integer>>) imagenClonada.getMatrizPixelesGris().clone());
-			//clonar la bufferedImage
+			// clonar los arrays
+			imagenClonada
+					.setHistogramaAbsoluto((HashMap<Integer, Integer>) imagenClonada.getHistogramaAbsoluto().clone());
+			imagenClonada
+					.setHistogramaAcumulado((HashMap<Integer, Integer>) imagenClonada.getHistogramaAcumulado().clone());
+			imagenClonada
+					.setMatrizPixelesGris((ArrayList<ArrayList<Integer>>) imagenClonada.getMatrizPixelesGris().clone());
+			// clonar la bufferedImage
 			ColorModel colorModel = imagenClonada.getImagen().getColorModel();
 			boolean isAlphaPremultiplied = colorModel.isAlphaPremultiplied();
 			WritableRaster raster = imagenClonada.getImagen().copyData(null);
@@ -267,8 +281,7 @@ public class Imagen extends Observable implements Cloneable {
 	 * @param matrizPixelesGris
 	 *            the matrizPixelesGris to set
 	 */
-	public void setMatrizPixelesGris(
-			ArrayList<ArrayList<Integer>> matrizPixelesGris) {
+	public void setMatrizPixelesGris(ArrayList<ArrayList<Integer>> matrizPixelesGris) {
 		this.matrizPixelesGris = matrizPixelesGris;
 	}
 
@@ -283,8 +296,7 @@ public class Imagen extends Observable implements Cloneable {
 	 * @param histogramaAcumulado
 	 *            the histogramaAcumulado to set
 	 */
-	public void setHistogramaAcumulado(
-			HashMap<Integer, Integer> histogramaAcumulado) {
+	public void setHistogramaAcumulado(HashMap<Integer, Integer> histogramaAcumulado) {
 		this.histogramaAcumulado = histogramaAcumulado;
 	}
 
@@ -371,7 +383,8 @@ public class Imagen extends Observable implements Cloneable {
 	}
 
 	/**
-	 * @param nombreImagen the nombreImagen to set
+	 * @param nombreImagen
+	 *            the nombreImagen to set
 	 */
 	public void setNombreImagen(String nombreImagen) {
 		this.nombreImagen = nombreImagen;

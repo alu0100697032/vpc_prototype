@@ -79,7 +79,8 @@ public class CambiarBrilloContraste extends JDialog {
 			Imagen imagenClonada = imagen.clone();
 			imagenClonada.ajustarBrilloContraste(nivelBrilloScrollbar.getValue(), nivelContrasteScrollbar.getValue());
 			conjuntoImagenes.addImagen(imagenClonada);
-			DibujaImagen dibujaImagen = new DibujaImagen(imagenClonada, panelEstado);
+			DibujaImagen dibujaImagen = new DibujaImagen(imagenClonada, imagenesAbiertas, barraMenu,
+					grupoInternalFrames, panelEstado, conjuntoImagenes);
 			DibujaInternalFrameImagen dibujaInternalFrameImagen = new DibujaInternalFrameImagen(dibujaImagen);
 			imagenesAbiertas.add(dibujaInternalFrameImagen);
 			grupoInternalFrames.add(dibujaInternalFrameImagen);

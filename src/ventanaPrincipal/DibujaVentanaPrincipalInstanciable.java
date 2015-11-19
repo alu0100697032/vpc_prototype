@@ -43,7 +43,8 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 					selectorFichero.getExtensionImagen());
 			getConjuntoImagenes().addImagen(imagen);
 			DibujaInternalFrameImagen dibujaInternalFrameImagen = new DibujaInternalFrameImagen(
-					new DibujaImagen(imagen, getPanelEstado()));
+					new DibujaImagen(imagen, getImagenesAbiertas(), getBarraMenu(), getGrupoInternalFrames(),
+							getPanelEstado(), conjuntoImagenes));
 			getImagenesAbiertas().add(dibujaInternalFrameImagen);
 			getGrupoInternalFrames().add(dibujaInternalFrameImagen);
 		}
@@ -72,7 +73,8 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
 				if (getImagenesAbiertas().get(i).isSelected()) {
 					DibujaInternalFrameImagen dibujaInternalFrameImagen = new DibujaInternalFrameImagen(
-							new DibujaImagen(getConjuntoImagenes().hacerCopiaImagen(i), getPanelEstado()));
+							new DibujaImagen(getConjuntoImagenes().hacerCopiaImagen(i), getImagenesAbiertas(),
+									getBarraMenu(), getGrupoInternalFrames(), getPanelEstado(), getConjuntoImagenes()));
 					getImagenesAbiertas().add(dibujaInternalFrameImagen);
 					getGrupoInternalFrames().add(dibujaInternalFrameImagen);
 				}
