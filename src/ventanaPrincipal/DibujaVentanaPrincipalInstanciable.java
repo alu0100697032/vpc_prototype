@@ -15,6 +15,7 @@ import dibujablesHistogramas.DibujaHistogramaAcumulado;
 import dibujablesHistogramas.DibujaInternalFrameHistogramaAbsoluto;
 import dibujablesHistogramas.DibujaInternalFrameHistogramaAcumulado;
 import dibujablesImagen.DibujaImagen;
+import dibujablesImagen.DibujaImagenInstanciable;
 import dibujablesImagen.DibujaInternalFrameImagen;
 
 public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
@@ -25,8 +26,11 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 		super();
 		addAbrirImagenListener(new AbrirImagenListener());
 		addGuardarImagenListener(new GuardarImagenListener());
+		
 		addHacerCopiaListener(new HacerCopiaListener());
 		addCambiarBrilloContrasteListener(new CambiarBrilloContrasteListener());
+		addSeleccionarRegionInteresListener(new SeleccionarRegionInteresListener());
+		
 		addVerHistogramaAbsolutoListener(new VerHistogramaAbsolutoListener());
 		addVerHistogramaAcumuladoListener(new VerHistogramaAcumuladoListener());
 		addVerInformacionImagenListener(new VerInformacionImagenListener());
@@ -43,7 +47,7 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 					selectorFichero.getExtensionImagen());
 			getConjuntoImagenes().addImagen(imagen);
 			DibujaInternalFrameImagen dibujaInternalFrameImagen = new DibujaInternalFrameImagen(
-					new DibujaImagen(imagen, getImagenesAbiertas(), getBarraMenu(), getGrupoInternalFrames(),
+					new DibujaImagenInstanciable(imagen, getImagenesAbiertas(), getBarraMenu(), getGrupoInternalFrames(),
 							getPanelEstado(), conjuntoImagenes));
 			getImagenesAbiertas().add(dibujaInternalFrameImagen);
 			getGrupoInternalFrames().add(dibujaInternalFrameImagen);
@@ -73,7 +77,7 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
 				if (getImagenesAbiertas().get(i).isSelected()) {
 					DibujaInternalFrameImagen dibujaInternalFrameImagen = new DibujaInternalFrameImagen(
-							new DibujaImagen(getConjuntoImagenes().hacerCopiaImagen(i), getImagenesAbiertas(),
+							new DibujaImagenInstanciable(getConjuntoImagenes().hacerCopiaImagen(i), getImagenesAbiertas(),
 									getBarraMenu(), getGrupoInternalFrames(), getPanelEstado(), getConjuntoImagenes()));
 					getImagenesAbiertas().add(dibujaInternalFrameImagen);
 					getGrupoInternalFrames().add(dibujaInternalFrameImagen);
@@ -85,6 +89,10 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 
 	class CambiarBrilloContrasteListener implements ActionListener {
 
+		/*
+		 * (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
@@ -99,6 +107,31 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 
 	}
 
+	class SeleccionarRegionInteresListener implements ActionListener{
+
+		private boolean seleccionActiva = false;
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			if(seleccionActiva == false) {
+				seleccionActiva = true;
+				getBarraMenu().getMenuItemSeleccionarRegionInteres().setText("Seleccionar ROI(activado)");
+				for(int i = 0; i < getImagenesAbiertas().size(); i++) {
+					getImagenesAbiertas().get(i).getDibujaImagenInstanciable().habilitarSeleccionRegionInteres();
+				}
+			}else {
+				seleccionActiva = false;
+				getBarraMenu().getMenuItemSeleccionarRegionInteres().setText("Seleccionar ROI(desactivado)");
+				for(int i = 0; i < getImagenesAbiertas().size(); i++) {
+					getImagenesAbiertas().get(i).getDibujaImagenInstanciable().deshabilitarSeleccionRegionInteres();
+				}
+			}
+		}
+		
+	}
 	class VerHistogramaAbsolutoListener implements ActionListener {
 
 		@Override

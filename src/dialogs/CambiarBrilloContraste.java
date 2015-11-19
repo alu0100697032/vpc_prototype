@@ -21,6 +21,7 @@ import javax.swing.JScrollBar;
 import clases.ConjuntoImagenes;
 import clases.Imagen;
 import dibujablesImagen.DibujaImagen;
+import dibujablesImagen.DibujaImagenInstanciable;
 import dibujablesImagen.DibujaInternalFrameImagen;
 import menuBar.DibujaBarraMenu;
 import statusBar.DibujaPanelEstado;
@@ -79,7 +80,7 @@ public class CambiarBrilloContraste extends JDialog {
 			Imagen imagenClonada = imagen.clone();
 			imagenClonada.ajustarBrilloContraste(nivelBrilloScrollbar.getValue(), nivelContrasteScrollbar.getValue());
 			conjuntoImagenes.addImagen(imagenClonada);
-			DibujaImagen dibujaImagen = new DibujaImagen(imagenClonada, imagenesAbiertas, barraMenu,
+			DibujaImagenInstanciable dibujaImagen = new DibujaImagenInstanciable(imagenClonada, imagenesAbiertas, barraMenu,
 					grupoInternalFrames, panelEstado, conjuntoImagenes);
 			DibujaInternalFrameImagen dibujaInternalFrameImagen = new DibujaInternalFrameImagen(dibujaImagen);
 			imagenesAbiertas.add(dibujaInternalFrameImagen);

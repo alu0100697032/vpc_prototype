@@ -53,7 +53,7 @@ public class DibujaImagenInstanciable extends DibujaImagen implements MouseMotio
 				Imagen subImagen = new Imagen(imagen.subImagen(inicioArrastre, e.getPoint()),
 						"subImagen_" + imagen.getNombreImagen(), imagen.getExtensionImagen());
 				conjuntoImagenes.addImagen(subImagen);
-				DibujaImagen dibujaImagen = new DibujaImagen(subImagen, imagenesAbiertas, barraMenu,
+				DibujaImagenInstanciable dibujaImagen = new DibujaImagenInstanciable(subImagen, imagenesAbiertas, barraMenu,
 						grupoInternalFrames, panelEstado, conjuntoImagenes);
 				DibujaInternalFrameImagen dibujaInternalFrameImagen = new DibujaInternalFrameImagen(dibujaImagen);
 				imagenesAbiertas.add(dibujaInternalFrameImagen);

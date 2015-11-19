@@ -7,21 +7,21 @@ public class DibujaInternalFrameImagen extends JInternalFrame{
 	/*
 	 * Atributos
 	 */
-	private DibujaImagen dibujaImagen;
+	private DibujaImagenInstanciable dibujaImagenInstanciable;
 
 	/*
 	 * Constructor
 	 */
-	public DibujaInternalFrameImagen(DibujaImagen img){
+	public DibujaInternalFrameImagen(DibujaImagenInstanciable img){
 		
-		setDibujaImagen(img);
-		setSize(dibujaImagen.getWidth(), dibujaImagen.getHeight());
+		setDibujaImagenInstanciable(img);
+		setSize(dibujaImagenInstanciable.getWidth(), dibujaImagenInstanciable.getHeight());
 		
 		JPanel contentPane = new JPanel();
 		contentPane.setSize(img.getWidth(), img.getHeight());
 		setContentPane(new JPanel());
 		
-		add(dibujaImagen);
+		add(dibujaImagenInstanciable);
 		
 		setClosable(true);
 		setResizable(true);
@@ -30,14 +30,14 @@ public class DibujaInternalFrameImagen extends JInternalFrame{
 	/**
 	 * @return the imagen
 	 */
-	public DibujaImagen getDibujaImagen() {
-		return dibujaImagen;
+	public DibujaImagenInstanciable getDibujaImagenInstanciable() {
+		return dibujaImagenInstanciable;
 	}
 
 	/**
 	 * @param imagen the imagen to set
 	 */
-	public void setDibujaImagen(DibujaImagen imagen) {
-		this.dibujaImagen = imagen;
+	public void setDibujaImagenInstanciable(DibujaImagenInstanciable imagen) {
+		this.dibujaImagenInstanciable = imagen;
 	}
 }

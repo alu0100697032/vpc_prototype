@@ -79,6 +79,9 @@ public class DibujaVentanaPrincipal extends JFrame {
 	public void addCambiarBrilloContrasteListener(ActionListener a){
 		barraMenu.getMenuItemCambiarBrilloContraste().addActionListener(a);
 	}
+	public void addSeleccionarRegionInteresListener(ActionListener a) {
+		barraMenu.getMenuItemSeleccionarRegionInteres().addActionListener(a);
+	}
 	/*
 	 * Ver
 	 */

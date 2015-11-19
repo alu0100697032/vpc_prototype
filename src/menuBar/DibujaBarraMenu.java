@@ -17,6 +17,7 @@ public class DibujaBarraMenu extends JMenuBar{
 	private JMenu menuEditar;
 	private JMenuItem menuItemCrearCopia;
 	private JMenuItem menuItemCambiarBrilloContraste;
+	private JMenuItem menuItemSeleccionarRegionInteres;
 	
 	private JMenu menuVer;
 	private JMenuItem menuItemVerHistogramaAbsoluo;
@@ -49,6 +50,9 @@ public class DibujaBarraMenu extends JMenuBar{
 		
 		menuItemCambiarBrilloContraste = new JMenuItem("Brillo y Contraste");
 		menuEditar.add(menuItemCambiarBrilloContraste);
+		
+		menuItemSeleccionarRegionInteres = new JMenuItem("Seleccionar ROI(desactivado)");
+		menuEditar.add(menuItemSeleccionarRegionInteres);
 		
 		add(menuEditar);
 		
@@ -203,5 +207,19 @@ public class DibujaBarraMenu extends JMenuBar{
 	 */
 	public void setMenuItemCambiarBrilloContraste(JMenuItem menuItemCambiarBrilloContraste) {
 		this.menuItemCambiarBrilloContraste = menuItemCambiarBrilloContraste;
+	}
+
+	/**
+	 * @return the menuItemSeleccionarRegionInteres
+	 */
+	public JMenuItem getMenuItemSeleccionarRegionInteres() {
+		return menuItemSeleccionarRegionInteres;
+	}
+
+	/**
+	 * @param menuItemSeleccionarRegionInteres the menuItemSeleccionarRegionInteres to set
+	 */
+	public void setMenuItemSeleccionarRegionInteres(JMenuItem menuItemSeleccionarRegionInteres) {
+		this.menuItemSeleccionarRegionInteres = menuItemSeleccionarRegionInteres;
 	}
 }
