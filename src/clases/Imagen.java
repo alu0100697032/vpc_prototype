@@ -2,6 +2,8 @@ package clases;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,6 +17,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Imagen extends Observable implements Cloneable {
 
+	/**
+	 * Atributos
+	 */
 	private BufferedImage imagen;
 	private ArrayList<ArrayList<Integer>> matrizPixelesGris;
 
@@ -27,8 +32,8 @@ public class Imagen extends Observable implements Cloneable {
 	private int contraste;
 	private int entropia;
 
-	/*
-	 * Constructor: abre la imagen desde selector de fichero
+	/**
+	 * Constructor: Imagen
 	 */
 
 	public Imagen() {
@@ -54,16 +59,17 @@ public class Imagen extends Observable implements Cloneable {
 
 		}
 		setImagen(img);
-		// inicializa el histograma
+		// inicializa los histogramas
 		histogramaAcumulado = new HashMap<Integer, Integer>();
 		histogramaAbsoluto = new HashMap<Integer, Integer>();
 		for (int i = 0; i < 256; i++)
 			histogramaAbsoluto.put(i, 0);
+		//pasar la imagen a gris
 		pasarImagenGris();
 	}
 
-	/*
-	 * Pasar a gris la imagen
+	/**
+	 * pasarImagenGris
 	 */
 
 	public void pasarImagenGris() {
@@ -86,14 +92,15 @@ public class Imagen extends Observable implements Cloneable {
 						new Color(colorGris, colorGris, colorGris).getRGB());
 			}
 		}
+		//una vez pasada a gris se calculan una serie de propiedades
 		obtenerHisogramaAcumulado();
 		obtenerRango();
 		obtenerBrillo();
 		obtenerContraste();
 	}
 
-	/*
-	 * Obtener histograma acumulado
+	/**
+	 * obtenerHisogramaAcumulado
 	 */
 	private void obtenerHisogramaAcumulado() {
 		int pixelesAcumulados = 0;
@@ -104,8 +111,8 @@ public class Imagen extends Observable implements Cloneable {
 		}
 	}
 
-	/*
-	 * Obtener rango
+	/**
+	 * obtenerRango
 	 */
 	private void obtenerRango() {
 		setRangoMaximo(0);
@@ -118,8 +125,8 @@ public class Imagen extends Observable implements Cloneable {
 		}
 	}
 
-	/*
-	 * Obtener brillo
+	/**
+	 * obtenerBrillo
 	 */
 	private void obtenerBrillo() {
 		int sumatorioValores = 0;
@@ -132,8 +139,8 @@ public class Imagen extends Observable implements Cloneable {
 		brillo = sumatorioValores / numeroPixleles;
 	}
 
-	/*
-	 * Obtener contraste
+	/**
+	 * obtenerContraste
 	 */
 	private void obtenerContraste() {
 		int sumatorioValores = 0;
@@ -148,8 +155,8 @@ public class Imagen extends Observable implements Cloneable {
 		contraste = (int) Math.sqrt(((sumatorioValores / numeroPixleles)));
 	}
 
-	/*
-	 * Cambiar brillo y contraste
+	/**
+	 * ajustarBrilloContraste
 	 */
 	public void ajustarBrilloContraste(int brilloPrima, int contrastePrima) {
 		int A = contrastePrima / contraste;
@@ -180,8 +187,8 @@ public class Imagen extends Observable implements Cloneable {
 		obtenerContraste();
 	}
 
-	/*
-	 * Guardar imagen
+	/**
+	 * guardarImagen
 	 */
 
 	public void guardarImagen() {
@@ -198,8 +205,8 @@ public class Imagen extends Observable implements Cloneable {
 		}
 	}
 
-	/*
-	 * Informacion de la imagen
+	/**
+	 * informacionImagen
 	 */
 	public String informacionImagen() {
 		String informacion = "Tipo: ." + extensionImagen + "\nSize: "
@@ -218,10 +225,17 @@ public class Imagen extends Observable implements Cloneable {
 	public Imagen clone() {
 		Imagen imagenClonada = null;
 		try {
+			//clonar las primitivas
 			imagenClonada = (Imagen) super.clone();
+			//clonar los arrays
 			imagenClonada.setHistogramaAbsoluto((HashMap<Integer, Integer>) imagenClonada.getHistogramaAbsoluto().clone());
 			imagenClonada.setHistogramaAcumulado((HashMap<Integer, Integer>) imagenClonada.getHistogramaAcumulado().clone());
 			imagenClonada.setMatrizPixelesGris((ArrayList<ArrayList<Integer>>) imagenClonada.getMatrizPixelesGris().clone());
+			//clonar la bufferedImage
+			ColorModel colorModel = imagenClonada.getImagen().getColorModel();
+			boolean isAlphaPremultiplied = colorModel.isAlphaPremultiplied();
+			WritableRaster raster = imagenClonada.getImagen().copyData(null);
+			imagenClonada.setImagen(new BufferedImage(colorModel, raster, isAlphaPremultiplied, null));
 		} catch (CloneNotSupportedException ex) {
 			System.out.println(" no se puede duplicar");
 		}
