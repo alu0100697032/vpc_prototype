@@ -76,11 +76,14 @@ public class DibujaVentanaPrincipal extends JFrame {
 	public void addHacerCopiaListener(ActionListener a){
 		barraMenu.getMenuItemCrearCopia().addActionListener(a);
 	}
+	public void addSeleccionarRegionInteresListener(ActionListener a) {
+		barraMenu.getMenuItemSeleccionarRegionInteres().addActionListener(a);
+	}
 	public void addCambiarBrilloContrasteListener(ActionListener a){
 		barraMenu.getMenuItemCambiarBrilloContraste().addActionListener(a);
 	}
-	public void addSeleccionarRegionInteresListener(ActionListener a) {
-		barraMenu.getMenuItemSeleccionarRegionInteres().addActionListener(a);
+	public void addTransformacionLinealTramosListener(ActionListener a){
+		barraMenu.getMenuItemTransformacionLinealTramos().addActionListener(a);
 	}
 	/*
 	 * Ver

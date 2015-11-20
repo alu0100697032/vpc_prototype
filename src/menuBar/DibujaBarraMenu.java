@@ -18,6 +18,7 @@ public class DibujaBarraMenu extends JMenuBar{
 	private JMenuItem menuItemCrearCopia;
 	private JMenuItem menuItemCambiarBrilloContraste;
 	private JMenuItem menuItemSeleccionarRegionInteres;
+	private JMenuItem menuItemTransformacionLinealTramos;
 	
 	private JMenu menuVer;
 	private JMenuItem menuItemVerHistogramaAbsoluo;
@@ -35,7 +36,7 @@ public class DibujaBarraMenu extends JMenuBar{
 		menuArchivo = new JMenu("Archivo");
 		
 		menuItemAbrirImagen = new JMenuItem("Abrir Imagen");
-		menuItemGuardarImagen = new JMenuItem("Guardar Como...");
+		menuItemGuardarImagen = new JMenuItem("Guardar Imagen");
 		menuArchivo.add(menuItemAbrirImagen);
 		menuArchivo.add(menuItemGuardarImagen);
 		
@@ -48,11 +49,14 @@ public class DibujaBarraMenu extends JMenuBar{
 		menuItemCrearCopia = new JMenuItem("Crear Copia");
 		menuEditar.add(menuItemCrearCopia);
 		
+		menuItemSeleccionarRegionInteres = new JMenuItem("Seleccionar ROI(desactivado)");
+		menuEditar.add(menuItemSeleccionarRegionInteres);
+		
 		menuItemCambiarBrilloContraste = new JMenuItem("Brillo y Contraste");
 		menuEditar.add(menuItemCambiarBrilloContraste);
 		
-		menuItemSeleccionarRegionInteres = new JMenuItem("Seleccionar ROI(desactivado)");
-		menuEditar.add(menuItemSeleccionarRegionInteres);
+		menuItemTransformacionLinealTramos = new JMenuItem("Transformacion lineal por tramos");
+		menuEditar.add(menuItemTransformacionLinealTramos);
 		
 		add(menuEditar);
 		
@@ -221,5 +225,20 @@ public class DibujaBarraMenu extends JMenuBar{
 	 */
 	public void setMenuItemSeleccionarRegionInteres(JMenuItem menuItemSeleccionarRegionInteres) {
 		this.menuItemSeleccionarRegionInteres = menuItemSeleccionarRegionInteres;
+	}
+
+	/**
+	 * @return the menuItemTransformacionLinealTramos
+	 */
+	public JMenuItem getMenuItemTransformacionLinealTramos() {
+		return menuItemTransformacionLinealTramos;
+	}
+
+	/**
+	 * @param menuItemTransformacionLinealTramos the menuItemTransformacionLinealTramos to set
+	 */
+	public void setMenuItemTransformacionLinealTramos(
+			JMenuItem menuItemTransformacionLinealTramos) {
+		this.menuItemTransformacionLinealTramos = menuItemTransformacionLinealTramos;
 	}
 }

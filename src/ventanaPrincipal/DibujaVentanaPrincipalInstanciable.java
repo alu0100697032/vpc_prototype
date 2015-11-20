@@ -8,8 +8,10 @@ import javax.swing.plaf.SliderUI;
 import clases.ConjuntoImagenes;
 import clases.Imagen;
 import dialogs.CambiarBrilloContraste;
+import dialogs.EspecificarNumeroTramos;
 import dialogs.InformacionImagen;
 import dialogs.SelectorFichero;
+import dialogs.TransformacionLinealTramos;
 import dibujablesHistogramas.DibujaHistogramaAbsoluto;
 import dibujablesHistogramas.DibujaHistogramaAcumulado;
 import dibujablesHistogramas.DibujaInternalFrameHistogramaAbsoluto;
@@ -28,8 +30,9 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 		addGuardarImagenListener(new GuardarImagenListener());
 		
 		addHacerCopiaListener(new HacerCopiaListener());
-		addCambiarBrilloContrasteListener(new CambiarBrilloContrasteListener());
 		addSeleccionarRegionInteresListener(new SeleccionarRegionInteresListener());
+		addCambiarBrilloContrasteListener(new CambiarBrilloContrasteListener());
+		addTransformacionLinealTramosListener(new TransformacionLinealTramosListener());
 		
 		addVerHistogramaAbsolutoListener(new VerHistogramaAbsolutoListener());
 		addVerHistogramaAcumuladoListener(new VerHistogramaAcumuladoListener());
@@ -86,27 +89,6 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 		}
 
 	}
-
-	class CambiarBrilloContrasteListener implements ActionListener {
-
-		/*
-		 * (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-		 */
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
-				if (getImagenesAbiertas().get(i).isSelected()) {
-					CambiarBrilloContraste cambiarBrilloContraste = new CambiarBrilloContraste(
-							conjuntoImagenes.getImagen(i), getImagenesAbiertas(), getBarraMenu(),
-							getGrupoInternalFrames(), getPanelEstado(), getConjuntoImagenes());
-				}
-			}
-		}
-
-	}
-
 	class SeleccionarRegionInteresListener implements ActionListener{
 
 		private boolean seleccionActiva = false;
@@ -131,6 +113,37 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 			}
 		}
 		
+	}
+	class CambiarBrilloContrasteListener implements ActionListener {
+
+		/*
+		 * (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
+				if (getImagenesAbiertas().get(i).isSelected()) {
+					CambiarBrilloContraste cambiarBrilloContraste = new CambiarBrilloContraste(
+							conjuntoImagenes.getImagen(i), getImagenesAbiertas(), getBarraMenu(),
+							getGrupoInternalFrames(), getPanelEstado(), getConjuntoImagenes());
+				}
+			}
+		}
+
+	}
+	class TransformacionLinealTramosListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
+				if (getImagenesAbiertas().get(i).isSelected()) {
+					EspecificarNumeroTramos especificarNumeroTramosDialog = new EspecificarNumeroTramos();
+				}
+			}
+		}
 	}
 	class VerHistogramaAbsolutoListener implements ActionListener {
 
