@@ -61,7 +61,7 @@ public class CambiarBrilloContraste extends JDialog {
 
 		nivelesBrilloContraste.add(nivelBrilloScrollbar);
 
-		nivelContrasteScrollbar = new JScrollBar(Adjustable.HORIZONTAL, imagen.getContraste(), 0, 0, 255);
+		nivelContrasteScrollbar = new JScrollBar(Adjustable.HORIZONTAL, imagen.getContraste(), 0, 0, 127);
 		nivelContrasteScrollbar.addAdjustmentListener(new AdjustmentListener() {
 			public void adjustmentValueChanged(AdjustmentEvent ae) {
 				mostrarNivelContraste.setText("Contraste: " + ae.getValue());

@@ -13,7 +13,6 @@ public class EspecificarNumeroTramos extends JDialog {
 
 	public EspecificarNumeroTramos() {
 		setResizable(false);
-
 		contenedor = new JPanel();
 		contenedor.setLayout(new BoxLayout(contenedor, BoxLayout.PAGE_AXIS));
 
@@ -27,7 +26,7 @@ public class EspecificarNumeroTramos extends JDialog {
 	public void accion() {
 		Object[] opciones = { "Aceptar", "Cancelar" };
 		int opcion = JOptionPane.showOptionDialog(this, contenedor,
-				"Transformacion lineal por tramos", JOptionPane.YES_NO_OPTION,
+				"Número de tramos", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
 		if (opcion == JOptionPane.YES_OPTION) {
 			TransformacionLinealTramos transformacionLinealTramosJDialog = new TransformacionLinealTramos(

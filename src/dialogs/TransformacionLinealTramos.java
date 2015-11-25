@@ -23,7 +23,7 @@ public class TransformacionLinealTramos extends JDialog {
 		tramosCoordenadas = new JPanel();
 		Object[] opciones = { "Aceptar", "Cancelar" };
 		int opcion = JOptionPane.showOptionDialog(this, tramosCoordenadas,
-				"Transformacion lineal por tramos", JOptionPane.YES_NO_OPTION,
+				"Coordenadas", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
 		if (opcion == JOptionPane.YES_OPTION) {
 

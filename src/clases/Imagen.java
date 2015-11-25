@@ -151,9 +151,9 @@ public class Imagen extends Observable implements Cloneable {
 	/**
 	 * ajustarBrilloContraste
 	 */
-	public void ajustarBrilloContraste(double brilloPrima, double contrastePrima) {
-		double A = contrastePrima / contraste;
-		double B = brilloPrima - (A * brillo);
+	public void ajustarBrilloContraste(int brilloPrima, int contrastePrima) {
+		double A = (double)(contrastePrima / contraste);
+		double B = (double)(brilloPrima - (A * brillo));
 		int colorCambiado;
 		HashMap<Integer, Integer> relacionVinVout = new HashMap<Integer, Integer>();
 		HashMap<Integer, Integer> histogramaCambiado = new HashMap<Integer, Integer>();
