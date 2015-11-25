@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Map.Entry;
 
@@ -149,26 +151,33 @@ public class Imagen extends Observable implements Cloneable {
 	/**
 	 * ajustarBrilloContraste
 	 */
-	public void ajustarBrilloContraste(int brilloPrima, int contrastePrima) {
-		int A = contrastePrima / contraste;
-		int B = brilloPrima - (A * brillo);
+	public void ajustarBrilloContraste(double brilloPrima, double contrastePrima) {
+		double A = contrastePrima / contraste;
+		double B = brilloPrima - (A * brillo);
 		int colorCambiado;
 		HashMap<Integer, Integer> relacionVinVout = new HashMap<Integer, Integer>();
 		HashMap<Integer, Integer> histogramaCambiado = new HashMap<Integer, Integer>();
-		for (int i = 0; i < histogramaAbsoluto.size(); i++)
-			histogramaCambiado.put(i, 0);
-		for (int i = 0; i < histogramaAbsoluto.size(); i++) {
-			colorCambiado = (A * histogramaAbsoluto.get(i)) + B;
-			histogramaCambiado.put(colorCambiado, histogramaAbsoluto.get(i));
-			relacionVinVout.put(i, colorCambiado);
-		}
+		//recorremos el histograma y cambiamos los valores de vin por vout
+		Iterator it = histogramaAbsoluto.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry pairs = (Map.Entry)it.next();
+	        colorCambiado = (int)((A * (int)(pairs.getKey())) + B);
+	        if(colorCambiado > 255)
+	        	colorCambiado = 255;
+	        if(colorCambiado < 0)
+	        	colorCambiado = 0;
+			histogramaCambiado.put(colorCambiado, (int)(pairs.getValue()));
+			relacionVinVout.put((int)(pairs.getKey()), colorCambiado);
+	    }
+	    //cambiamos la matriz de pixeles y cambiamos la bifferedimage
 		for (int i = 0; i < matrizPixelesGris.size(); i++) {
 			for (int j = 0; j < matrizPixelesGris.get(i).size(); j++) {
-				colorCambiado = histogramaCambiado.get(matrizPixelesGris.get(i).get(j));
+				colorCambiado = relacionVinVout.get(matrizPixelesGris.get(i).get(j));
 				matrizPixelesGris.get(i).set(j, colorCambiado);
 				imagen.setRGB(i, j, new Color(colorCambiado, colorCambiado, colorCambiado).getRGB());
 			}
 		}
+		//actualizamos la imformacion de la imagen
 		setHistogramaAbsoluto(histogramaCambiado);
 		obtenerHisogramaAcumulado();
 		obtenerRango();
