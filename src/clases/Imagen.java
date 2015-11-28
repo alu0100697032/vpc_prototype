@@ -87,12 +87,13 @@ public class Imagen extends Observable implements Cloneable {
 	 * obtenerHisogramaAcumulado
 	 */
 	private void obtenerHisogramaAcumulado() {
-		int pixelesAcumulados = 0;
 		histogramaAcumulado.clear();
+		int pixelesAcumulados = 0;
 		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
-			pixelesAcumulados = pixelesAcumulados + entry.getValue();
+			pixelesAcumulados += entry.getValue();
 			histogramaAcumulado.put(entry.getKey(), pixelesAcumulados);
-		}
+			System.out.println(entry.getKey()+ ": " + histogramaAcumulado.get(entry.getKey()));
+		}	
 	}
 
 	/**
@@ -116,7 +117,7 @@ public class Imagen extends Observable implements Cloneable {
 		int sumatorioValores = 0;
 		int numeroPixleles = histogramaAcumulado.get(255);
 		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
-			sumatorioValores = sumatorioValores + entry.getKey() * entry.getValue();
+			sumatorioValores += entry.getKey() * entry.getValue();
 		}
 		brillo = sumatorioValores / numeroPixleles;
 	}
@@ -129,10 +130,10 @@ public class Imagen extends Observable implements Cloneable {
 		int numeroPixleles = histogramaAcumulado.get(255);
 		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
 			for (int j = 0; j < entry.getValue(); j++) {
-				sumatorioValores = sumatorioValores + (int) Math.pow((entry.getKey() - brillo), 2);
+				sumatorioValores += (int) Math.pow((entry.getKey() - brillo), 2);
 			}
 		}
-		contraste = (int) Math.sqrt(((sumatorioValores / numeroPixleles)));
+		contraste = (int) Math.sqrt((sumatorioValores / numeroPixleles));
 	}
 
 	/**
@@ -157,6 +158,8 @@ public class Imagen extends Observable implements Cloneable {
 		int colorCambiado;
 		HashMap<Integer, Integer> relacionVinVout = new HashMap<Integer, Integer>();
 		HashMap<Integer, Integer> histogramaCambiado = new HashMap<Integer, Integer>();
+		for(int i = 0; i < 256; i++)
+			histogramaCambiado.put(i, 0);
 		//recorremos el histograma y cambiamos los valores de vin por vout
 		Iterator it = histogramaAbsoluto.entrySet().iterator();
 	    while (it.hasNext()) {
@@ -166,7 +169,7 @@ public class Imagen extends Observable implements Cloneable {
 	        	colorCambiado = 255;
 	        if(colorCambiado < 0)
 	        	colorCambiado = 0;
-			histogramaCambiado.put(colorCambiado, (int)(pairs.getValue()));
+			histogramaCambiado.put(colorCambiado, histogramaCambiado.get(colorCambiado)+(int)(pairs.getValue()));
 			relacionVinVout.put((int)(pairs.getKey()), colorCambiado);
 	    }
 	    //cambiamos la matriz de pixeles y cambiamos la bifferedimage
