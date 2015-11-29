@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class SelectorFichero {
+public class AbrirImagenDialog {
 	/**
 	 * Atributos
 	 */
@@ -22,7 +22,7 @@ public class SelectorFichero {
 	/**
 	 * Constructor: SelectorFichero
 	 */
-	public SelectorFichero() {
+	public AbrirImagenDialog() {
 		imagenCargada = null;
 		JFileChooser selectorFichero = new JFileChooser();
 		selectorFichero.setDialogTitle("Seleccione una imagen para abrir:");

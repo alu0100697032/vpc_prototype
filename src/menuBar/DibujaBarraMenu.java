@@ -19,6 +19,7 @@ public class DibujaBarraMenu extends JMenuBar{
 	private JMenuItem menuItemCambiarBrilloContraste;
 	private JMenuItem menuItemSeleccionarRegionInteres;
 	private JMenuItem menuItemTransformacionLinealTramos;
+	private JMenuItem menuItemCorreccionGamma;
 	
 	private JMenu menuVer;
 	private JMenuItem menuItemVerHistogramaAbsoluo;
@@ -58,6 +59,9 @@ public class DibujaBarraMenu extends JMenuBar{
 		menuItemTransformacionLinealTramos = new JMenuItem("Transformacion lineal por tramos");
 		menuEditar.add(menuItemTransformacionLinealTramos);
 		
+		menuItemCorreccionGamma = new JMenuItem("Corrección Gamma");
+		menuEditar.add(menuItemCorreccionGamma);
+		
 		add(menuEditar);
 		
 		//Ver
@@ -75,10 +79,6 @@ public class DibujaBarraMenu extends JMenuBar{
 		
 		add(menuVer);
 	}
-	
-	/*
-	 * 
-	 */
 	
 	/**
 	 * @return the menuItemGuardarImagen
@@ -240,5 +240,19 @@ public class DibujaBarraMenu extends JMenuBar{
 	public void setMenuItemTransformacionLinealTramos(
 			JMenuItem menuItemTransformacionLinealTramos) {
 		this.menuItemTransformacionLinealTramos = menuItemTransformacionLinealTramos;
+	}
+
+	/**
+	 * @return the menuItemCorreccionGamma
+	 */
+	public JMenuItem getMenuItemCorreccionGamma() {
+		return menuItemCorreccionGamma;
+	}
+
+	/**
+	 * @param menuItemCorreccionGamma the menuItemCorreccionGamma to set
+	 */
+	public void setMenuItemCorreccionGamma(JMenuItem menuItemCorreccionGamma) {
+		this.menuItemCorreccionGamma = menuItemCorreccionGamma;
 	}
 }

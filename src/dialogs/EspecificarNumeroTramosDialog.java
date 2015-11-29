@@ -6,12 +6,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class EspecificarNumeroTramos extends JDialog {
+public class EspecificarNumeroTramosDialog extends JDialog {
 
 	private JTextField numeroTramosEspecificados;
 	private JPanel contenedor;
 
-	public EspecificarNumeroTramos() {
+	public EspecificarNumeroTramosDialog() {
 		setResizable(false);
 		contenedor = new JPanel();
 		contenedor.setLayout(new BoxLayout(contenedor, BoxLayout.PAGE_AXIS));
@@ -29,7 +29,7 @@ public class EspecificarNumeroTramos extends JDialog {
 				"Número de tramos", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
 		if (opcion == JOptionPane.YES_OPTION) {
-			TransformacionLinealTramos transformacionLinealTramosJDialog = new TransformacionLinealTramos(
+			TransformacionLinealTramosDialog transformacionLinealTramosJDialog = new TransformacionLinealTramosDialog(
 					Integer.parseInt(numeroTramosEspecificados.getText()));
 		}
 	}

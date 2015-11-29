@@ -7,9 +7,9 @@ import org.omg.Messaging.SyncScopeHelper;
 
 import clases.Imagen;
 
-public class InformacionImagen extends JDialog {
+public class InformacionImagenDialog extends JDialog {
 
-	public InformacionImagen(Imagen imagen) {
+	public InformacionImagenDialog(Imagen imagen) {
 		setResizable(false);
 		JOptionPane.showMessageDialog(this, imagen.informacionImagen(), "Informacion de la imagen",
 				JOptionPane.INFORMATION_MESSAGE);

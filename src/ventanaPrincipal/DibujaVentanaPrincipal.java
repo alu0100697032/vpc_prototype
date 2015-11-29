@@ -85,6 +85,9 @@ public class DibujaVentanaPrincipal extends JFrame {
 	public void addTransformacionLinealTramosListener(ActionListener a){
 		barraMenu.getMenuItemTransformacionLinealTramos().addActionListener(a);
 	}
+	public void addCorreccionGammaListener(ActionListener a) {
+		barraMenu.getMenuItemCorreccionGamma().addActionListener(a);
+	}
 	/*
 	 * Ver
 	 */

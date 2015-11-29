@@ -18,14 +18,14 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class Imagen extends Observable implements Cloneable {
+import org.omg.Messaging.SyncScopeHelper;
 
+public class Imagen extends Observable implements Cloneable {
 	/**
 	 * Atributos
 	 */
 	private BufferedImage imagen;
 	private ArrayList<ArrayList<Integer>> matrizPixelesGris;
-
 	private HashMap<Integer, Integer> histogramaAbsoluto;
 	private HashMap<Integer, Integer> histogramaAcumulado;
 	private String extensionImagen;
@@ -35,11 +35,9 @@ public class Imagen extends Observable implements Cloneable {
 	private int brillo;
 	private int contraste;
 	private float entropia;
-
 	/**
 	 * Constructor: Imagen
 	 */
-
 	public Imagen(BufferedImage img, String nombre, String extension) {
 		setImagen(img);
 		setExtensionImagen(extension);
@@ -52,11 +50,9 @@ public class Imagen extends Observable implements Cloneable {
 		// pasar la imagen a gris
 		pasarImagenGris();
 	}
-
 	/**
 	 * pasarImagenGris
 	 */
-
 	public void pasarImagenGris() {
 		Color colorRGB;
 		int colorGris;
@@ -82,7 +78,6 @@ public class Imagen extends Observable implements Cloneable {
 		obtenerContraste();
 		obtenerEntropia();
 	}
-
 	/**
 	 * obtenerHisogramaAcumulado
 	 */
@@ -92,10 +87,9 @@ public class Imagen extends Observable implements Cloneable {
 		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
 			pixelesAcumulados += entry.getValue();
 			histogramaAcumulado.put(entry.getKey(), pixelesAcumulados);
-			System.out.println(entry.getKey()+ ": " + histogramaAcumulado.get(entry.getKey()));
+			//System.out.println(entry.getKey()+ ": " + histogramaAcumulado.get(entry.getKey()));
 		}	
 	}
-
 	/**
 	 * obtenerRango
 	 */
@@ -109,7 +103,6 @@ public class Imagen extends Observable implements Cloneable {
 				rangoMinimo = entry.getKey();
 		}
 	}
-
 	/**
 	 * obtenerBrillo
 	 */
@@ -121,7 +114,6 @@ public class Imagen extends Observable implements Cloneable {
 		}
 		brillo = sumatorioValores / numeroPixleles;
 	}
-
 	/**
 	 * obtenerContraste
 	 */
@@ -135,7 +127,6 @@ public class Imagen extends Observable implements Cloneable {
 		}
 		contraste = (int) Math.sqrt((sumatorioValores / numeroPixleles));
 	}
-
 	/**
 	 * obtenerEntropia
 	 */
@@ -148,7 +139,6 @@ public class Imagen extends Observable implements Cloneable {
 				entropia -= (probabilidad * (Math.log(probabilidad) / Math.log(2)));
 		}
 	}
-
 	/**
 	 * ajustarBrilloContraste
 	 */
@@ -157,9 +147,9 @@ public class Imagen extends Observable implements Cloneable {
 		double B = (double)(brilloPrima - (A * brillo));
 		int colorCambiado;
 		HashMap<Integer, Integer> relacionVinVout = new HashMap<Integer, Integer>();
-		HashMap<Integer, Integer> histogramaCambiado = new HashMap<Integer, Integer>();
+		HashMap<Integer, Integer> VOut = new HashMap<Integer, Integer>();
 		for(int i = 0; i < 256; i++)
-			histogramaCambiado.put(i, 0);
+			VOut.put(i, 0);
 		//recorremos el histograma y cambiamos los valores de vin por vout
 		Iterator it = histogramaAbsoluto.entrySet().iterator();
 	    while (it.hasNext()) {
@@ -169,25 +159,55 @@ public class Imagen extends Observable implements Cloneable {
 	        	colorCambiado = 255;
 	        if(colorCambiado < 0)
 	        	colorCambiado = 0;
-			histogramaCambiado.put(colorCambiado, histogramaCambiado.get(colorCambiado)+(int)(pairs.getValue()));
+			VOut.put(colorCambiado, VOut.get(colorCambiado)+(int)(pairs.getValue()));
 			relacionVinVout.put((int)(pairs.getKey()), colorCambiado);
 	    }
-	    //cambiamos la matriz de pixeles y cambiamos la bifferedimage
+	    actualizarValores(relacionVinVout, VOut);
+	}
+	/**
+	 * correccionGamma
+	 */
+	public void correccionGamma(double y) {
+		int colorCambiado;
+		HashMap<Integer, Integer> relacionVinVout = new HashMap<Integer, Integer>();
+		HashMap<Integer, Integer> VOut = new HashMap<Integer, Integer>();
+		for(int i = 0; i < 256; i++)
+			VOut.put(i, 0);
+		//recorremos el histograma y cambiamos los valores de vin por vout
+		Iterator it = histogramaAbsoluto.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry pairs = (Map.Entry)it.next();
+	        double a = (int)pairs.getKey()/(double)255;
+	        System.out.println(a);
+	        double b = Math.pow(a, y);
+	        colorCambiado = (int)(b*255);
+			VOut.put(colorCambiado, VOut.get(colorCambiado)+(int)(pairs.getValue()));
+			relacionVinVout.put((int)(pairs.getKey()), colorCambiado);
+	    }
+	    actualizarValores(relacionVinVout, VOut);
+	}
+	/**
+	 * actualizarValores
+	 */
+	public void actualizarValores(HashMap<Integer, Integer> relacionVinVout, HashMap<Integer, Integer> VOut) {
+		//cambiamos la matriz de pixeles y cambiamos la bufferedimage
 		for (int i = 0; i < matrizPixelesGris.size(); i++) {
 			for (int j = 0; j < matrizPixelesGris.get(i).size(); j++) {
-				colorCambiado = relacionVinVout.get(matrizPixelesGris.get(i).get(j));
+				int colorCambiado = relacionVinVout.get(matrizPixelesGris.get(i).get(j));
 				matrizPixelesGris.get(i).set(j, colorCambiado);
 				imagen.setRGB(i, j, new Color(colorCambiado, colorCambiado, colorCambiado).getRGB());
 			}
 		}
 		//actualizamos la imformacion de la imagen
-		setHistogramaAbsoluto(histogramaCambiado);
+		setHistogramaAbsoluto(VOut);
 		obtenerHisogramaAcumulado();
 		obtenerRango();
 		obtenerBrillo();
 		obtenerContraste();
 	}
-
+	/**
+	 * subImagen
+	 */
 	public BufferedImage subImagen(Point inicio, Point fin) {
 		int k = 0;
 		int l = 0;
@@ -204,25 +224,6 @@ public class Imagen extends Observable implements Cloneable {
 		}
 		return subImagen;
 	}
-
-	/**
-	 * guardarImagen
-	 */
-
-	public void guardarImagen() {
-		File saveFile = new File("imagen." + extensionImagen);
-		JFileChooser chooser = new JFileChooser();
-		chooser.setSelectedFile(saveFile);
-		int rval = chooser.showSaveDialog(null);
-		if (rval == JFileChooser.APPROVE_OPTION) {
-			saveFile = chooser.getSelectedFile();
-			try {
-				ImageIO.write(imagen, extensionImagen, saveFile);
-			} catch (IOException ex) {
-			}
-		}
-	}
-
 	/**
 	 * informacionImagen
 	 */
