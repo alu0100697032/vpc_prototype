@@ -236,8 +236,17 @@ public class Imagen extends Observable implements Cloneable {
 		}
 		actualizarValores(relacionVinVout, VOut);
 	}
+	/**
+	 * repintarCambiosMatrizPixeles
+	 */
 	public void repintarCambiosMatrizPixeles(ArrayList<ArrayList<Integer>> matrizDiferencia, int umbral) {
-		
+		for (int i = 0; i < matrizDiferencia.size(); i++) {
+			for (int j = 0; j < matrizDiferencia.get(i).size(); j++) {
+				if(matrizDiferencia.get(i).get(j) > umbral) {
+					imagen.setRGB(i, j, new Color(255, 0, 0).getRGB());
+				}
+			}
+		}
 	}
 	/**
 	 * diferenciaImagenes
