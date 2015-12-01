@@ -154,7 +154,9 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 			// TODO Auto-generated method stub
 			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
 				if (getImagenesAbiertas().get(i).isSelected()) {
-					EspecificarNumeroTramosDialog especificarNumeroTramosDialog = new EspecificarNumeroTramosDialog();
+					EspecificarNumeroTramosDialog especificarNumeroTramosDialog = new EspecificarNumeroTramosDialog(
+							conjuntoImagenes.getImagen(i), getImagenesAbiertas(), getBarraMenu(),
+							getGrupoInternalFrames(), getPanelEstado(), getConjuntoImagenes());
 				}
 			}
 		}

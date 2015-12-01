@@ -35,6 +35,7 @@ public class Imagen extends Observable implements Cloneable {
 	private int brillo;
 	private int contraste;
 	private float entropia;
+
 	/**
 	 * Constructor: Imagen
 	 */
@@ -50,6 +51,7 @@ public class Imagen extends Observable implements Cloneable {
 		// pasar la imagen a gris
 		pasarImagenGris();
 	}
+
 	/**
 	 * pasarImagenGris
 	 */
@@ -78,6 +80,7 @@ public class Imagen extends Observable implements Cloneable {
 		obtenerContraste();
 		obtenerEntropia();
 	}
+
 	/**
 	 * obtenerHisogramaAcumulado
 	 */
@@ -87,9 +90,11 @@ public class Imagen extends Observable implements Cloneable {
 		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
 			pixelesAcumulados += entry.getValue();
 			histogramaAcumulado.put(entry.getKey(), pixelesAcumulados);
-			//System.out.println(entry.getKey()+ ": " + histogramaAcumulado.get(entry.getKey()));
-		}	
+			// System.out.println(entry.getKey()+ ": " +
+			// histogramaAcumulado.get(entry.getKey()));
+		}
 	}
+
 	/**
 	 * obtenerRango
 	 */
@@ -103,6 +108,7 @@ public class Imagen extends Observable implements Cloneable {
 				rangoMinimo = entry.getKey();
 		}
 	}
+
 	/**
 	 * obtenerBrillo
 	 */
@@ -114,6 +120,7 @@ public class Imagen extends Observable implements Cloneable {
 		}
 		brillo = sumatorioValores / numeroPixleles;
 	}
+
 	/**
 	 * obtenerContraste
 	 */
@@ -127,6 +134,7 @@ public class Imagen extends Observable implements Cloneable {
 		}
 		contraste = (int) Math.sqrt((sumatorioValores / numeroPixleles));
 	}
+
 	/**
 	 * obtenerEntropia
 	 */
@@ -134,36 +142,79 @@ public class Imagen extends Observable implements Cloneable {
 		entropia = 0;
 		int numeroPixleles = histogramaAcumulado.get(255);
 		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
-			float probabilidad = (float)entry.getValue() / (float)numeroPixleles;
-			if(probabilidad > 0.0)
+			float probabilidad = (float) entry.getValue() / (float) numeroPixleles;
+			if (probabilidad > 0.0)
 				entropia -= (probabilidad * (Math.log(probabilidad) / Math.log(2)));
 		}
+	}
+
+	/**
+	 * ajusteLinealTramos
+	 */
+	public void ajusteLinealTramos(ArrayList<Integer> coordenadasTramos) {
+		int xAnterior = coordenadasTramos.get(0);
+		int yAnterior = coordenadasTramos.get(1);
+		int x = 2;
+		int y = 3;
+		int xSiguiente = coordenadasTramos.get(x);
+		int ySiguiente = coordenadasTramos.get(y);
+		int colorCambiado;
+		HashMap<Integer, Integer> relacionVinVout = new HashMap<Integer, Integer>();
+		HashMap<Integer, Integer> VOut = new HashMap<Integer, Integer>();
+		for (int i = 0; i < 256; i++)
+			VOut.put(i, 0);
+		// recorremos el histograma y cambiamos los valores de vin por vout
+		Iterator it = histogramaAbsoluto.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry pairs = (Map.Entry) it.next();
+			if((int)pairs.getKey() >= xAnterior && (int) pairs.getKey() <= xSiguiente) {
+				if ((int) pairs.getKey() < coordenadasTramos.get(coordenadasTramos.size() - 2)
+						&& (int) pairs.getKey() == xSiguiente) {
+					x += 2;
+					y += 2;
+					xAnterior = xSiguiente;
+					yAnterior = ySiguiente;
+					xSiguiente = coordenadasTramos.get(x);
+					ySiguiente = coordenadasTramos.get(y);
+				}
+				colorCambiado = (((ySiguiente - yAnterior) / (xSiguiente - xAnterior)) * ((int) pairs.getKey() - xAnterior))
+						+ yAnterior;
+	
+				VOut.put(colorCambiado, VOut.get(colorCambiado) + (int) (pairs.getValue()));
+				relacionVinVout.put((int) (pairs.getKey()), colorCambiado);
+			}else {
+				VOut.put((int)pairs.getKey(), VOut.get((int)pairs.getKey()) + (int) (pairs.getValue()));
+				relacionVinVout.put((int)(pairs.getKey()), (int)(pairs.getKey()));
+			}
+		}
+		actualizarValores(relacionVinVout, VOut);
 	}
 	/**
 	 * ajustarBrilloContraste
 	 */
 	public void ajustarBrilloContraste(int brilloPrima, int contrastePrima) {
-		double A = (double)(contrastePrima / contraste);
-		double B = (double)(brilloPrima - (A * brillo));
+		double A = (double) (contrastePrima / contraste);
+		double B = (double) (brilloPrima - (A * brillo));
 		int colorCambiado;
 		HashMap<Integer, Integer> relacionVinVout = new HashMap<Integer, Integer>();
 		HashMap<Integer, Integer> VOut = new HashMap<Integer, Integer>();
-		for(int i = 0; i < 256; i++)
+		for (int i = 0; i < 256; i++)
 			VOut.put(i, 0);
-		//recorremos el histograma y cambiamos los valores de vin por vout
+		// recorremos el histograma y cambiamos los valores de vin por vout
 		Iterator it = histogramaAbsoluto.entrySet().iterator();
-	    while (it.hasNext()) {
-	        Map.Entry pairs = (Map.Entry)it.next();
-	        colorCambiado = (int)((A * (int)(pairs.getKey())) + B);
-	        if(colorCambiado > 255)
-	        	colorCambiado = 255;
-	        if(colorCambiado < 0)
-	        	colorCambiado = 0;
-			VOut.put(colorCambiado, VOut.get(colorCambiado)+(int)(pairs.getValue()));
-			relacionVinVout.put((int)(pairs.getKey()), colorCambiado);
-	    }
-	    actualizarValores(relacionVinVout, VOut);
+		while (it.hasNext()) {
+			Map.Entry pairs = (Map.Entry) it.next();
+			colorCambiado = (int) ((A * (int) (pairs.getKey())) + B);
+			if (colorCambiado > 255)
+				colorCambiado = 255;
+			if (colorCambiado < 0)
+				colorCambiado = 0;
+			VOut.put(colorCambiado, VOut.get(colorCambiado) + (int) (pairs.getValue()));
+			relacionVinVout.put((int) (pairs.getKey()), colorCambiado);
+		}
+		actualizarValores(relacionVinVout, VOut);
 	}
+
 	/**
 	 * correccionGamma
 	 */
@@ -171,26 +222,26 @@ public class Imagen extends Observable implements Cloneable {
 		int colorCambiado;
 		HashMap<Integer, Integer> relacionVinVout = new HashMap<Integer, Integer>();
 		HashMap<Integer, Integer> VOut = new HashMap<Integer, Integer>();
-		for(int i = 0; i < 256; i++)
+		for (int i = 0; i < 256; i++)
 			VOut.put(i, 0);
-		//recorremos el histograma y cambiamos los valores de vin por vout
+		// recorremos el histograma y cambiamos los valores de vin por vout
 		Iterator it = histogramaAbsoluto.entrySet().iterator();
-	    while (it.hasNext()) {
-	        Map.Entry pairs = (Map.Entry)it.next();
-	        double a = (int)pairs.getKey()/(double)255;
-	        System.out.println(a);
-	        double b = Math.pow(a, y);
-	        colorCambiado = (int)(b*255);
-			VOut.put(colorCambiado, VOut.get(colorCambiado)+(int)(pairs.getValue()));
-			relacionVinVout.put((int)(pairs.getKey()), colorCambiado);
-	    }
-	    actualizarValores(relacionVinVout, VOut);
+		while (it.hasNext()) {
+			Map.Entry pairs = (Map.Entry) it.next();
+			double a = (int) pairs.getKey() / (double) 255;
+			double b = Math.pow(a, y);
+			colorCambiado = (int) (b * 255);
+			VOut.put(colorCambiado, VOut.get(colorCambiado) + (int) (pairs.getValue()));
+			relacionVinVout.put((int) (pairs.getKey()), colorCambiado);
+		}
+		actualizarValores(relacionVinVout, VOut);
 	}
+
 	/**
 	 * actualizarValores
 	 */
 	public void actualizarValores(HashMap<Integer, Integer> relacionVinVout, HashMap<Integer, Integer> VOut) {
-		//cambiamos la matriz de pixeles y cambiamos la bufferedimage
+		// cambiamos la matriz de pixeles y cambiamos la bufferedimage
 		for (int i = 0; i < matrizPixelesGris.size(); i++) {
 			for (int j = 0; j < matrizPixelesGris.get(i).size(); j++) {
 				int colorCambiado = relacionVinVout.get(matrizPixelesGris.get(i).get(j));
@@ -198,13 +249,14 @@ public class Imagen extends Observable implements Cloneable {
 				imagen.setRGB(i, j, new Color(colorCambiado, colorCambiado, colorCambiado).getRGB());
 			}
 		}
-		//actualizamos la imformacion de la imagen
+		// actualizamos la imformacion de la imagen
 		setHistogramaAbsoluto(VOut);
 		obtenerHisogramaAcumulado();
 		obtenerRango();
 		obtenerBrillo();
 		obtenerContraste();
 	}
+
 	/**
 	 * subImagen
 	 */
@@ -224,6 +276,7 @@ public class Imagen extends Observable implements Cloneable {
 		}
 		return subImagen;
 	}
+
 	/**
 	 * informacionImagen
 	 */
