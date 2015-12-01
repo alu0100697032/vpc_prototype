@@ -88,6 +88,9 @@ public class DibujaVentanaPrincipal extends JFrame {
 	public void addCorreccionGammaListener(ActionListener a) {
 		barraMenu.getMenuItemCorreccionGamma().addActionListener(a);
 	}
+	public void addDiferenciaImagenesListener(ActionListener a) {
+		barraMenu.getMenuItemDiferenciaImagenes().addActionListener(a);
+	}
 	/*
 	 * Ver
 	 */

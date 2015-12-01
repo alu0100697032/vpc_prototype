@@ -236,7 +236,36 @@ public class Imagen extends Observable implements Cloneable {
 		}
 		actualizarValores(relacionVinVout, VOut);
 	}
-
+	public void repintarCambiosMatrizPixeles(ArrayList<ArrayList<Integer>> matrizDiferencia, int umbral) {
+		
+	}
+	/**
+	 * diferenciaImagenes
+	 */
+	public ArrayList<ArrayList<Integer>> diferenciaImagenes(Imagen imagenResta) {
+		ArrayList<ArrayList<Integer>> matrizPixelesDiferencia = new ArrayList<ArrayList<Integer>>();
+		for (int i = 0; i < imagen.getWidth(); i++) {
+			matrizPixelesDiferencia.add(new ArrayList<Integer>());
+			for (int j = 0; j < imagen.getHeight(); j++) {
+				matrizPixelesDiferencia.get(i).add(Math.abs(matrizPixelesGris.get(i).get(j)-imagenResta.getMatrizPixelesGris().get(i).get(j)));
+			}
+		}
+		return matrizPixelesDiferencia;
+	}
+	/**
+	 * generarHistogramaMatriz
+	 */
+	public HashMap<Integer, Integer> generarHistogramaMatriz(ArrayList<ArrayList<Integer>> matriz){
+		HashMap<Integer, Integer> histograma = new HashMap<Integer, Integer>();
+		for (int i = 0; i < 256; i++)
+			histograma.put(i, 0);
+		for(int i = 0; i < matriz.size(); i++) {
+			for(int j = 0; j < matriz.get(i).size(); j++) {
+				histograma.put(matriz.get(i).get(j), histograma.get(matriz.get(i).get(j))+1);
+			}
+		}
+		return histograma;
+	}
 	/**
 	 * actualizarValores
 	 */

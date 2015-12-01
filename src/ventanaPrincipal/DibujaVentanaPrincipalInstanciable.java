@@ -2,6 +2,7 @@ package ventanaPrincipal;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import clases.ConjuntoImagenes;
 import clases.Imagen;
@@ -10,6 +11,7 @@ import dialogs.CorreccionGammaDialog;
 import dialogs.EspecificarNumeroTramosDialog;
 import dialogs.GuardarImagenDialog;
 import dialogs.InformacionImagenDialog;
+import dialogs.SeleccionarUmbralDialog;
 import dialogs.AbrirImagenDialog;
 import dibujablesHistogramas.DibujaHistogramaAbsoluto;
 import dibujablesHistogramas.DibujaHistogramaAcumulado;
@@ -38,6 +40,7 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 		addCambiarBrilloContrasteListener(new CambiarBrilloContrasteListener());
 		addTransformacionLinealTramosListener(new TransformacionLinealTramosListener());
 		addCorreccionGammaListener(new CorreccionGammaListener());
+		addDiferenciaImagenesListener(new DiferenciaImagenesListener());
 
 		addVerHistogramaAbsolutoListener(new VerHistogramaAbsolutoListener());
 		addVerHistogramaAcumuladoListener(new VerHistogramaAcumuladoListener());
@@ -180,6 +183,44 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 				}
 			}
 		}
+	}
+
+	class DiferenciaImagenesListener implements ActionListener {
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.
+		 * ActionEvent)
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
+				if (getImagenesAbiertas().get(i).isSelected()) {
+					//Abre imagen y la visualiza
+					AbrirImagenDialog abrirImagenDiferencia = new AbrirImagenDialog();
+					Imagen imagen = new Imagen(abrirImagenDiferencia.getImagenCargada(),
+							abrirImagenDiferencia.getNombreImagen(), abrirImagenDiferencia.getExtensionImagen());
+					getConjuntoImagenes().addImagen(imagen);
+					DibujaInternalFrameImagen dibujaInternalFrameImagen = new DibujaInternalFrameImagen(
+							new DibujaImagenInstanciable(imagen, getImagenesAbiertas(), getBarraMenu(),
+									getGrupoInternalFrames(), getPanelEstado(), conjuntoImagenes));
+					getImagenesAbiertas().add(dibujaInternalFrameImagen);
+					getGrupoInternalFrames().add(dibujaInternalFrameImagen);
+					//abre su histograma
+					ArrayList<ArrayList<Integer>> matrizDiferencia = conjuntoImagenes.getImagen(i).diferenciaImagenes(imagen);
+					DibujaHistogramaAbsoluto dibujaHistogramaAbsolutoDiferencia = new DibujaHistogramaAbsoluto(
+							conjuntoImagenes.getImagen(i)
+									.generarHistogramaMatriz(matrizDiferencia));
+					DibujaInternalFrameHistogramaAbsoluto dibujaInternalFrameImagenDiferencia = new DibujaInternalFrameHistogramaAbsoluto(
+							dibujaHistogramaAbsolutoDiferencia);
+					getGrupoInternalFrames().add(dibujaInternalFrameImagenDiferencia);
+					//Pregunta por el umbral
+					SeleccionarUmbralDialog seleccionarUmbralDialog =  new SeleccionarUmbralDialog(imagen, matrizDiferencia);
+				}
+			}
+		}
+
 	}
 
 	class VerHistogramaAbsolutoListener implements ActionListener {
