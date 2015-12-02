@@ -1,5 +1,7 @@
 package dibujablesHistogramas;
 
+import java.beans.PropertyVetoException;
+
 import javax.swing.JInternalFrame;
 
 public class DibujaInternalFrameHistogramaAbsoluto extends JInternalFrame{

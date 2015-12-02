@@ -124,12 +124,13 @@ public class Imagen extends Observable implements Cloneable {
 	/**
 	 * obtenerContraste
 	 */
+	
 	private void obtenerContraste() {
 		int sumatorioValores = 0;
 		int numeroPixleles = histogramaAcumulado.get(255);
 		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
 			for (int j = 0; j < entry.getValue(); j++) {
-				sumatorioValores += (int) Math.pow((entry.getKey() - brillo), 2);
+				sumatorioValores += entry.getValue()*((int) Math.pow((entry.getKey() - brillo), 2));
 			}
 		}
 		contraste = (int) Math.sqrt((sumatorioValores / numeroPixleles));
@@ -151,6 +152,7 @@ public class Imagen extends Observable implements Cloneable {
 	/**
 	 * ajusteLinealTramos
 	 */
+	//bien
 	public void ajusteLinealTramos(ArrayList<Integer> coordenadasTramos) {
 		int xAnterior = coordenadasTramos.get(0);
 		int yAnterior = coordenadasTramos.get(1);
@@ -177,9 +179,11 @@ public class Imagen extends Observable implements Cloneable {
 					xSiguiente = coordenadasTramos.get(x);
 					ySiguiente = coordenadasTramos.get(y);
 				}
-				colorCambiado = (((ySiguiente - yAnterior) / (xSiguiente - xAnterior)) * ((int) pairs.getKey() - xAnterior))
-						+ yAnterior;
-	
+				double A = ((ySiguiente - yAnterior) / (double)(xSiguiente - xAnterior));
+				double B = yAnterior - A * xAnterior; 
+						
+				colorCambiado = (int)((A * (int)pairs.getKey()) + B);
+		
 				VOut.put(colorCambiado, VOut.get(colorCambiado) + (int) (pairs.getValue()));
 				relacionVinVout.put((int) (pairs.getKey()), colorCambiado);
 			}else {
@@ -218,6 +222,7 @@ public class Imagen extends Observable implements Cloneable {
 	/**
 	 * correccionGamma
 	 */
+	//bien
 	public void correccionGamma(double y) {
 		int colorCambiado;
 		HashMap<Integer, Integer> relacionVinVout = new HashMap<Integer, Integer>();
@@ -251,6 +256,7 @@ public class Imagen extends Observable implements Cloneable {
 	/**
 	 * diferenciaImagenes
 	 */
+	//hacer diferencia y mostrar imagen
 	public ArrayList<ArrayList<Integer>> diferenciaImagenes(Imagen imagenResta) {
 		ArrayList<ArrayList<Integer>> matrizPixelesDiferencia = new ArrayList<ArrayList<Integer>>();
 		for (int i = 0; i < imagen.getWidth(); i++) {

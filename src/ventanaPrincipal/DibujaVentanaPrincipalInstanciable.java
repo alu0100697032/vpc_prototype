@@ -41,6 +41,7 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 		addTransformacionLinealTramosListener(new TransformacionLinealTramosListener());
 		addCorreccionGammaListener(new CorreccionGammaListener());
 		addDiferenciaImagenesListener(new DiferenciaImagenesListener());
+		addEcualizacionListener(new EcualizacionListener());
 
 		addVerHistogramaAbsolutoListener(new VerHistogramaAbsolutoListener());
 		addVerHistogramaAcumuladoListener(new VerHistogramaAcumuladoListener());
@@ -183,6 +184,26 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 				}
 			}
 		}
+	}
+	
+	class EcualizacionListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			/*for (int i = 0; i < getImagenesAbiertas().size(); i++) {
+				if (getImagenesAbiertas().get(i).isSelected()) {
+					Imagen imagen = new Imagen(conjuntoImagenes.hacerCopiaImagen(index));
+					getConjuntoImagenes().addImagen(imagen);
+					DibujaInternalFrameImagen dibujaInternalFrameImagen = new DibujaInternalFrameImagen(
+							new DibujaImagenInstanciable(imagen, getImagenesAbiertas(), getBarraMenu(),
+									getGrupoInternalFrames(), getPanelEstado(), conjuntoImagenes));
+					getImagenesAbiertas().add(dibujaInternalFrameImagen);
+					getGrupoInternalFrames().add(dibujaInternalFrameImagen);
+				}
+			}*/
+		}
+		
 	}
 
 	class DiferenciaImagenesListener implements ActionListener {

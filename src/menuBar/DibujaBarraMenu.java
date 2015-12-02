@@ -21,6 +21,7 @@ public class DibujaBarraMenu extends JMenuBar{
 	private JMenuItem menuItemTransformacionLinealTramos;
 	private JMenuItem menuItemCorreccionGamma;
 	private JMenuItem menuItemDiferenciaImagenes;
+	private JMenuItem menuItemEcualizacion;
 	
 	private JMenu menuVer;
 	private JMenuItem menuItemVerHistogramaAbsoluo;
@@ -60,11 +61,14 @@ public class DibujaBarraMenu extends JMenuBar{
 		menuItemTransformacionLinealTramos = new JMenuItem("Transformacion lineal por tramos");
 		menuEditar.add(menuItemTransformacionLinealTramos);
 		
-		menuItemCorreccionGamma = new JMenuItem("Corrección Gamma");
+		menuItemCorreccionGamma = new JMenuItem("Correcciï¿½n Gamma");
 		menuEditar.add(menuItemCorreccionGamma);
 		
 		menuItemDiferenciaImagenes = new JMenuItem("Diferencia");
 		menuEditar.add(menuItemDiferenciaImagenes);
+		
+		menuItemEcualizacion = new JMenuItem("Ecualizacion");
+		menuEditar.add(menuItemEcualizacion);
 		
 		add(menuEditar);
 		
@@ -272,5 +276,19 @@ public class DibujaBarraMenu extends JMenuBar{
 	 */
 	public void setMenuItemDiferenciaImagenes(JMenuItem menuItemDiferenciaImagenes) {
 		this.menuItemDiferenciaImagenes = menuItemDiferenciaImagenes;
+	}
+
+	/**
+	 * @return the menuItemEcualizacion
+	 */
+	public JMenuItem getMenuItemEcualizacion() {
+		return menuItemEcualizacion;
+	}
+
+	/**
+	 * @param menuItemEcualizacion the menuItemEcualizacion to set
+	 */
+	public void setMenuItemEcualizacion(JMenuItem menuItemEcualizacion) {
+		this.menuItemEcualizacion = menuItemEcualizacion;
 	}
 }
