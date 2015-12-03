@@ -192,9 +192,10 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			/*for (int i = 0; i < getImagenesAbiertas().size(); i++) {
+			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
 				if (getImagenesAbiertas().get(i).isSelected()) {
-					Imagen imagen = new Imagen(conjuntoImagenes.hacerCopiaImagen(index));
+					Imagen imagen = getConjuntoImagenes().hacerCopiaImagen(i);
+					imagen.ecualizar();
 					getConjuntoImagenes().addImagen(imagen);
 					DibujaInternalFrameImagen dibujaInternalFrameImagen = new DibujaInternalFrameImagen(
 							new DibujaImagenInstanciable(imagen, getImagenesAbiertas(), getBarraMenu(),
@@ -202,7 +203,7 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 					getImagenesAbiertas().add(dibujaInternalFrameImagen);
 					getGrupoInternalFrames().add(dibujaInternalFrameImagen);
 				}
-			}*/
+			}
 		}
 		
 	}
