@@ -191,7 +191,7 @@ public class Imagen extends Observable implements Cloneable {
 				relacionVinVout.put((int)(pairs.getKey()), (int)(pairs.getKey()));
 			}
 		}
-		actualizarValores(relacionVinVout, VOut);
+		actualizarValoresVinVout(relacionVinVout, VOut);
 	}
 	/**
 	 * ajustarBrilloContraste
@@ -216,7 +216,7 @@ public class Imagen extends Observable implements Cloneable {
 			VOut.put(colorCambiado, VOut.get(colorCambiado) + (int) (pairs.getValue()));
 			relacionVinVout.put((int) (pairs.getKey()), colorCambiado);
 		}
-		actualizarValores(relacionVinVout, VOut);
+		actualizarValoresVinVout(relacionVinVout, VOut);
 	}
 
 	/**
@@ -239,7 +239,7 @@ public class Imagen extends Observable implements Cloneable {
 			VOut.put(colorCambiado, VOut.get(colorCambiado) + (int) (pairs.getValue()));
 			relacionVinVout.put((int) (pairs.getKey()), colorCambiado);
 		}
-		actualizarValores(relacionVinVout, VOut);
+		actualizarValoresVinVout(relacionVinVout, VOut);
 	}
 	/**
 	 * repintarCambiosMatrizPixeles
@@ -257,15 +257,15 @@ public class Imagen extends Observable implements Cloneable {
 	 * diferenciaImagenes
 	 */
 	//hacer diferencia y mostrar imagen
-	public ArrayList<ArrayList<Integer>> diferenciaImagenes(Imagen imagenResta) {
-		ArrayList<ArrayList<Integer>> matrizPixelesDiferencia = new ArrayList<ArrayList<Integer>>();
+	public BufferedImage diferenciaImagenes(Imagen imagenResta) {
+		BufferedImage imagenDiferencia = new BufferedImage(imagen.getWidth(), imagen.getHeight(), imagen.getType());
 		for (int i = 0; i < imagen.getWidth(); i++) {
-			matrizPixelesDiferencia.add(new ArrayList<Integer>());
 			for (int j = 0; j < imagen.getHeight(); j++) {
-				matrizPixelesDiferencia.get(i).add(Math.abs(matrizPixelesGris.get(i).get(j)-imagenResta.getMatrizPixelesGris().get(i).get(j)));
+				int colorCambiado = Math.abs(matrizPixelesGris.get(i).get(j)-imagenResta.getMatrizPixelesGris().get(i).get(j));
+				imagenDiferencia.setRGB(i,j, new Color(colorCambiado, colorCambiado,colorCambiado).getRGB());
 			}
 		}
-		return matrizPixelesDiferencia;
+		return imagenDiferencia;
 	}
 	/**
 	 * generarHistogramaMatriz
@@ -284,7 +284,7 @@ public class Imagen extends Observable implements Cloneable {
 	/**
 	 * actualizarValores
 	 */
-	public void actualizarValores(HashMap<Integer, Integer> relacionVinVout, HashMap<Integer, Integer> VOut) {
+	public void actualizarValoresVinVout(HashMap<Integer, Integer> relacionVinVout, HashMap<Integer, Integer> VOut) {
 		// cambiamos la matriz de pixeles y cambiamos la bufferedimage
 		for (int i = 0; i < matrizPixelesGris.size(); i++) {
 			for (int j = 0; j < matrizPixelesGris.get(i).size(); j++) {
@@ -300,7 +300,26 @@ public class Imagen extends Observable implements Cloneable {
 		obtenerBrillo();
 		obtenerContraste();
 	}
-
+	/**
+	 * actualizarValoresMedienteBufferedImage
+	 */
+	public void actualizarValoresMedienteBufferedImage() {
+		histogramaAbsoluto.clear();
+		for (int i = 0; i < 256; i++)
+			histogramaAbsoluto.put(i, 0);
+		for (int i = 0; i < matrizPixelesGris.size(); i++) {
+			for (int j = 0; j < matrizPixelesGris.get(i).size(); j++) {
+				int colorCambiado = new Color(imagen.getRGB(i, j)).getRed();
+				matrizPixelesGris.get(i).set(j, colorCambiado);
+				histogramaAbsoluto.put(colorCambiado, histogramaAbsoluto.get(colorCambiado)+1);
+			}
+		}
+		// actualizamos la imformacion de la imagen
+		obtenerHisogramaAcumulado();
+		obtenerRango();
+		obtenerBrillo();
+		obtenerContraste();
+	}
 	/**
 	 * subImagen
 	 */

@@ -2,6 +2,7 @@ package ventanaPrincipal;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import clases.ConjuntoImagenes;
@@ -228,16 +229,24 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 									getGrupoInternalFrames(), getPanelEstado(), conjuntoImagenes));
 					getImagenesAbiertas().add(dibujaInternalFrameImagen);
 					getGrupoInternalFrames().add(dibujaInternalFrameImagen);
-					//abre su histograma
-					ArrayList<ArrayList<Integer>> matrizDiferencia = conjuntoImagenes.getImagen(i).diferenciaImagenes(imagen);
-					DibujaHistogramaAbsoluto dibujaHistogramaAbsolutoDiferencia = new DibujaHistogramaAbsoluto(
+					//genera la imagen diferencia
+					Imagen imagenDiferencia = new Imagen(conjuntoImagenes.getImagen(i).diferenciaImagenes(imagen),
+							"imagenDiferencia", abrirImagenDiferencia.getExtensionImagen());
+					imagenDiferencia.actualizarValoresMedienteBufferedImage();
+					getConjuntoImagenes().addImagen(imagenDiferencia);
+					DibujaInternalFrameImagen dibujaInternalFrameImagenDiferencia = new DibujaInternalFrameImagen(
+							new DibujaImagenInstanciable(imagenDiferencia, getImagenesAbiertas(), getBarraMenu(),
+									getGrupoInternalFrames(), getPanelEstado(), conjuntoImagenes));
+					getImagenesAbiertas().add(dibujaInternalFrameImagenDiferencia);
+					getGrupoInternalFrames().add(dibujaInternalFrameImagenDiferencia);
+					/*DibujaHistogramaAbsoluto dibujaHistogramaAbsolutoDiferencia = new DibujaHistogramaAbsoluto(
 							conjuntoImagenes.getImagen(i)
 									.generarHistogramaMatriz(matrizDiferencia));
 					DibujaInternalFrameHistogramaAbsoluto dibujaInternalFrameImagenDiferencia = new DibujaInternalFrameHistogramaAbsoluto(
 							dibujaHistogramaAbsolutoDiferencia);
 					getGrupoInternalFrames().add(dibujaInternalFrameImagenDiferencia);
 					//Pregunta por el umbral
-					SeleccionarUmbralDialog seleccionarUmbralDialog =  new SeleccionarUmbralDialog(imagen, matrizDiferencia);
+					SeleccionarUmbralDialog seleccionarUmbralDialog =  new SeleccionarUmbralDialog(imagen, matrizDiferencia);*/
 				}
 			}
 		}
