@@ -47,6 +47,7 @@ public class Imagen extends Observable implements Cloneable {
 	/**
 	 * pasarImagenGris
 	 */
+	//problema, cada vezque genero una imagen altero los pixeles por pasar a gris cada vez
 	public void pasarImagenGris() {
 		Color colorRGB;
 		int colorGris;
@@ -275,6 +276,7 @@ public class Imagen extends Observable implements Cloneable {
 	/**
 	 * diferenciaImagenes
 	 */
+	//bien
 	public BufferedImage diferenciaImagenes(Imagen imagenResta) {
 		BufferedImage imagenDiferencia = new BufferedImage(imagen.getWidth(), imagen.getHeight(), imagen.getType());
 		for (int i = 0; i < imagen.getWidth(); i++) {
