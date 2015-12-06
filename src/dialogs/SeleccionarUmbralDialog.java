@@ -27,7 +27,7 @@ public class SeleccionarUmbralDialog extends JDialog {
 	/**
 	 * Constructor: SeleccionarUmbralDialog
 	 */
-	public SeleccionarUmbralDialog(Imagen imagen, ArrayList<ArrayList<Integer>> matrizDiferencia) {
+	public SeleccionarUmbralDialog(Imagen imagen) {
 		setResizable(false);
 		JPanelUmbral = new JPanel();
 		JPanelUmbral.setLayout(new BoxLayout(JPanelUmbral, BoxLayout.PAGE_AXIS));
@@ -35,18 +35,18 @@ public class SeleccionarUmbralDialog extends JDialog {
 		JTextFieldValorUmbral = new JTextField("10");
 		JPanelUmbral.add(JLabelValorUmbral);
 		JPanelUmbral.add(JTextFieldValorUmbral);
-		accion(imagen, matrizDiferencia);
+		accion(imagen);
 	}
 
 	/**
 	 * accion
 	 */
-	public void accion(Imagen imagen, ArrayList<ArrayList<Integer>> matrizDiferencia) {
+	public void accion(Imagen imagen) {
 		Object[] opciones = { "Aceptar", "Cancelar" };
 		int opcion = JOptionPane.showOptionDialog(this, JPanelUmbral, "Seleccionar Umbral", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
 		if (opcion == JOptionPane.YES_OPTION) {
-			imagen.repintarCambiosMatrizPixeles(matrizDiferencia, Integer.parseInt(JTextFieldValorUmbral.getText()));
+			imagen.repintarMapaCambios(Integer.parseInt(JTextFieldValorUmbral.getText()));
 		}
 	}
 }

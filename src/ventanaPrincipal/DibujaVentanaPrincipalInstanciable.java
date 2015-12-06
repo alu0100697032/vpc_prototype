@@ -42,6 +42,7 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 		addTransformacionLinealTramosListener(new TransformacionLinealTramosListener());
 		addCorreccionGammaListener(new CorreccionGammaListener());
 		addDiferenciaImagenesListener(new DiferenciaImagenesListener());
+		addMapaCambiosListener(new MapaCambiosListener());
 		addEcualizacionListener(new EcualizacionListener());
 
 		addVerHistogramaAbsolutoListener(new VerHistogramaAbsolutoListener());
@@ -231,8 +232,7 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 					getImagenesAbiertas().add(dibujaInternalFrameImagen);
 					getGrupoInternalFrames().add(dibujaInternalFrameImagen);
 					//genera la imagen diferencia
-					Imagen imagenDiferencia = new Imagen(conjuntoImagenes.getImagen(i).diferenciaImagenes(imagenResta),
-							"imagenDiferencia", abrirImagenResta.getExtensionImagen());
+					Imagen imagenDiferencia = new Imagen(conjuntoImagenes.getImagen(i).diferenciaImagenes(imagenResta));
 					getConjuntoImagenes().addImagen(imagenDiferencia);
 					DibujaInternalFrameImagen dibujaInternalFrameImagenDiferencia = new DibujaInternalFrameImagen(
 							new DibujaImagenInstanciable(imagenDiferencia, getImagenesAbiertas(), getBarraMenu(),
@@ -245,6 +245,23 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 
 	}
 
+	class MapaCambiosListener implements ActionListener{
+
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
+				if (getImagenesAbiertas().get(i).isSelected()) {
+					SeleccionarUmbralDialog umbralDialog = new SeleccionarUmbralDialog(conjuntoImagenes.getImagen(i));
+					getImagenesAbiertas().get(i).repaint();
+				}
+			}
+		}
+		
+	}
 	class VerHistogramaAbsolutoListener implements ActionListener {
 
 		@Override
