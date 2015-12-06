@@ -121,9 +121,7 @@ public class Imagen extends Observable implements Cloneable {
 		int sumatorioValores = 0;
 		int numeroPixleles = histogramaAcumulado.get(255);
 		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
-			for (int j = 0; j < entry.getValue(); j++) {
-				sumatorioValores += entry.getValue() * ((int) Math.pow((entry.getKey() - brillo), 2));
-			}
+			sumatorioValores += entry.getValue() * (Math.pow((entry.getKey() - brillo), 2));
 		}
 		contraste = (int) Math.sqrt((sumatorioValores / numeroPixleles));
 	}
@@ -190,8 +188,8 @@ public class Imagen extends Observable implements Cloneable {
 	 * ajustarBrilloContraste
 	 */
 	public void ajustarBrilloContraste(int brilloPrima, int contrastePrima) {
-		double A = (double) (contrastePrima / contraste);
-		double B = (double) (brilloPrima - (A * brillo));
+		double A = contrastePrima / (double)contraste;
+		double B = brilloPrima - ((double)A * brillo);
 		int colorCambiado;
 		HashMap<Integer, Integer> relacionVinVout = new HashMap<Integer, Integer>();
 		HashMap<Integer, Integer> VOut = new HashMap<Integer, Integer>();
@@ -201,13 +199,13 @@ public class Imagen extends Observable implements Cloneable {
 		Iterator it = histogramaAbsoluto.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry pairs = (Map.Entry) it.next();
-			colorCambiado = (int) ((A * (int) (pairs.getKey())) + B);
+			colorCambiado = (int) ((A * (int)pairs.getKey()) + B);
 			if (colorCambiado > 255)
 				colorCambiado = 255;
 			if (colorCambiado < 0)
 				colorCambiado = 0;
-			VOut.put(colorCambiado, VOut.get(colorCambiado) + (int) (pairs.getValue()));
-			relacionVinVout.put((int) (pairs.getKey()), colorCambiado);
+			VOut.put(colorCambiado, VOut.get(colorCambiado) + (int)pairs.getValue());
+			relacionVinVout.put((int)pairs.getKey(), colorCambiado);
 		}
 		actualizarValoresVinVout(relacionVinVout, VOut);
 	}
@@ -215,6 +213,7 @@ public class Imagen extends Observable implements Cloneable {
 	/**
 	 * ecualizar
 	 */
+	//bien
 	public void ecualizar() {
 		int colorCambiado;
 		HashMap<Integer, Integer> relacionVinVout = new HashMap<Integer, Integer>();
@@ -226,7 +225,7 @@ public class Imagen extends Observable implements Cloneable {
 		while (it.hasNext()) {
 			Map.Entry pairs = (Map.Entry) it.next();
 			// esto va a dar 0000000 seguro
-			colorCambiado = Math.round((((float)256 / histogramaAbsoluto.get(255)) * (int) pairs.getKey()) - 1);
+			colorCambiado = Math.round((((float)256 / histogramaAcumulado.get(255)) * (int) histogramaAcumulado.get((int)pairs.getKey())) - 1);
 			if(colorCambiado < 0)
 				colorCambiado = 0;
 			if(colorCambiado > 255)
