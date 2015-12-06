@@ -221,33 +221,24 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
 				if (getImagenesAbiertas().get(i).isSelected()) {
 					//Abre imagen y la visualiza
-					AbrirImagenDialog abrirImagenDiferencia = new AbrirImagenDialog();
-					Imagen imagen = new Imagen(abrirImagenDiferencia.getImagenCargada(),
-							abrirImagenDiferencia.getNombreImagen(), abrirImagenDiferencia.getExtensionImagen());
-					getConjuntoImagenes().addImagen(imagen);
+					AbrirImagenDialog abrirImagenResta = new AbrirImagenDialog();
+					Imagen imagenResta = new Imagen(abrirImagenResta.getImagenCargada(),
+							abrirImagenResta.getNombreImagen(), abrirImagenResta.getExtensionImagen());
+					getConjuntoImagenes().addImagen(imagenResta);
 					DibujaInternalFrameImagen dibujaInternalFrameImagen = new DibujaInternalFrameImagen(
-							new DibujaImagenInstanciable(imagen, getImagenesAbiertas(), getBarraMenu(),
+							new DibujaImagenInstanciable(imagenResta, getImagenesAbiertas(), getBarraMenu(),
 									getGrupoInternalFrames(), getPanelEstado(), conjuntoImagenes));
 					getImagenesAbiertas().add(dibujaInternalFrameImagen);
 					getGrupoInternalFrames().add(dibujaInternalFrameImagen);
 					//genera la imagen diferencia
-					Imagen imagenDiferencia = new Imagen(conjuntoImagenes.getImagen(i).diferenciaImagenes(imagen),
-							"imagenDiferencia", abrirImagenDiferencia.getExtensionImagen());
-					imagenDiferencia.actualizarValoresMedienteBufferedImage();
+					Imagen imagenDiferencia = new Imagen(conjuntoImagenes.getImagen(i).diferenciaImagenes(imagenResta),
+							"imagenDiferencia", abrirImagenResta.getExtensionImagen());
 					getConjuntoImagenes().addImagen(imagenDiferencia);
 					DibujaInternalFrameImagen dibujaInternalFrameImagenDiferencia = new DibujaInternalFrameImagen(
 							new DibujaImagenInstanciable(imagenDiferencia, getImagenesAbiertas(), getBarraMenu(),
 									getGrupoInternalFrames(), getPanelEstado(), conjuntoImagenes));
 					getImagenesAbiertas().add(dibujaInternalFrameImagenDiferencia);
 					getGrupoInternalFrames().add(dibujaInternalFrameImagenDiferencia);
-					/*DibujaHistogramaAbsoluto dibujaHistogramaAbsolutoDiferencia = new DibujaHistogramaAbsoluto(
-							conjuntoImagenes.getImagen(i)
-									.generarHistogramaMatriz(matrizDiferencia));
-					DibujaInternalFrameHistogramaAbsoluto dibujaInternalFrameImagenDiferencia = new DibujaInternalFrameHistogramaAbsoluto(
-							dibujaHistogramaAbsolutoDiferencia);
-					getGrupoInternalFrames().add(dibujaInternalFrameImagenDiferencia);
-					//Pregunta por el umbral
-					SeleccionarUmbralDialog seleccionarUmbralDialog =  new SeleccionarUmbralDialog(imagen, matrizDiferencia);*/
 				}
 			}
 		}

@@ -61,7 +61,7 @@ public class DibujaBarraMenu extends JMenuBar{
 		menuItemTransformacionLinealTramos = new JMenuItem("Transformacion lineal por tramos");
 		menuEditar.add(menuItemTransformacionLinealTramos);
 		
-		menuItemCorreccionGamma = new JMenuItem("Correcci�n Gamma");
+		menuItemCorreccionGamma = new JMenuItem("Correccion Gamma");
 		menuEditar.add(menuItemCorreccionGamma);
 		
 		menuItemDiferenciaImagenes = new JMenuItem("Diferencia");
