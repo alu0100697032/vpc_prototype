@@ -36,6 +36,7 @@ public class Imagen extends Observable implements Cloneable {
 		setImagen(img);
 		setExtensionImagen(extension);
 		setNombreImagen(nombre);
+		mapaCambios = null;
 		// inicializa los histogramas
 		histogramaAcumulado = new HashMap<Integer, Integer>();
 		histogramaAbsoluto = new HashMap<Integer, Integer>();
@@ -51,6 +52,7 @@ public class Imagen extends Observable implements Cloneable {
 		setImagen(img);
 		setExtensionImagen(".jpg");
 		setNombreImagen("imagen");
+		mapaCambios = null;
 		// inicializa los histogramas
 		histogramaAcumulado = new HashMap<Integer, Integer>();
 		histogramaAbsoluto = new HashMap<Integer, Integer>();
@@ -301,7 +303,6 @@ public class Imagen extends Observable implements Cloneable {
 		}
 		return imagenDiferencia;
 	}
-
 
 	/**
 	 * repintarCambiosMatrizPixeles

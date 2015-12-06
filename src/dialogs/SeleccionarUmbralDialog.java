@@ -46,7 +46,8 @@ public class SeleccionarUmbralDialog extends JDialog {
 		int opcion = JOptionPane.showOptionDialog(this, JPanelUmbral, "Seleccionar Umbral", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
 		if (opcion == JOptionPane.YES_OPTION) {
-			imagen.repintarMapaCambios(Integer.parseInt(JTextFieldValorUmbral.getText()));
+			if(imagen.getMapaCambios()!= null)
+				imagen.repintarMapaCambios(Integer.parseInt(JTextFieldValorUmbral.getText()));
 		}
 	}
 }
