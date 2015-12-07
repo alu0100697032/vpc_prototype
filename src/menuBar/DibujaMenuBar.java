@@ -31,6 +31,8 @@ public class DibujaMenuBar extends JMenuBar{
 	
 	private EscaladoMenu escaladoMenu;
 	
+	private OperacionesGeometricasMenu operacionesGeometricasMenu;
+	
 	/*
 	 * Constructor
 	 */
@@ -94,10 +96,11 @@ public class DibujaMenuBar extends JMenuBar{
 		add(menuVer);
 		
 		//Escalado
-		
 		setEscaladoMenu(new EscaladoMenu());
-		
 		add(getEscaladoMenu());
+		//Operaciones geometricas
+		setOperacionesGeometricasMenu(new OperacionesGeometricasMenu());
+		add(getOperacionesGeometricasMenu());
 		
 	}
 	
@@ -331,5 +334,19 @@ public class DibujaMenuBar extends JMenuBar{
 	 */
 	public void setEscaladoMenu(EscaladoMenu escaladoMenu) {
 		this.escaladoMenu = escaladoMenu;
+	}
+
+	/**
+	 * @return the operacionesGeometricasMenu
+	 */
+	public OperacionesGeometricasMenu getOperacionesGeometricasMenu() {
+		return operacionesGeometricasMenu;
+	}
+
+	/**
+	 * @param operacionesGeometricasMenu the operacionesGeometricasMenu to set
+	 */
+	public void setOperacionesGeometricasMenu(OperacionesGeometricasMenu operacionesGeometricasMenu) {
+		this.operacionesGeometricasMenu = operacionesGeometricasMenu;
 	}
 }

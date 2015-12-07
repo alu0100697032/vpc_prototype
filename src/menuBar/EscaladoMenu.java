@@ -19,7 +19,7 @@ public class EscaladoMenu extends JMenu{
 	 * Constructor: EscaladoMenu
 	 */
 	public EscaladoMenu() {
-		setText("Transformacion de escalado");
+		setText("Escalado");
 		
 		setVecinoMasProximoMenuItem(new JMenuItem("VMP"));
 		add(getVecinoMasProximoMenuItem());

@@ -416,7 +416,52 @@ public class Imagen extends Observable implements Cloneable {
 		
 		return imagenEscalada;
 	}
-	
+	/**
+	 * espejoHorizontal
+	 */
+	public BufferedImage espejoHorizontal() {
+		BufferedImage imagenEspejo = new BufferedImage(imagen.getWidth(), imagen.getHeight(), imagen.getType());
+		for(int i = 0; i < imagenEspejo.getWidth(); i++) {
+			for(int j = 0; j < imagenEspejo.getHeight(); j++) {
+				int color = matrizPixelesGris.get(imagenEspejo.getWidth()-i-1).get(j);
+				imagenEspejo.setRGB(i, j, new Color(color, color, color).getRGB());
+			}
+		}
+		return imagenEspejo;
+	}
+	/**
+	 * espejoVertical
+	 */
+	public BufferedImage espejoVertical() {
+		BufferedImage imagenEspejo = new BufferedImage(imagen.getWidth(), imagen.getHeight(), imagen.getType());
+		for(int i = 0; i < imagenEspejo.getWidth(); i++) {
+			for(int j = 0; j < imagenEspejo.getHeight(); j++) {
+				int color = matrizPixelesGris.get(i).get(imagenEspejo.getHeight()-j-1);
+				imagenEspejo.setRGB(i, j, new Color(color, color, color).getRGB());
+			}
+		}
+		return imagenEspejo;
+	}
+	/**
+	 * traspuesta
+	 */
+	public BufferedImage traspuesta() {
+		BufferedImage imagenTraspuesta = new BufferedImage(imagen.getHeight(), imagen.getWidth(), imagen.getType());
+		for(int i = 0; i < imagenTraspuesta.getWidth(); i++) {
+			for(int j = 0; j < imagenTraspuesta.getHeight(); j++) {
+				int color = matrizPixelesGris.get(j).get(i);
+				imagenTraspuesta.setRGB(i, j, new Color(color, color, color).getRGB());
+			}
+		}
+		return imagenTraspuesta;
+	}
+	/**
+	 * rotacion90
+	 */
+	public BufferedImage rotacion90() {
+		BufferedImage imagenRotada = new BufferedImage(imagen.getWidth(), imagen.getHeight(), imagen.getType());
+		return imagenRotada;
+	}
 	/**
 	 * subImagen
 	 */

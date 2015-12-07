@@ -50,6 +50,11 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 
 		addVMPListener(new VecinoMasProximoListener());
 		addBilinearistener(new BilinearListener());
+		
+		addEspejoHorizontalListener(new EspejoHorizontalListener());
+		addEspejoVerticalListener(new EspejoVerticalListener());
+		addTraspuestaListener(new TraspuestaListener());
+		addRotaciones90Listener(new Rotaciones90Listener());
 		conjuntoImagenes = new ConjuntoImagenes();
 	}
 
@@ -357,7 +362,98 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 		}
 
 	}
+	
+	class EspejoHorizontalListener implements ActionListener{
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
+				if (getImagenesAbiertas().get(i).isSelected()) {
+					Imagen imagen = new Imagen(conjuntoImagenes.getImagen(i).espejoHorizontal());
+					getConjuntoImagenes().addImagen(imagen);
+					DibujaInternalFrameImagen dibujaInternalFrameImagenDiferencia = new DibujaInternalFrameImagen(
+							new DibujaImagenInstanciable(imagen, getImagenesAbiertas(), getBarraMenu(),
+									getGrupoInternalFrames(), getPanelEstado(), conjuntoImagenes));
+					getImagenesAbiertas().add(dibujaInternalFrameImagenDiferencia);
+					getGrupoInternalFrames().add(dibujaInternalFrameImagenDiferencia);
+				}
+			}
+		}
+		
+	}
+
+	class EspejoVerticalListener implements ActionListener {
+
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
+				if (getImagenesAbiertas().get(i).isSelected()) {
+					Imagen imagen = new Imagen(conjuntoImagenes.getImagen(i).espejoVertical());
+					getConjuntoImagenes().addImagen(imagen);
+					DibujaInternalFrameImagen dibujaInternalFrameImagenDiferencia = new DibujaInternalFrameImagen(
+							new DibujaImagenInstanciable(imagen, getImagenesAbiertas(), getBarraMenu(),
+									getGrupoInternalFrames(), getPanelEstado(), conjuntoImagenes));
+					getImagenesAbiertas().add(dibujaInternalFrameImagenDiferencia);
+					getGrupoInternalFrames().add(dibujaInternalFrameImagenDiferencia);
+				}
+			}
+		}
+		
+	}
+	
+	class TraspuestaListener implements ActionListener{
+
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
+				if (getImagenesAbiertas().get(i).isSelected()) {
+					Imagen imagen = new Imagen(conjuntoImagenes.getImagen(i).traspuesta());
+					getConjuntoImagenes().addImagen(imagen);
+					DibujaInternalFrameImagen dibujaInternalFrameImagenDiferencia = new DibujaInternalFrameImagen(
+							new DibujaImagenInstanciable(imagen, getImagenesAbiertas(), getBarraMenu(),
+									getGrupoInternalFrames(), getPanelEstado(), conjuntoImagenes));
+					getImagenesAbiertas().add(dibujaInternalFrameImagenDiferencia);
+					getGrupoInternalFrames().add(dibujaInternalFrameImagenDiferencia);
+				}
+			}
+		}
+		
+	}
+	
+	class Rotaciones90Listener implements ActionListener{
+
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
+				if (getImagenesAbiertas().get(i).isSelected()) {
+					Imagen imagen = new Imagen(conjuntoImagenes.getImagen(i).rotacion90());
+					getConjuntoImagenes().addImagen(imagen);
+					DibujaInternalFrameImagen dibujaInternalFrameImagenDiferencia = new DibujaInternalFrameImagen(
+							new DibujaImagenInstanciable(imagen, getImagenesAbiertas(), getBarraMenu(),
+									getGrupoInternalFrames(), getPanelEstado(), conjuntoImagenes));
+					getImagenesAbiertas().add(dibujaInternalFrameImagenDiferencia);
+					getGrupoInternalFrames().add(dibujaInternalFrameImagenDiferencia);
+				}
+			}
+		}
+		
+	}
 	/**
 	 * @return the conjuntoImagenes
 	 */
