@@ -2,9 +2,6 @@ package ventanaPrincipal;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-
 import clases.ConjuntoImagenes;
 import clases.Imagen;
 import dialogs.CambiarBrilloContrasteDialog;
@@ -20,7 +17,9 @@ import dibujablesHistogramas.DibujaInternalFrameHistogramaAbsoluto;
 import dibujablesHistogramas.DibujaInternalFrameHistogramaAcumulado;
 import dibujablesImagen.DibujaImagenInstanciable;
 import dibujablesImagen.DibujaInternalFrameImagen;
+import escaladoDialogs.NuevaEscalaDialog;
 
+@SuppressWarnings("serial")
 public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 
 	/**
@@ -48,6 +47,9 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 		addVerHistogramaAbsolutoListener(new VerHistogramaAbsolutoListener());
 		addVerHistogramaAcumuladoListener(new VerHistogramaAcumuladoListener());
 		addVerInformacionImagenListener(new VerInformacionImagenListener());
+
+		addVMPListener(new VecinoMasProximoListener());
+		addBilinearistener(new BilinearListener());
 		conjuntoImagenes = new ConjuntoImagenes();
 	}
 
@@ -187,8 +189,8 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 			}
 		}
 	}
-	
-	class EcualizacionListener implements ActionListener{
+
+	class EcualizacionListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -206,7 +208,7 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 				}
 			}
 		}
-		
+
 	}
 
 	class DiferenciaImagenesListener implements ActionListener {
@@ -221,7 +223,7 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 			// TODO Auto-generated method stub
 			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
 				if (getImagenesAbiertas().get(i).isSelected()) {
-					//Abre imagen y la visualiza
+					// Abre imagen y la visualiza
 					AbrirImagenDialog abrirImagenResta = new AbrirImagenDialog();
 					Imagen imagenResta = new Imagen(abrirImagenResta.getImagenCargada(),
 							abrirImagenResta.getNombreImagen(), abrirImagenResta.getExtensionImagen());
@@ -231,7 +233,7 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 									getGrupoInternalFrames(), getPanelEstado(), conjuntoImagenes));
 					getImagenesAbiertas().add(dibujaInternalFrameImagen);
 					getGrupoInternalFrames().add(dibujaInternalFrameImagen);
-					//genera la imagen diferencia
+					// genera la imagen diferencia
 					Imagen imagenDiferencia = new Imagen(conjuntoImagenes.getImagen(i).diferenciaImagenes(imagenResta));
 					getConjuntoImagenes().addImagen(imagenDiferencia);
 					DibujaInternalFrameImagen dibujaInternalFrameImagenDiferencia = new DibujaInternalFrameImagen(
@@ -245,10 +247,13 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 
 	}
 
-	class MapaCambiosListener implements ActionListener{
+	class MapaCambiosListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.
+		 * ActionEvent)
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -260,8 +265,9 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 				}
 			}
 		}
-		
+
 	}
+
 	class VerHistogramaAbsolutoListener implements ActionListener {
 
 		@Override
@@ -303,6 +309,49 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 				if (getImagenesAbiertas().get(i).isSelected()) {
 					InformacionImagenDialog informacion = new InformacionImagenDialog(
 							getConjuntoImagenes().getImagen(i));
+				}
+			}
+		}
+
+	}
+
+	class VecinoMasProximoListener implements ActionListener {
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.
+		 * ActionEvent)
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
+				if (getImagenesAbiertas().get(i).isSelected()) {
+					NuevaEscalaDialog nuevaEscalaDialog = new NuevaEscalaDialog(conjuntoImagenes.getImagen(i),
+							getImagenesAbiertas(), getBarraMenu(), getGrupoInternalFrames(), getPanelEstado(), getConjuntoImagenes(), 0);
+				}
+			}
+
+		}
+
+	}
+
+	class BilinearListener implements ActionListener {
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.
+		 * ActionEvent)
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
+				if (getImagenesAbiertas().get(i).isSelected()) {
+					NuevaEscalaDialog nuevaEscalaDialog = new NuevaEscalaDialog(conjuntoImagenes.getImagen(i),
+							getImagenesAbiertas(), getBarraMenu(), getGrupoInternalFrames(), getPanelEstado(), getConjuntoImagenes(), 1);
 				}
 			}
 		}

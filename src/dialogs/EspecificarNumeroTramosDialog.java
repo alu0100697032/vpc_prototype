@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 import clases.ConjuntoImagenes;
 import clases.Imagen;
 import dibujablesImagen.DibujaInternalFrameImagen;
-import menuBar.DibujaBarraMenu;
+import menuBar.DibujaMenuBar;
 import statusBar.DibujaPanelEstado;
 
 public class EspecificarNumeroTramosDialog extends JDialog {
@@ -21,7 +21,7 @@ public class EspecificarNumeroTramosDialog extends JDialog {
 	private JPanel contenedor;
 
 	public EspecificarNumeroTramosDialog(Imagen imagen, ArrayList<DibujaInternalFrameImagen> imagenesAbiertas,
-			DibujaBarraMenu barraMenu, JDesktopPane grupoInternalFrames, DibujaPanelEstado panelEstado,
+			DibujaMenuBar barraMenu, JDesktopPane grupoInternalFrames, DibujaPanelEstado panelEstado,
 			ConjuntoImagenes conjuntoImagenes) {
 		setResizable(false);
 		contenedor = new JPanel();
@@ -34,7 +34,7 @@ public class EspecificarNumeroTramosDialog extends JDialog {
 
 	}
 
-	public void accion(Imagen imagen, ArrayList<DibujaInternalFrameImagen> imagenesAbiertas, DibujaBarraMenu barraMenu,
+	public void accion(Imagen imagen, ArrayList<DibujaInternalFrameImagen> imagenesAbiertas, DibujaMenuBar barraMenu,
 			JDesktopPane grupoInternalFrames, DibujaPanelEstado panelEstado, ConjuntoImagenes conjuntoImagenes) {
 		Object[] opciones = { "Aceptar", "Cancelar" };
 		int opcion = JOptionPane.showOptionDialog(this, contenedor, "Número de tramos", JOptionPane.YES_NO_OPTION,

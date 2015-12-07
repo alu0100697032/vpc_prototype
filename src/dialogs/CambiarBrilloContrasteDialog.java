@@ -23,7 +23,7 @@ import clases.Imagen;
 import dibujablesImagen.DibujaImagen;
 import dibujablesImagen.DibujaImagenInstanciable;
 import dibujablesImagen.DibujaInternalFrameImagen;
-import menuBar.DibujaBarraMenu;
+import menuBar.DibujaMenuBar;
 import statusBar.DibujaPanelEstado;
 
 public class CambiarBrilloContrasteDialog extends JDialog {
@@ -41,7 +41,7 @@ public class CambiarBrilloContrasteDialog extends JDialog {
 	 * Constructor
 	 */
 	public CambiarBrilloContrasteDialog(Imagen imagen, ArrayList<DibujaInternalFrameImagen> imagenesAbiertas,
-			DibujaBarraMenu barraMenu, JDesktopPane grupoInternalFrames, DibujaPanelEstado panelEstado,
+			DibujaMenuBar barraMenu, JDesktopPane grupoInternalFrames, DibujaPanelEstado panelEstado,
 			ConjuntoImagenes conjuntoImagenes) {
 
 		setResizable(false);

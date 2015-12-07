@@ -9,7 +9,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 
 import dibujablesImagen.DibujaInternalFrameImagen;
-import menuBar.DibujaBarraMenu;
+import menuBar.DibujaMenuBar;
 import statusBar.DibujaPanelEstado;
 
 public class DibujaVentanaPrincipal extends JFrame {
@@ -18,7 +18,7 @@ public class DibujaVentanaPrincipal extends JFrame {
 	 * Atributos 
 	 */
 	private ArrayList<DibujaInternalFrameImagen> imagenesAbiertas;
-	private DibujaBarraMenu barraMenu;
+	private DibujaMenuBar barraMenu;
 	private JDesktopPane grupoInternalFrames;
 	private DibujaPanelEstado panelEstado;
 	
@@ -43,7 +43,7 @@ public class DibujaVentanaPrincipal extends JFrame {
 
 		//MenuBar
 		
-		barraMenu = new DibujaBarraMenu();
+		barraMenu = new DibujaMenuBar();
 		setJMenuBar(barraMenu);
 		
 		//DesktopPane
@@ -112,6 +112,15 @@ public class DibujaVentanaPrincipal extends JFrame {
 		barraMenu.getMenuItemVerInformacionImagen().addActionListener(a);
 	}
 	/*
+	 * Escalado
+	 */
+	public void addVMPListener(ActionListener a) {
+		barraMenu.getEscaladoMenu().getVecinoMasProximoMenuItem().addActionListener(a);
+	}
+	public void addBilinearistener(ActionListener a) {
+		barraMenu.getEscaladoMenu().getBilinearMenuItem().addActionListener(a);
+	}
+	/*
 	 * GETTER AND SETTER
 	 */
 
@@ -160,14 +169,14 @@ public class DibujaVentanaPrincipal extends JFrame {
 	/**
 	 * @return the barraMenu
 	 */
-	public DibujaBarraMenu getBarraMenu() {
+	public DibujaMenuBar getBarraMenu() {
 		return barraMenu;
 	}
 
 	/**
 	 * @param barraMenu the barraMenu to set
 	 */
-	public void setBarraMenu(DibujaBarraMenu barraMenu) {
+	public void setBarraMenu(DibujaMenuBar barraMenu) {
 		this.barraMenu = barraMenu;
 	}
 

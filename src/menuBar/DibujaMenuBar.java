@@ -4,7 +4,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-public class DibujaBarraMenu extends JMenuBar{
+public class DibujaMenuBar extends JMenuBar{
 
 	/*
 	 * Atributos
@@ -29,11 +29,13 @@ public class DibujaBarraMenu extends JMenuBar{
 	private JMenuItem menuItemVerHistogramaAcumulado;
 	private JMenuItem menuItemVerInformacionImagen;
 	
+	private EscaladoMenu escaladoMenu;
+	
 	/*
 	 * Constructor
 	 */
 	
-	public DibujaBarraMenu(){
+	public DibujaMenuBar(){
 
 		//Archivo
 		
@@ -90,6 +92,13 @@ public class DibujaBarraMenu extends JMenuBar{
 		menuVer.add(menuItemVerInformacionImagen);
 		
 		add(menuVer);
+		
+		//Escalado
+		
+		setEscaladoMenu(new EscaladoMenu());
+		
+		add(getEscaladoMenu());
+		
 	}
 	
 	/**
@@ -308,5 +317,19 @@ public class DibujaBarraMenu extends JMenuBar{
 	 */
 	public void setMenuItemMapaCambios(JMenuItem menuItemMapaCambios) {
 		this.menuItemMapaCambios = menuItemMapaCambios;
+	}
+
+	/**
+	 * @return the escaladoMenu
+	 */
+	public EscaladoMenu getEscaladoMenu() {
+		return escaladoMenu;
+	}
+
+	/**
+	 * @param escaladoMenu the escaladoMenu to set
+	 */
+	public void setEscaladoMenu(EscaladoMenu escaladoMenu) {
+		this.escaladoMenu = escaladoMenu;
 	}
 }

@@ -18,7 +18,7 @@ import javax.swing.JLabel;
 
 import clases.ConjuntoImagenes;
 import clases.Imagen;
-import menuBar.DibujaBarraMenu;
+import menuBar.DibujaMenuBar;
 import statusBar.DibujaPanelEstado;
 
 public class DibujaImagen extends JLabel{
@@ -35,7 +35,7 @@ public class DibujaImagen extends JLabel{
 	/**
 	 * Constructor: DibujaImagen
 	 */
-	public DibujaImagen(Imagen img, ArrayList<DibujaInternalFrameImagen> imagenesAbiertas, DibujaBarraMenu barraMenu,
+	public DibujaImagen(Imagen img, ArrayList<DibujaInternalFrameImagen> imagenesAbiertas, DibujaMenuBar barraMenu,
 			JDesktopPane grupoInternalFrames, DibujaPanelEstado pEstado, ConjuntoImagenes conjuntoImagenes) {
 
 		setPanelEstado(pEstado);

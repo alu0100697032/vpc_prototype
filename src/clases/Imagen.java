@@ -362,7 +362,29 @@ public class Imagen extends Observable implements Cloneable {
 		// actualizamos la imformacion de la imagen
 		obtenerInformacionImagen();
 	}
-
+	/**
+	 * escalarVMP
+	 */
+	public BufferedImage escalarVMP(float porcentajeX, float porcentajeY) {
+		int ancho = (int)(porcentajeX * imagen.getWidth());
+		int alto = (int)(porcentajeY * imagen.getHeight());
+		BufferedImage imagenEscalada = new BufferedImage(ancho, alto, imagen.getType());
+		
+		for(int i = 0; i < imagenEscalada.getWidth(); i++) {
+			for(int j = 0; j < imagenEscalada.getHeight(); j++) {
+				int x = Math.round(i/porcentajeX);
+				int y = Math.round(j/porcentajeY);
+				if(x >= imagen.getWidth())
+					x = imagen.getWidth() - 1;
+				if(y >= imagen.getHeight())
+					y = imagen.getHeight() - 1;
+				int color = matrizPixelesGris.get(x).get(y);
+				imagenEscalada.setRGB(i, j, new Color(color, color, color).getRGB());
+			}
+		}
+		
+		return imagenEscalada;
+	}	
 	/**
 	 * subImagen
 	 */

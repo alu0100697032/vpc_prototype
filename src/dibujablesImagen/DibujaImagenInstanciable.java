@@ -21,7 +21,7 @@ import javax.swing.JDesktopPane;
 
 import clases.ConjuntoImagenes;
 import clases.Imagen;
-import menuBar.DibujaBarraMenu;
+import menuBar.DibujaMenuBar;
 import statusBar.DibujaPanelEstado;
 
 public class DibujaImagenInstanciable extends DibujaImagen implements MouseMotionListener{
@@ -33,7 +33,7 @@ public class DibujaImagenInstanciable extends DibujaImagen implements MouseMotio
 	/** Constructor: DibujaImagenInstanciable
 	 */
 	public DibujaImagenInstanciable(Imagen img, ArrayList<DibujaInternalFrameImagen> imagenesAbiertas,
-			DibujaBarraMenu barraMenu, JDesktopPane grupoInternalFrames, DibujaPanelEstado pEstado,
+			DibujaMenuBar barraMenu, JDesktopPane grupoInternalFrames, DibujaPanelEstado pEstado,
 			ConjuntoImagenes conjuntoImagenes) {
 		super(img, imagenesAbiertas, barraMenu, grupoInternalFrames, pEstado, conjuntoImagenes);
 		// TODO Auto-generated constructor stub

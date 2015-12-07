@@ -14,7 +14,7 @@ import clases.ConjuntoImagenes;
 import clases.Imagen;
 import dibujablesImagen.DibujaImagenInstanciable;
 import dibujablesImagen.DibujaInternalFrameImagen;
-import menuBar.DibujaBarraMenu;
+import menuBar.DibujaMenuBar;
 import statusBar.DibujaPanelEstado;
 
 public class TransformacionLinealTramosDialog extends JDialog {
@@ -28,7 +28,7 @@ public class TransformacionLinealTramosDialog extends JDialog {
 	 * Constructor: TransformacionLinealTramos
 	 */
 	public TransformacionLinealTramosDialog(Imagen imagen, ArrayList<DibujaInternalFrameImagen> imagenesAbiertas,
-			DibujaBarraMenu barraMenu, JDesktopPane grupoInternalFrames, DibujaPanelEstado panelEstado,
+			DibujaMenuBar barraMenu, JDesktopPane grupoInternalFrames, DibujaPanelEstado panelEstado,
 			ConjuntoImagenes conjuntoImagenes, int numeroTramos) {
 		setResizable(false);
 		JPaneltramosCoordenadas = new JPanel();
@@ -50,7 +50,7 @@ public class TransformacionLinealTramosDialog extends JDialog {
 	 * accion
 	 */
 	public void accion(Imagen imagen, ArrayList<DibujaInternalFrameImagen> imagenesAbiertas,
-			DibujaBarraMenu barraMenu, JDesktopPane grupoInternalFrames, DibujaPanelEstado panelEstado,
+			DibujaMenuBar barraMenu, JDesktopPane grupoInternalFrames, DibujaPanelEstado panelEstado,
 			ConjuntoImagenes conjuntoImagenes) {
 		Object[] opciones = { "Aceptar", "Cancelar" };
 		int opcion = JOptionPane.showOptionDialog(this, JPaneltramosCoordenadas,

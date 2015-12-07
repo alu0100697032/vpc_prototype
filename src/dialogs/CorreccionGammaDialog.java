@@ -19,7 +19,7 @@ import clases.ConjuntoImagenes;
 import clases.Imagen;
 import dibujablesImagen.DibujaImagenInstanciable;
 import dibujablesImagen.DibujaInternalFrameImagen;
-import menuBar.DibujaBarraMenu;
+import menuBar.DibujaMenuBar;
 import statusBar.DibujaPanelEstado;
 
 public class CorreccionGammaDialog extends JDialog{
@@ -33,7 +33,7 @@ public class CorreccionGammaDialog extends JDialog{
 	 * Constructor: CorreccionGamma
 	 */
 	public CorreccionGammaDialog(Imagen imagen, ArrayList<DibujaInternalFrameImagen> imagenesAbiertas,
-			DibujaBarraMenu barraMenu, JDesktopPane grupoInternalFrames, DibujaPanelEstado panelEstado,
+			DibujaMenuBar barraMenu, JDesktopPane grupoInternalFrames, DibujaPanelEstado panelEstado,
 			ConjuntoImagenes conjuntoImagenes) {
 		setResizable(false);
 		JPanelGamma = new JPanel();
@@ -48,7 +48,7 @@ public class CorreccionGammaDialog extends JDialog{
 	 * accion
 	 */
 	public void accion(Imagen imagen, ArrayList<DibujaInternalFrameImagen> imagenesAbiertas,
-			DibujaBarraMenu barraMenu, JDesktopPane grupoInternalFrames, DibujaPanelEstado panelEstado,
+			DibujaMenuBar barraMenu, JDesktopPane grupoInternalFrames, DibujaPanelEstado panelEstado,
 			ConjuntoImagenes conjuntoImagenes, JTextField valorY) {
 		
 		Object[] opciones = { "Aceptar", "Cancelar" };
