@@ -386,6 +386,38 @@ public class Imagen extends Observable implements Cloneable {
 		return imagenEscalada;
 	}	
 	/**
+	 * escalarBilineal
+	 */
+	public BufferedImage escalarBilineal(float porcentajeX, float porcentajeY) {
+		int ancho = (int)(porcentajeX * imagen.getWidth());
+		int alto = (int)(porcentajeY * imagen.getHeight());
+		BufferedImage imagenEscalada = new BufferedImage(ancho, alto, imagen.getType());
+		
+		for(int i = 0; i < imagenEscalada.getWidth(); i++) {
+			for(int j = 0; j < imagenEscalada.getHeight(); j++) {
+				int X = (int)(i/porcentajeX);
+				int Y = (int)(j/porcentajeY);
+				int X1 = X+1;
+				int Y1 = Y+1;
+				if(X1 >= imagen.getWidth())
+					X1 = imagen.getWidth() - 1;
+				if(Y1 >= imagen.getHeight())
+					Y1 = imagen.getHeight() - 1;
+				int A = matrizPixelesGris.get(X).get(Y1);
+				int B = matrizPixelesGris.get(X1).get(Y1); 
+				int C = matrizPixelesGris.get(X).get(Y); 
+				int D = matrizPixelesGris.get(X1).get(Y);
+				float p = (i/(float)porcentajeX)-X;
+				float q = (j/(float)porcentajeY)-Y;
+				int color = (int)(C+(D-C)*p+(A-C)*q+(B+C-A-D)*p*q);
+				imagenEscalada.setRGB(i, j, new Color(color, color, color).getRGB());
+			}
+		}
+		
+		return imagenEscalada;
+	}
+	
+	/**
 	 * subImagen
 	 */
 	public BufferedImage subImagen(Point inicio, Point fin) {

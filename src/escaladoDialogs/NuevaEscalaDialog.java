@@ -52,18 +52,21 @@ public class NuevaEscalaDialog extends JDialog {
 		int opcion = JOptionPane.showOptionDialog(this, nuevaEscalaJPanel, "Nueva escala", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
 		if (opcion == JOptionPane.YES_OPTION) {
+			Imagen imagenEscalada = null;
 			if (tecnica == 0) {// vmp
-				Imagen imagenEscalada = new Imagen(imagen.escalarVMP(Float.parseFloat(anchoTexField.getText())/(float)100,
+				imagenEscalada = new Imagen(imagen.escalarVMP(Float.parseFloat(anchoTexField.getText())/(float)100,
 						Float.parseFloat(altoTexField.getText())/(float)100));
-				conjuntoImagenes.addImagen(imagenEscalada);
-				DibujaImagenInstanciable dibujaImagen = new DibujaImagenInstanciable(imagenEscalada, imagenesAbiertas, barraMenu,
-						grupoInternalFrames, panelEstado, conjuntoImagenes);
-				DibujaInternalFrameImagen dibujaInternalFrameImagen = new DibujaInternalFrameImagen(dibujaImagen);
-				imagenesAbiertas.add(dibujaInternalFrameImagen);
-				grupoInternalFrames.add(dibujaInternalFrameImagen);
-			} else if (tecnica == 1) {// bilinear
 				
+			} else if (tecnica == 1) {// bilinear
+				imagenEscalada = new Imagen(imagen.escalarBilineal(Float.parseFloat(anchoTexField.getText())/(float)100,
+						Float.parseFloat(altoTexField.getText())/(float)100));
 			}
+			conjuntoImagenes.addImagen(imagenEscalada);
+			DibujaImagenInstanciable dibujaImagen = new DibujaImagenInstanciable(imagenEscalada, imagenesAbiertas, barraMenu,
+					grupoInternalFrames, panelEstado, conjuntoImagenes);
+			DibujaInternalFrameImagen dibujaInternalFrameImagen = new DibujaInternalFrameImagen(dibujaImagen);
+			imagenesAbiertas.add(dibujaInternalFrameImagen);
+			grupoInternalFrames.add(dibujaInternalFrameImagen);
 		}
 	}
 
