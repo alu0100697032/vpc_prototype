@@ -459,7 +459,15 @@ public class Imagen extends Observable implements Cloneable {
 	 * rotacion90
 	 */
 	public BufferedImage rotacion90() {
-		BufferedImage imagenRotada = new BufferedImage(imagen.getWidth(), imagen.getHeight(), imagen.getType());
+		BufferedImage imagenRotada = new BufferedImage(imagen.getHeight(), imagen.getWidth(), imagen.getType());
+		for(int i = 0; i < imagenRotada.getWidth(); i++) {
+			for(int j = 0; j < imagenRotada.getHeight(); j++) {
+				//int x = (int) ((i*Math.round(Math.cos(Math.toRadians(90)))) + j*Math.round(Math.sin(Math.toRadians(90))));
+				//int y = (int) (-(i*Math.round(Math.sin(Math.toRadians(90))))+j*Math.round(Math.cos(Math.toRadians(90))));
+				int color = matrizPixelesGris.get(imagenRotada.getHeight()-j-1).get(i);
+				imagenRotada.setRGB(i, j, new Color(color, color, color).getRGB());
+			}
+		}
 		return imagenRotada;
 	}
 	/**
