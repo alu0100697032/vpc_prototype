@@ -135,6 +135,9 @@ public class DibujaVentanaPrincipal extends JFrame {
 	public void addRotaciones90Listener(ActionListener a) {
 		barraMenu.getOperacionesGeometricasMenu().getRotaciones90MenuItem().addActionListener(a);
 	}
+	public void addRotacionesListener(ActionListener a) {
+		barraMenu.getOperacionesGeometricasMenu().getRotacionesMenuItem().addActionListener(a);
+	}
 	/*
 	 * GETTER AND SETTER
 	 */

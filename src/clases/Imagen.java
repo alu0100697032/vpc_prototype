@@ -45,6 +45,7 @@ public class Imagen extends Observable implements Cloneable {
 		// pasar la imagen a gris
 		pasarImagenGris();
 	}
+
 	/**
 	 * Constructor: Imagen
 	 */
@@ -70,10 +71,12 @@ public class Imagen extends Observable implements Cloneable {
 		}
 		obtenerInformacionImagen();
 	}
+
 	/**
 	 * pasarImagenGris
 	 */
-	//problema, cada vezque genero una imagen altero los pixeles por pasar a gris cada vez
+	// problema, cada vezque genero una imagen altero los pixeles por pasar a
+	// gris cada vez
 	public void pasarImagenGris() {
 		Color colorRGB;
 		int colorGris;
@@ -131,7 +134,7 @@ public class Imagen extends Observable implements Cloneable {
 		int sumatorioValores = 0;
 		int numeroPixleles = histogramaAcumulado.get(255);
 		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
-			sumatorioValores += (int)entry.getKey() * (int)entry.getValue();
+			sumatorioValores += (int) entry.getKey() * (int) entry.getValue();
 		}
 		brillo = sumatorioValores / numeroPixleles;
 	}
@@ -146,7 +149,7 @@ public class Imagen extends Observable implements Cloneable {
 		for (Entry<Integer, Integer> entry : histogramaAbsoluto.entrySet()) {
 			sumatorioValores += entry.getValue() * (Math.pow((entry.getKey() - brillo), 2));
 		}
-		contraste = (int) Math.sqrt((sumatorioValores / (double)numeroPixleles));
+		contraste = (int) Math.sqrt((sumatorioValores / (double) numeroPixleles));
 	}
 
 	/**
@@ -211,8 +214,8 @@ public class Imagen extends Observable implements Cloneable {
 	 * ajustarBrilloContraste
 	 */
 	public void ajustarBrilloContraste(int brilloPrima, int contrastePrima) {
-		double A = contrastePrima / (double)contraste;
-		double B = brilloPrima - ((double)A * brillo);
+		double A = contrastePrima / (double) contraste;
+		double B = brilloPrima - ((double) A * brillo);
 		int colorCambiado;
 		HashMap<Integer, Integer> relacionVinVout = new HashMap<Integer, Integer>();
 		HashMap<Integer, Integer> VOut = new HashMap<Integer, Integer>();
@@ -222,13 +225,13 @@ public class Imagen extends Observable implements Cloneable {
 		Iterator it = histogramaAbsoluto.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry pairs = (Map.Entry) it.next();
-			colorCambiado = (int) ((A * (int)pairs.getKey()) + B);
+			colorCambiado = (int) ((A * (int) pairs.getKey()) + B);
 			if (colorCambiado > 255)
 				colorCambiado = 255;
 			if (colorCambiado < 0)
 				colorCambiado = 0;
-			VOut.put(colorCambiado, VOut.get(colorCambiado) + (int)pairs.getValue());
-			relacionVinVout.put((int)pairs.getKey(), colorCambiado);
+			VOut.put(colorCambiado, VOut.get(colorCambiado) + (int) pairs.getValue());
+			relacionVinVout.put((int) pairs.getKey(), colorCambiado);
 		}
 		actualizarValoresVinVout(relacionVinVout, VOut);
 	}
@@ -236,7 +239,7 @@ public class Imagen extends Observable implements Cloneable {
 	/**
 	 * ecualizar
 	 */
-	//bien
+	// bien
 	public void ecualizar() {
 		int colorCambiado;
 		HashMap<Integer, Integer> relacionVinVout = new HashMap<Integer, Integer>();
@@ -248,10 +251,12 @@ public class Imagen extends Observable implements Cloneable {
 		while (it.hasNext()) {
 			Map.Entry pairs = (Map.Entry) it.next();
 			// esto va a dar 0000000 seguro
-			colorCambiado = Math.round((((float)256 / histogramaAcumulado.get(255)) * (int) histogramaAcumulado.get((int)pairs.getKey())) - 1);
-			if(colorCambiado < 0)
+			colorCambiado = Math.round(
+					(((float) 256 / histogramaAcumulado.get(255)) * (int) histogramaAcumulado.get((int) pairs.getKey()))
+							- 1);
+			if (colorCambiado < 0)
 				colorCambiado = 0;
-			if(colorCambiado > 255)
+			if (colorCambiado > 255)
 				colorCambiado = 255;
 			VOut.put(colorCambiado, VOut.get(colorCambiado) + (int) (pairs.getValue()));
 			relacionVinVout.put((int) (pairs.getKey()), colorCambiado);
@@ -285,7 +290,7 @@ public class Imagen extends Observable implements Cloneable {
 	/**
 	 * diferenciaImagenes
 	 */
-	//bien
+	// bien
 	public BufferedImage diferenciaImagenes(Imagen imagenResta) {
 		BufferedImage imagenDiferencia = new BufferedImage(imagen.getWidth(), imagen.getHeight(), imagen.getType());
 		mapaCambios = new ArrayList<>();
@@ -307,7 +312,7 @@ public class Imagen extends Observable implements Cloneable {
 	/**
 	 * repintarCambiosMatrizPixeles
 	 */
-	//bien
+	// bien
 	public void repintarMapaCambios(int umbral) {
 		for (int i = 0; i < imagen.getWidth(); i++) {
 			for (int j = 0; j < imagen.getHeight(); j++) {
@@ -334,6 +339,7 @@ public class Imagen extends Observable implements Cloneable {
 		setHistogramaAbsoluto(VOut);
 		obtenerInformacionImagen();
 	}
+
 	/**
 	 * obtenerInformacionImagen
 	 */
@@ -344,7 +350,7 @@ public class Imagen extends Observable implements Cloneable {
 		obtenerContraste();
 		obtenerEntropia();
 	}
-	
+
 	/**
 	 * actualizarValoresMedienteBufferedImage
 	 */
@@ -362,114 +368,236 @@ public class Imagen extends Observable implements Cloneable {
 		// actualizamos la imformacion de la imagen
 		obtenerInformacionImagen();
 	}
+
 	/**
 	 * escalarVMP
 	 */
 	public BufferedImage escalarVMP(float porcentajeX, float porcentajeY) {
-		int ancho = (int)(porcentajeX * imagen.getWidth());
-		int alto = (int)(porcentajeY * imagen.getHeight());
+		int ancho = (int) (porcentajeX * imagen.getWidth());
+		int alto = (int) (porcentajeY * imagen.getHeight());
 		BufferedImage imagenEscalada = new BufferedImage(ancho, alto, imagen.getType());
-		
-		for(int i = 0; i < imagenEscalada.getWidth(); i++) {
-			for(int j = 0; j < imagenEscalada.getHeight(); j++) {
-				int x = Math.round(i/porcentajeX);
-				int y = Math.round(j/porcentajeY);
-				if(x >= imagen.getWidth())
+
+		for (int i = 0; i < imagenEscalada.getWidth(); i++) {
+			for (int j = 0; j < imagenEscalada.getHeight(); j++) {
+				int x = Math.round(i / porcentajeX);
+				int y = Math.round(j / porcentajeY);
+				if (x >= imagen.getWidth())
 					x = imagen.getWidth() - 1;
-				if(y >= imagen.getHeight())
+				if (y >= imagen.getHeight())
 					y = imagen.getHeight() - 1;
 				int color = matrizPixelesGris.get(x).get(y);
 				imagenEscalada.setRGB(i, j, new Color(color, color, color).getRGB());
 			}
 		}
-		
+
 		return imagenEscalada;
-	}	
+	}
+
 	/**
 	 * escalarBilineal
 	 */
 	public BufferedImage escalarBilineal(float porcentajeX, float porcentajeY) {
-		int ancho = (int)(porcentajeX * imagen.getWidth());
-		int alto = (int)(porcentajeY * imagen.getHeight());
+		int ancho = (int) (porcentajeX * imagen.getWidth());
+		int alto = (int) (porcentajeY * imagen.getHeight());
 		BufferedImage imagenEscalada = new BufferedImage(ancho, alto, imagen.getType());
-		
-		for(int i = 0; i < imagenEscalada.getWidth(); i++) {
-			for(int j = 0; j < imagenEscalada.getHeight(); j++) {
-				int X = (int)(i/porcentajeX);
-				int Y = (int)(j/porcentajeY);
-				int X1 = X+1;
-				int Y1 = Y+1;
-				if(X1 >= imagen.getWidth())
+
+		for (int i = 0; i < imagenEscalada.getWidth(); i++) {
+			for (int j = 0; j < imagenEscalada.getHeight(); j++) {
+				int X = (int) (i / porcentajeX);
+				int Y = (int) (j / porcentajeY);
+				int X1 = X + 1;
+				int Y1 = Y + 1;
+				if (X1 >= imagen.getWidth())
 					X1 = imagen.getWidth() - 1;
-				if(Y1 >= imagen.getHeight())
+				if (Y1 >= imagen.getHeight())
 					Y1 = imagen.getHeight() - 1;
 				int A = matrizPixelesGris.get(X).get(Y1);
-				int B = matrizPixelesGris.get(X1).get(Y1); 
-				int C = matrizPixelesGris.get(X).get(Y); 
+				int B = matrizPixelesGris.get(X1).get(Y1);
+				int C = matrizPixelesGris.get(X).get(Y);
 				int D = matrizPixelesGris.get(X1).get(Y);
-				float p = (i/(float)porcentajeX)-X;
-				float q = (j/(float)porcentajeY)-Y;
-				int color = (int)(C+(D-C)*p+(A-C)*q+(B+C-A-D)*p*q);
+				float p = (i / (float) porcentajeX) - X;
+				float q = (j / (float) porcentajeY) - Y;
+				int color = (int) (C + (D - C) * p + (A - C) * q + (B + C - A - D) * p * q);
 				imagenEscalada.setRGB(i, j, new Color(color, color, color).getRGB());
 			}
 		}
-		
+
 		return imagenEscalada;
 	}
+
 	/**
 	 * espejoHorizontal
 	 */
 	public BufferedImage espejoHorizontal() {
 		BufferedImage imagenEspejo = new BufferedImage(imagen.getWidth(), imagen.getHeight(), imagen.getType());
-		for(int i = 0; i < imagenEspejo.getWidth(); i++) {
-			for(int j = 0; j < imagenEspejo.getHeight(); j++) {
-				int color = matrizPixelesGris.get(imagenEspejo.getWidth()-i-1).get(j);
+		for (int i = 0; i < imagenEspejo.getWidth(); i++) {
+			for (int j = 0; j < imagenEspejo.getHeight(); j++) {
+				int color = matrizPixelesGris.get(imagenEspejo.getWidth() - i - 1).get(j);
 				imagenEspejo.setRGB(i, j, new Color(color, color, color).getRGB());
 			}
 		}
 		return imagenEspejo;
 	}
+
 	/**
 	 * espejoVertical
 	 */
 	public BufferedImage espejoVertical() {
 		BufferedImage imagenEspejo = new BufferedImage(imagen.getWidth(), imagen.getHeight(), imagen.getType());
-		for(int i = 0; i < imagenEspejo.getWidth(); i++) {
-			for(int j = 0; j < imagenEspejo.getHeight(); j++) {
-				int color = matrizPixelesGris.get(i).get(imagenEspejo.getHeight()-j-1);
+		for (int i = 0; i < imagenEspejo.getWidth(); i++) {
+			for (int j = 0; j < imagenEspejo.getHeight(); j++) {
+				int color = matrizPixelesGris.get(i).get(imagenEspejo.getHeight() - j - 1);
 				imagenEspejo.setRGB(i, j, new Color(color, color, color).getRGB());
 			}
 		}
 		return imagenEspejo;
 	}
+
 	/**
 	 * traspuesta
 	 */
 	public BufferedImage traspuesta() {
 		BufferedImage imagenTraspuesta = new BufferedImage(imagen.getHeight(), imagen.getWidth(), imagen.getType());
-		for(int i = 0; i < imagenTraspuesta.getWidth(); i++) {
-			for(int j = 0; j < imagenTraspuesta.getHeight(); j++) {
+		for (int i = 0; i < imagenTraspuesta.getWidth(); i++) {
+			for (int j = 0; j < imagenTraspuesta.getHeight(); j++) {
 				int color = matrizPixelesGris.get(j).get(i);
 				imagenTraspuesta.setRGB(i, j, new Color(color, color, color).getRGB());
 			}
 		}
 		return imagenTraspuesta;
 	}
+
 	/**
 	 * rotacion90
 	 */
 	public BufferedImage rotacion90() {
 		BufferedImage imagenRotada = new BufferedImage(imagen.getHeight(), imagen.getWidth(), imagen.getType());
-		for(int i = 0; i < imagenRotada.getWidth(); i++) {
-			for(int j = 0; j < imagenRotada.getHeight(); j++) {
-				//int x = (int) ((i*Math.round(Math.cos(Math.toRadians(90)))) + j*Math.round(Math.sin(Math.toRadians(90))));
-				//int y = (int) (-(i*Math.round(Math.sin(Math.toRadians(90))))+j*Math.round(Math.cos(Math.toRadians(90))));
-				int color = matrizPixelesGris.get(imagenRotada.getHeight()-j-1).get(i);
+		for (int i = 0; i < imagenRotada.getWidth(); i++) {
+			for (int j = 0; j < imagenRotada.getHeight(); j++) {
+				// int x = (int) ((i*Math.round(Math.cos(Math.toRadians(90)))) +
+				// j*Math.round(Math.sin(Math.toRadians(90))));
+				// int y = (int)
+				// (-(i*Math.round(Math.sin(Math.toRadians(90))))+j*Math.round(Math.cos(Math.toRadians(90))));
+				int color = matrizPixelesGris.get(imagenRotada.getHeight() - j - 1).get(i);
 				imagenRotada.setRGB(i, j, new Color(color, color, color).getRGB());
 			}
 		}
 		return imagenRotada;
 	}
+
+	/**
+	 * rotacion
+	 */
+	public BufferedImage rotacion(int grados) {
+
+		BufferedImage imagenRotada = new BufferedImage(getWidthParalelogram(grados), getHeightParalelogram(grados),
+				imagen.getType());
+		// System.out.println(getWidthParalelogram(grados) + " " +
+		// getHeightParalelogram(grados));
+		for (int i = 0; i < imagenRotada.getWidth(); i++) {
+			for (int j = 0; j < imagenRotada.getHeight(); j++) {
+				int x = (int) ((i * Math.round(Math.cos(Math.toRadians(grados))))
+						+ j * Math.round(Math.sin(Math.toRadians(grados))));
+				int y = (int) (-(i * Math.round(Math.sin(Math.toRadians(grados))))
+						+ j * Math.round(Math.cos(Math.toRadians(grados))));
+				//como poner en relacion los dos origenes de coordenadas
+				int color;
+				if(x >= imagen.getWidth() || x < 0 || y < 0 || y >= imagen.getHeight())
+					color = 255;
+				else	
+					color = matrizPixelesGris.get(x).get(y);
+				imagenRotada.setRGB(i, j, new Color(color, color, color).getRGB());
+			}
+		}
+		return imagenRotada;
+	}
+
+	/**
+	 * getWidthParalelogram
+	 */
+	public int getWidthParalelogram(int grados) {
+		int xMax = 0;
+		int xMin = 0;
+		int xPrima = (int) (-imagen.getHeight() * Math.round(Math.sin(Math.toRadians(grados))));
+		if (xPrima > xMax)
+			xMax = xPrima;
+		if (xPrima < xMin)
+			xMin = xPrima;
+		xPrima = (int) (imagen.getWidth() * Math.round(Math.cos(Math.toRadians(grados))));
+		if (xPrima > xMax)
+			xMax = xPrima;
+		if (xPrima < xMin)
+			xMin = xPrima;
+		xPrima = (int) ((imagen.getWidth() * Math.round(Math.cos(Math.toRadians(grados)))
+				- (imagen.getHeight() * Math.round(Math.sin(Math.toRadians(grados))))));
+		if (xPrima > xMax)
+			xMax = xPrima;
+		if (xPrima < xMin)
+			xMin = xPrima;
+		return xMax - xMin;
+	}
+
+	/**
+	 * getHeightParalelogram
+	 */
+	public int getHeightParalelogram(int grados) {
+		int yMax = 0;
+		int yMin = 0;
+		int yPrima = (int) (imagen.getHeight() * Math.round(Math.cos(Math.toRadians(grados))));
+		if (yPrima > yMax)
+			yMax = yPrima;
+		if (yPrima < yMin)
+			yMin = yPrima;
+		yPrima = (int) (imagen.getWidth() * Math.round(Math.sin(Math.toRadians(grados))));
+		if (yPrima > yMax)
+			yMax = yPrima;
+		if (yPrima < yMin)
+			yMin = yPrima;
+		yPrima = (int) ((imagen.getWidth() * Math.round(Math.sin(Math.toRadians(grados)))
+				+ (imagen.getHeight() * Math.round(Math.cos(Math.toRadians(grados))))));
+		if (yPrima > yMax)
+			yMax = yPrima;
+		if (yPrima < yMin)
+			yMin = yPrima;
+		return yMax - yMin;
+	}
+
+	/**
+	 * getDesplazamientoX
+	 */
+	public int getDesplazamientoX(int grados) {
+		int xMin = 0;
+		int xPrima = (int) (-imagen.getHeight() * Math.round(Math.sin(Math.toRadians(grados))));
+		if (xPrima < xMin)
+			xMin = xPrima;
+		xPrima = (int) (imagen.getWidth() * Math.round(Math.cos(Math.toRadians(grados))));
+		if (xPrima < xMin)
+			xMin = xPrima;
+		xPrima = (int) ((imagen.getWidth() * Math.round(Math.cos(Math.toRadians(grados)))
+				- (imagen.getHeight() * Math.round(Math.sin(Math.toRadians(grados))))));
+		if (xPrima < xMin)
+			xMin = xPrima;
+		return -xMin;
+	}
+
+	/**
+	 * getDesplazamientoY
+	 */
+	public int getDesplazamientoY(int grados) {
+		int yMin = 0;
+		int yPrima = (int) (imagen.getHeight() * Math.round(Math.cos(Math.toRadians(grados))));
+		if (yPrima < yMin)
+			yMin = yPrima;
+		yPrima = (int) (imagen.getWidth() * Math.round(Math.sin(Math.toRadians(grados))));
+		if (yPrima < yMin)
+			yMin = yPrima;
+		yPrima = (int) ((imagen.getWidth() * Math.round(Math.sin(Math.toRadians(grados)))
+				+ (imagen.getHeight() * Math.round(Math.cos(Math.toRadians(grados))))));
+		if (yPrima < yMin)
+			yMin = yPrima;
+		return -yMin;
+	}
+
 	/**
 	 * subImagen
 	 */
@@ -680,14 +808,17 @@ public class Imagen extends Observable implements Cloneable {
 	public void setNombreImagen(String nombreImagen) {
 		this.nombreImagen = nombreImagen;
 	}
+
 	/**
 	 * @return the mapaCambios
 	 */
 	public ArrayList<ArrayList<Integer>> getMapaCambios() {
 		return mapaCambios;
 	}
+
 	/**
-	 * @param mapaCambios the mapaCambios to set
+	 * @param mapaCambios
+	 *            the mapaCambios to set
 	 */
 	public void setMapaCambios(ArrayList<ArrayList<Integer>> mapaCambios) {
 		this.mapaCambios = mapaCambios;

@@ -9,6 +9,7 @@ import dialogs.CorreccionGammaDialog;
 import dialogs.EspecificarNumeroTramosDialog;
 import dialogs.GuardarImagenDialog;
 import dialogs.InformacionImagenDialog;
+import dialogs.RotacionDialog;
 import dialogs.SeleccionarUmbralDialog;
 import dialogs.AbrirImagenDialog;
 import dibujablesHistogramas.DibujaHistogramaAbsoluto;
@@ -50,11 +51,13 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 
 		addVMPListener(new VecinoMasProximoListener());
 		addBilinearistener(new BilinearListener());
-		
+
 		addEspejoHorizontalListener(new EspejoHorizontalListener());
 		addEspejoVerticalListener(new EspejoVerticalListener());
 		addTraspuestaListener(new TraspuestaListener());
 		addRotaciones90Listener(new Rotaciones90Listener());
+		addRotacionesListener(new RotacionesListener());
+
 		conjuntoImagenes = new ConjuntoImagenes();
 	}
 
@@ -334,7 +337,8 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
 				if (getImagenesAbiertas().get(i).isSelected()) {
 					NuevaEscalaDialog nuevaEscalaDialog = new NuevaEscalaDialog(conjuntoImagenes.getImagen(i),
-							getImagenesAbiertas(), getBarraMenu(), getGrupoInternalFrames(), getPanelEstado(), getConjuntoImagenes(), 0);
+							getImagenesAbiertas(), getBarraMenu(), getGrupoInternalFrames(), getPanelEstado(),
+							getConjuntoImagenes(), 0);
 				}
 			}
 
@@ -356,17 +360,21 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
 				if (getImagenesAbiertas().get(i).isSelected()) {
 					NuevaEscalaDialog nuevaEscalaDialog = new NuevaEscalaDialog(conjuntoImagenes.getImagen(i),
-							getImagenesAbiertas(), getBarraMenu(), getGrupoInternalFrames(), getPanelEstado(), getConjuntoImagenes(), 1);
+							getImagenesAbiertas(), getBarraMenu(), getGrupoInternalFrames(), getPanelEstado(),
+							getConjuntoImagenes(), 1);
 				}
 			}
 		}
 
 	}
-	
-	class EspejoHorizontalListener implements ActionListener{
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	class EspejoHorizontalListener implements ActionListener {
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.
+		 * ActionEvent)
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -383,13 +391,16 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 				}
 			}
 		}
-		
+
 	}
 
 	class EspejoVerticalListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.
+		 * ActionEvent)
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -406,13 +417,16 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 				}
 			}
 		}
-		
-	}
-	
-	class TraspuestaListener implements ActionListener{
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	}
+
+	class TraspuestaListener implements ActionListener {
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.
+		 * ActionEvent)
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -429,13 +443,16 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 				}
 			}
 		}
-		
-	}
-	
-	class Rotaciones90Listener implements ActionListener{
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	}
+
+	class Rotaciones90Listener implements ActionListener {
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.
+		 * ActionEvent)
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -452,8 +469,31 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 				}
 			}
 		}
-		
+
 	}
+
+	class RotacionesListener implements ActionListener {
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.
+		 * ActionEvent)
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
+				if (getImagenesAbiertas().get(i).isSelected()) {
+					RotacionDialog rotacionDialog = new RotacionDialog(conjuntoImagenes.getImagen(i),
+							getImagenesAbiertas(), getBarraMenu(), getGrupoInternalFrames(), getPanelEstado(),
+							getConjuntoImagenes());
+				}
+			}
+		}
+
+	}
+
 	/**
 	 * @return the conjuntoImagenes
 	 */
