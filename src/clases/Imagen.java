@@ -497,9 +497,9 @@ public class Imagen extends Observable implements Cloneable {
 		for (int i = 0; i < imagenRotada.getWidth(); i++) {
 			for (int j = 0; j < imagenRotada.getHeight(); j++) {
 				int x = (int) ((i * Math.round(Math.cos(Math.toRadians(grados))))
-						+ j * Math.round(Math.sin(Math.toRadians(grados))));
+						+ j * Math.round(Math.sin(Math.toRadians(grados))))+getDesplazamientoX(grados);
 				int y = (int) (-(i * Math.round(Math.sin(Math.toRadians(grados))))
-						+ j * Math.round(Math.cos(Math.toRadians(grados))));
+						+ j * Math.round(Math.cos(Math.toRadians(grados))))+getDesplazamientoY(grados);
 				//como poner en relacion los dos origenes de coordenadas
 				int color;
 				if(x >= imagen.getWidth() || x < 0 || y < 0 || y >= imagen.getHeight())
@@ -577,7 +577,7 @@ public class Imagen extends Observable implements Cloneable {
 				- (imagen.getHeight() * Math.round(Math.sin(Math.toRadians(grados))))));
 		if (xPrima < xMin)
 			xMin = xPrima;
-		return -xMin;
+		return xMin;
 	}
 
 	/**
@@ -595,7 +595,7 @@ public class Imagen extends Observable implements Cloneable {
 				+ (imagen.getHeight() * Math.round(Math.cos(Math.toRadians(grados))))));
 		if (yPrima < yMin)
 			yMin = yPrima;
-		return -yMin;
+		return yMin;
 	}
 
 	/**
