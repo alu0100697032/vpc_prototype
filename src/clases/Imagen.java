@@ -494,12 +494,14 @@ public class Imagen extends Observable implements Cloneable {
 				imagen.getType());
 		// System.out.println(getWidthParalelogram(grados) + " " +
 		// getHeightParalelogram(grados));
+		int xMin = getDesplazamientoX(grados);
+		int yMin = getDesplazamientoY(grados);
 		for (int i = 0; i < imagenRotada.getWidth(); i++) {
 			for (int j = 0; j < imagenRotada.getHeight(); j++) {
-				int x = (int) ((i * Math.round(Math.cos(Math.toRadians(grados))))
-						+ j * Math.round(Math.sin(Math.toRadians(grados))))+getDesplazamientoX(grados);
-				int y = (int) (-(i * Math.round(Math.sin(Math.toRadians(grados))))
-						+ j * Math.round(Math.cos(Math.toRadians(grados))))+getDesplazamientoY(grados);
+				int x = (int) (((i+xMin) * Math.cos(Math.toRadians(grados)))
+						+ (j+yMin) * Math.sin(Math.toRadians(grados)));
+				int y = (int) (-((i+xMin) * Math.sin(Math.toRadians(grados)))
+						+ (j+yMin) * Math.cos(Math.toRadians(grados)));
 				//como poner en relacion los dos origenes de coordenadas
 				int color;
 				if(x >= imagen.getWidth() || x < 0 || y < 0 || y >= imagen.getHeight())
@@ -518,23 +520,23 @@ public class Imagen extends Observable implements Cloneable {
 	public int getWidthParalelogram(int grados) {
 		int xMax = 0;
 		int xMin = 0;
-		int xPrima = (int) (-imagen.getHeight() * Math.round(Math.sin(Math.toRadians(grados))));
+		int xPrima = (int) (-imagen.getHeight() * Math.sin(Math.toRadians(grados)));
 		if (xPrima > xMax)
 			xMax = xPrima;
 		if (xPrima < xMin)
 			xMin = xPrima;
-		xPrima = (int) (imagen.getWidth() * Math.round(Math.cos(Math.toRadians(grados))));
+		xPrima = (int) (imagen.getWidth() * Math.cos(Math.toRadians(grados)));
 		if (xPrima > xMax)
 			xMax = xPrima;
 		if (xPrima < xMin)
 			xMin = xPrima;
-		xPrima = (int) ((imagen.getWidth() * Math.round(Math.cos(Math.toRadians(grados)))
-				- (imagen.getHeight() * Math.round(Math.sin(Math.toRadians(grados))))));
+		xPrima = (int) ((imagen.getWidth() * Math.cos(Math.toRadians(grados))
+				- (imagen.getHeight() * Math.sin(Math.toRadians(grados)))));
 		if (xPrima > xMax)
 			xMax = xPrima;
 		if (xPrima < xMin)
 			xMin = xPrima;
-		return xMax - xMin;
+		return Math.abs(xMin-xMax);
 	}
 
 	/**
@@ -543,23 +545,23 @@ public class Imagen extends Observable implements Cloneable {
 	public int getHeightParalelogram(int grados) {
 		int yMax = 0;
 		int yMin = 0;
-		int yPrima = (int) (imagen.getHeight() * Math.round(Math.cos(Math.toRadians(grados))));
+		int yPrima = (int) (imagen.getHeight() * Math.cos(Math.toRadians(grados)));
 		if (yPrima > yMax)
 			yMax = yPrima;
 		if (yPrima < yMin)
 			yMin = yPrima;
-		yPrima = (int) (imagen.getWidth() * Math.round(Math.sin(Math.toRadians(grados))));
+		yPrima = (int) (imagen.getWidth() * Math.sin(Math.toRadians(grados)));
 		if (yPrima > yMax)
 			yMax = yPrima;
 		if (yPrima < yMin)
 			yMin = yPrima;
-		yPrima = (int) ((imagen.getWidth() * Math.round(Math.sin(Math.toRadians(grados)))
-				+ (imagen.getHeight() * Math.round(Math.cos(Math.toRadians(grados))))));
+		yPrima = (int) ((imagen.getWidth() * Math.sin(Math.toRadians(grados)))
+				+ (imagen.getHeight() * Math.cos(Math.toRadians(grados))));
 		if (yPrima > yMax)
 			yMax = yPrima;
 		if (yPrima < yMin)
 			yMin = yPrima;
-		return yMax - yMin;
+		return Math.abs(yMin-yMax);
 	}
 
 	/**
@@ -567,14 +569,14 @@ public class Imagen extends Observable implements Cloneable {
 	 */
 	public int getDesplazamientoX(int grados) {
 		int xMin = 0;
-		int xPrima = (int) (-imagen.getHeight() * Math.round(Math.sin(Math.toRadians(grados))));
+		int xPrima = (int) (-imagen.getHeight() * Math.sin(Math.toRadians(grados)));
 		if (xPrima < xMin)
 			xMin = xPrima;
-		xPrima = (int) (imagen.getWidth() * Math.round(Math.cos(Math.toRadians(grados))));
+		xPrima = (int) (imagen.getWidth() * Math.cos(Math.toRadians(grados)));
 		if (xPrima < xMin)
 			xMin = xPrima;
-		xPrima = (int) ((imagen.getWidth() * Math.round(Math.cos(Math.toRadians(grados)))
-				- (imagen.getHeight() * Math.round(Math.sin(Math.toRadians(grados))))));
+		xPrima = (int) ((imagen.getWidth() * Math.cos(Math.toRadians(grados)))
+				- (imagen.getHeight() * Math.sin(Math.toRadians(grados))));
 		if (xPrima < xMin)
 			xMin = xPrima;
 		return xMin;
@@ -585,14 +587,14 @@ public class Imagen extends Observable implements Cloneable {
 	 */
 	public int getDesplazamientoY(int grados) {
 		int yMin = 0;
-		int yPrima = (int) (imagen.getHeight() * Math.round(Math.cos(Math.toRadians(grados))));
+		int yPrima = (int) (imagen.getHeight() * Math.cos(Math.toRadians(grados)));
 		if (yPrima < yMin)
 			yMin = yPrima;
-		yPrima = (int) (imagen.getWidth() * Math.round(Math.sin(Math.toRadians(grados))));
+		yPrima = (int) (imagen.getWidth() * Math.sin(Math.toRadians(grados)));
 		if (yPrima < yMin)
 			yMin = yPrima;
-		yPrima = (int) ((imagen.getWidth() * Math.round(Math.sin(Math.toRadians(grados)))
-				+ (imagen.getHeight() * Math.round(Math.cos(Math.toRadians(grados))))));
+		yPrima = (int) ((imagen.getWidth() * Math.sin(Math.toRadians(grados)))
+				+ (imagen.getHeight() * Math.cos(Math.toRadians(grados))));
 		if (yPrima < yMin)
 			yMin = yPrima;
 		return yMin;
