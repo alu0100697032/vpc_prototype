@@ -10,6 +10,7 @@ import dialogs.EspecificarNumeroTramosDialog;
 import dialogs.GuardarImagenDialog;
 import dialogs.InformacionImagenDialog;
 import dialogs.RotacionDialog;
+import dialogs.RotarPintarDialog;
 import dialogs.SeleccionarUmbralDialog;
 import dialogs.AbrirImagenDialog;
 import dibujablesHistogramas.DibujaHistogramaAbsoluto;
@@ -56,6 +57,7 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 		addEspejoVerticalListener(new EspejoVerticalListener());
 		addTraspuestaListener(new TraspuestaListener());
 		addRotaciones90Listener(new Rotaciones90Listener());
+		addRotarPintarListener(new RotarPintarListener());
 		addRotacionesListener(new RotacionesListener());
 
 		conjuntoImagenes = new ConjuntoImagenes();
@@ -471,7 +473,27 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 		}
 
 	}
+	class RotarPintarListener implements ActionListener {
 
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.
+		 * ActionEvent)
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
+				if (getImagenesAbiertas().get(i).isSelected()) {
+					RotarPintarDialog rotacionDialog = new RotarPintarDialog(conjuntoImagenes.getImagen(i),
+							getImagenesAbiertas(), getBarraMenu(), getGrupoInternalFrames(), getPanelEstado(),
+							getConjuntoImagenes());
+				}
+			}
+		}
+
+	}
 	class RotacionesListener implements ActionListener {
 
 		/*

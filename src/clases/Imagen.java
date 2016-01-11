@@ -474,17 +474,39 @@ public class Imagen extends Observable implements Cloneable {
 		BufferedImage imagenRotada = new BufferedImage(imagen.getHeight(), imagen.getWidth(), imagen.getType());
 		for (int i = 0; i < imagenRotada.getWidth(); i++) {
 			for (int j = 0; j < imagenRotada.getHeight(); j++) {
-				// int x = (int) ((i*Math.round(Math.cos(Math.toRadians(90)))) +
-				// j*Math.round(Math.sin(Math.toRadians(90))));
-				// int y = (int)
-				// (-(i*Math.round(Math.sin(Math.toRadians(90))))+j*Math.round(Math.cos(Math.toRadians(90))));
 				int color = matrizPixelesGris.get(imagenRotada.getHeight() - j - 1).get(i);
 				imagenRotada.setRGB(i, j, new Color(color, color, color).getRGB());
 			}
 		}
 		return imagenRotada;
 	}
+	/**
+	 * rotarPintar
+	 */
+	public BufferedImage rotarPintar(int grados) {
 
+		BufferedImage imagenRotada = new BufferedImage(getWidthParalelogram(grados), getHeightParalelogram(grados),
+				imagen.getType());
+		int xMin = getDesplazamientoX(grados);
+		int yMin = getDesplazamientoY(grados);
+		for (int i = 0; i < imagen.getWidth(); i++) {
+			for (int j = 0; j < imagen.getHeight(); j++) {
+				int x = (int) ((i * Math.cos(Math.toRadians(grados)))
+						-( j * Math.sin(Math.toRadians(grados)))) -xMin;
+				int y = (int) (i * Math.sin(Math.toRadians(grados))
+						+ j * Math.cos(Math.toRadians(grados)))-yMin;
+				//como poner en relacion los dos origenes de coordenadas
+				int color;
+				if(x >= imagenRotada.getWidth() || x < 0 || y < 0 || y >= imagenRotada.getHeight())
+					continue;
+				else {	
+					color = matrizPixelesGris.get(i).get(j);
+					imagenRotada.setRGB(x, y, new Color(color, color, color).getRGB());
+				}
+			}
+		}
+		return imagenRotada;
+	}
 	/**
 	 * rotacion
 	 */

@@ -16,6 +16,7 @@ public class OperacionesGeometricasMenu extends JMenu{
 	private JMenuItem espejoVerticalMenuItem;
 	private JMenuItem traspuestaMenuItem;
 	private JMenuItem rotaciones90MenuItem;
+	private JMenuItem rotarPintarMenuItem;
 	private JMenuItem rotacionesMenuItem;
 	/**
 	 * Constructor: OperacionesGeometricas
@@ -34,6 +35,9 @@ public class OperacionesGeometricasMenu extends JMenu{
 		
 		setRotaciones90MenuItem(new JMenuItem("Rotaciones 90 grados"));
 		add(getRotaciones90MenuItem());
+		
+		setRotarPintarMenuItem(new JMenuItem("Rotar y pintar"));
+		add(getRotarPintarMenuItem());
 		
 		setRotacionesMenuItem(new JMenuItem("Rotar"));
 		add(getRotacionesMenuItem());
@@ -97,5 +101,17 @@ public class OperacionesGeometricasMenu extends JMenu{
 	 */
 	public void setRotacionesMenuItem(JMenuItem rotacionesMenuItem) {
 		this.rotacionesMenuItem = rotacionesMenuItem;
+	}
+	/**
+	 * @return the rotarPintarMenuItem
+	 */
+	public JMenuItem getRotarPintarMenuItem() {
+		return rotarPintarMenuItem;
+	}
+	/**
+	 * @param rotarPintarMenuItem the rotarPintarMenuItem to set
+	 */
+	public void setRotarPintarMenuItem(JMenuItem rotarPintarMenuItem) {
+		this.rotarPintarMenuItem = rotarPintarMenuItem;
 	}
 }

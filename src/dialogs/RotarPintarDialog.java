@@ -22,11 +22,11 @@ import dibujablesImagen.DibujaInternalFrameImagen;
 import menuBar.DibujaMenuBar;
 import statusBar.DibujaPanelEstado;
 
-public class RotacionDialog extends JDialog{
+public class RotarPintarDialog extends JDialog{
 	/**
 	 * Atributos
 	 */
-	public RotacionDialog(Imagen imagen, ArrayList<DibujaInternalFrameImagen> imagenesAbiertas,
+	public RotarPintarDialog(Imagen imagen, ArrayList<DibujaInternalFrameImagen> imagenesAbiertas,
 			DibujaMenuBar barraMenu, JDesktopPane grupoInternalFrames, DibujaPanelEstado panelEstado,
 			ConjuntoImagenes conjuntoImagenes) {
 		setResizable(false);
@@ -39,10 +39,10 @@ public class RotacionDialog extends JDialog{
 		
 		Object[] opciones = { "Aceptar", "Cancelar" };
 		int opcion = JOptionPane.showOptionDialog(this, JPanelGrados,
-				"Rotar", JOptionPane.YES_NO_OPTION,
+				"Rotar y pintar", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
 		if (opcion == JOptionPane.YES_OPTION) {
-			Imagen imagenRotada = new Imagen(imagen.rotacion(Integer.parseInt(JTextFieldValorGrados.getText())));
+			Imagen imagenRotada = new Imagen(imagen.rotarPintar(Integer.parseInt(JTextFieldValorGrados.getText())));
 			conjuntoImagenes.addImagen(imagenRotada);
 			DibujaImagenInstanciable dibujaImagen = new DibujaImagenInstanciable(imagenRotada, imagenesAbiertas, barraMenu,
 					grupoInternalFrames, panelEstado, conjuntoImagenes);
