@@ -45,6 +45,7 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 		addCorreccionGammaListener(new CorreccionGammaListener());
 		addDiferenciaImagenesListener(new DiferenciaImagenesListener());
 		addMapaCambiosListener(new MapaCambiosListener());
+		addEspecificacionListener(new EspecificacionListener());
 		addEcualizacionListener(new EcualizacionListener());
 
 		addVerHistogramaAbsolutoListener(new VerHistogramaAbsolutoListener());
@@ -201,7 +202,41 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 			}
 		}
 	}
+	class EspecificacionListener implements ActionListener {
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.
+		 * ActionEvent)
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
+				if (getImagenesAbiertas().get(i).isSelected()) {
+					// Abre imagen y la visualiza
+					AbrirImagenDialog abrirImagenReferencia = new AbrirImagenDialog();
+					Imagen imagenReferencia = new Imagen(abrirImagenReferencia.getImagenCargada(),
+							abrirImagenReferencia.getNombreImagen(), abrirImagenReferencia.getExtensionImagen());
+					getConjuntoImagenes().addImagen(imagenReferencia);
+					DibujaInternalFrameImagen dibujaInternalFrameImagen = new DibujaInternalFrameImagen(
+							new DibujaImagenInstanciable(imagenReferencia, getImagenesAbiertas(), getBarraMenu(),
+									getGrupoInternalFrames(), getPanelEstado(), conjuntoImagenes));
+					getImagenesAbiertas().add(dibujaInternalFrameImagen);
+					getGrupoInternalFrames().add(dibujaInternalFrameImagen);
+					// genera la imagen especificada
+					Imagen imagenEspecificada = new Imagen(conjuntoImagenes.getImagen(i).especificacion(imagenReferencia));
+					getConjuntoImagenes().addImagen(imagenEspecificada);
+					DibujaInternalFrameImagen dibujaInternalFrameImagenDiferencia = new DibujaInternalFrameImagen(
+							new DibujaImagenInstanciable(imagenEspecificada, getImagenesAbiertas(), getBarraMenu(),
+									getGrupoInternalFrames(), getPanelEstado(), conjuntoImagenes));
+					getImagenesAbiertas().add(dibujaInternalFrameImagenDiferencia);
+					getGrupoInternalFrames().add(dibujaInternalFrameImagenDiferencia);
+				}
+			}
+		}
 
+	}
 	class EcualizacionListener implements ActionListener {
 
 		@Override

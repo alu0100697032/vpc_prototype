@@ -94,6 +94,9 @@ public class DibujaVentanaPrincipal extends JFrame {
 	public void addMapaCambiosListener(ActionListener a) {
 		barraMenu.getMenuItemMapaCambios().addActionListener(a);
 	}
+	public void addEspecificacionListener(ActionListener a){
+		barraMenu.getMenuItemEspecificacion().addActionListener(a);
+	}
 	public void addEcualizacionListener(ActionListener a){
 		barraMenu.getMenuItemEcualizacion().addActionListener(a);
 	}

@@ -22,6 +22,7 @@ public class DibujaMenuBar extends JMenuBar{
 	private JMenuItem menuItemCorreccionGamma;
 	private JMenuItem menuItemDiferenciaImagenes;
 	private JMenuItem menuItemMapaCambios;
+	private JMenuItem menuItemEspecificacion;
 	private JMenuItem menuItemEcualizacion;
 	
 	private JMenu menuVer;
@@ -74,6 +75,9 @@ public class DibujaMenuBar extends JMenuBar{
 		
 		menuItemMapaCambios = new JMenuItem("Generar mapa de cambios");
 		menuEditar.add(menuItemMapaCambios);
+		
+		menuItemEspecificacion = new JMenuItem("Especificacion");
+		menuEditar.add(menuItemEspecificacion);
 		
 		menuItemEcualizacion = new JMenuItem("Ecualizacion");
 		menuEditar.add(menuItemEcualizacion);
@@ -348,5 +352,13 @@ public class DibujaMenuBar extends JMenuBar{
 	 */
 	public void setOperacionesGeometricasMenu(OperacionesGeometricasMenu operacionesGeometricasMenu) {
 		this.operacionesGeometricasMenu = operacionesGeometricasMenu;
+	}
+
+	public JMenuItem getMenuItemEspecificacion() {
+		return menuItemEspecificacion;
+	}
+
+	public void setMenuItemEspecificacion(JMenuItem menuItemEspecificacion) {
+		this.menuItemEspecificacion = menuItemEspecificacion;
 	}
 }
