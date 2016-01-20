@@ -9,6 +9,7 @@ import dialogs.CorreccionGammaDialog;
 import dialogs.EspecificarNumeroTramosDialog;
 import dialogs.GuardarImagenDialog;
 import dialogs.InformacionImagenDialog;
+import dialogs.RotacionBilinealDialog;
 import dialogs.RotacionDialog;
 import dialogs.RotarPintarDialog;
 import dialogs.SeleccionarUmbralDialog;
@@ -59,7 +60,8 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 		addRotaciones90Listener(new Rotaciones90Listener());
 		addRotarPintarListener(new RotarPintarListener());
 		addRotacionesListener(new RotacionesListener());
-
+		addRotacionesBilinealesListener(new RotacionesBilinealesListener());
+		
 		conjuntoImagenes = new ConjuntoImagenes();
 	}
 
@@ -515,7 +517,27 @@ public class DibujaVentanaPrincipalInstanciable extends DibujaVentanaPrincipal {
 		}
 
 	}
+	class RotacionesBilinealesListener implements ActionListener {
 
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.
+		 * ActionEvent)
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			for (int i = 0; i < getImagenesAbiertas().size(); i++) {
+				if (getImagenesAbiertas().get(i).isSelected()) {
+					RotacionBilinealDialog rotacionBilinealDialog = new RotacionBilinealDialog(conjuntoImagenes.getImagen(i),
+							getImagenesAbiertas(), getBarraMenu(), getGrupoInternalFrames(), getPanelEstado(),
+							getConjuntoImagenes());
+				}
+			}
+		}
+
+	}
 	/**
 	 * @return the conjuntoImagenes
 	 */

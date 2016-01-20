@@ -520,10 +520,10 @@ public class Imagen extends Observable implements Cloneable {
 		int yMin = getDesplazamientoY(grados);
 		for (int i = 0; i < imagenRotada.getWidth(); i++) {
 			for (int j = 0; j < imagenRotada.getHeight(); j++) {
-				int x = (int) (((i+xMin) * Math.cos(Math.toRadians(grados)))
-						+ (j+yMin) * Math.sin(Math.toRadians(grados)));
-				int y = (int) (-((i+xMin) * Math.sin(Math.toRadians(grados)))
-						+ (j+yMin) * Math.cos(Math.toRadians(grados)));
+				int x = (int) Math.round((((i+xMin) * Math.cos(Math.toRadians(grados)))
+						+ (j+yMin) * Math.sin(Math.toRadians(grados))));
+				int y = (int) Math.round((-((i+xMin) * Math.sin(Math.toRadians(grados)))
+						+ (j+yMin) * Math.cos(Math.toRadians(grados))));
 				//como poner en relacion los dos origenes de coordenadas
 				int color;
 				if(x >= imagen.getWidth() || x < 0 || y < 0 || y >= imagen.getHeight())
@@ -535,7 +535,50 @@ public class Imagen extends Observable implements Cloneable {
 		}
 		return imagenRotada;
 	}
+	/**
+	 * rotacionBilineal
+	 */
+	public BufferedImage rotacionBilineal(int grados) {
 
+		BufferedImage imagenRotada = new BufferedImage(getWidthParalelogram(grados), getHeightParalelogram(grados),
+				imagen.getType());
+		// System.out.println(getWidthParalelogram(grados) + " " +
+		// getHeightParalelogram(grados));
+		int xMin = getDesplazamientoX(grados);
+		int yMin = getDesplazamientoY(grados);
+		for (int i = 0; i < imagenRotada.getWidth(); i++) {
+			for (int j = 0; j < imagenRotada.getHeight(); j++) {
+				int X = (int)Math.floor(((i+xMin) * Math.cos(Math.toRadians(grados)))
+						+ (j+yMin) * Math.sin(Math.toRadians(grados)));
+				int Y = (int)Math.floor(-((i+xMin) * Math.sin(Math.toRadians(grados)))
+						+ (j+yMin) * Math.cos(Math.toRadians(grados)));
+				int color = 255;
+				if(X >= imagen.getWidth() || X < 0 || Y < 0 || Y >= imagen.getHeight())
+					color = 255;
+				else {
+					int X1 = X + 1;
+					int Y1 = Y + 1;
+					if (X1 >= imagen.getWidth())
+						X1 = imagen.getWidth() - 1;
+					if (Y1 >= imagen.getHeight())
+						Y1 = imagen.getHeight() - 1;
+					
+					int A = matrizPixelesGris.get(X).get(Y1);
+					int B = matrizPixelesGris.get(X1).get(Y1);
+					int C = matrizPixelesGris.get(X).get(Y);
+					int D = matrizPixelesGris.get(X1).get(Y);
+					
+					double p = (double)(((i+xMin) * Math.cos(Math.toRadians(grados)))
+							+ (j+yMin) * Math.sin(Math.toRadians(grados)))-X;
+					double q = (double)(-((i+xMin) * Math.sin(Math.toRadians(grados)))
+							+ (j+yMin) * Math.cos(Math.toRadians(grados)))-Y;
+					color = (int) (C + (D - C) * p + (A - C) * q + (B + C - A - D) * p * q);
+				}
+				imagenRotada.setRGB(i, j, new Color(color, color, color).getRGB());
+			}
+		}
+		return imagenRotada;
+	}
 	/**
 	 * getWidthParalelogram
 	 */
